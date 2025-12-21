@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Plane, Train, ArrowRight, Ticket, Calendar, MapPin } from 'lucide-react';
 
@@ -108,33 +107,33 @@ const Transport: React.FC = () => {
                 <Ticket size={18} className="text-[#A68A71] opacity-20" />
               </div>
               
-              {/* Main Schedule Row - Times on sides */}
-              <div className="flex items-center justify-between gap-2">
+              {/* Main Schedule - Time under Location */}
+              <div className="flex items-start justify-between gap-2 px-2">
                 {/* Departure Side */}
-                <div className="flex items-center gap-4 flex-1">
-                  <span className="text-5xl font-black text-[#4E342E] tracking-tighter shrink-0">{t.depTime}</span>
+                <div className="flex flex-col items-start flex-1">
                   <button onClick={() => window.open(getGoogleMapsUrl(t.from), '_blank')} className="flex flex-col items-start gap-0.5 group/loc">
                     <span className="text-lg font-bold text-[#4E342E] group-hover/loc:text-[#D8C4B6] transition-colors">{t.from}</span>
                     <span className="text-[10px] text-[#A68A71] font-black uppercase tracking-widest flex items-center gap-1">
                        Departure <MapPin size={8} />
                     </span>
                   </button>
+                  <span className="text-4xl font-black text-[#4E342E] tracking-tighter mt-2">{t.depTime}</span>
                 </div>
 
-                {/* Arrow Divider */}
-                <div className="flex flex-col items-center justify-center opacity-30 px-2 shrink-0">
+                {/* Arrow Divider - Centered relative to block */}
+                <div className="flex items-center justify-center pt-8 opacity-30 shrink-0">
                   <ArrowRight size={24} />
                 </div>
 
                 {/* Arrival Side */}
-                <div className="flex items-center gap-4 flex-1 justify-end">
+                <div className="flex flex-col items-end flex-1 text-right">
                   <button onClick={() => window.open(getGoogleMapsUrl(t.to), '_blank')} className="flex flex-col items-end gap-0.5 group/loc">
                     <span className="text-lg font-bold text-[#4E342E] group-hover/loc:text-[#D8C4B6] transition-colors">{t.to}</span>
                     <span className="text-[10px] text-[#A68A71] font-black uppercase tracking-widest flex items-center gap-1">
                        <MapPin size={8} /> Arrival
                     </span>
                   </button>
-                  <span className="text-5xl font-black text-[#4E342E] tracking-tighter shrink-0">{t.arrTime}</span>
+                  <span className="text-4xl font-black text-[#4E342E] tracking-tighter mt-2">{t.arrTime}</span>
                 </div>
               </div>
 

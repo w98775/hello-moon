@@ -520,23 +520,48 @@
 
     function TransportView() {
       const transports = [
-        { date: '01/23', id: '高鐵 0818 次', from: '左營', to: '桃園', time: '10:25-12:18' },
-        { date: '01/23', id: 'MH 367', from: 'TPE', to: 'KUL', time: '15:10-20:05' },
-        { date: '01/25', id: 'MH 485', from: 'KUL', to: 'MLE', time: '09:40-11:00' },
-        { date: '01/30', id: 'MH 484', from: 'MLE', to: 'KUL', time: '12:00-19:45' },
-        { date: '01/31', id: 'MH 366', from: 'KUL', to: 'TPE', time: '09:20-14:10' },
-        { date: '01/31', id: '高鐵 0841 次', from: '桃園', to: '左營', time: '16:34-18:25' },
+        { date: '01/23', id: '高鐵 0818 次', from: '左營', to: '桃園', depTime: '10:25', arrTime: '12:18' },
+        { date: '01/23', id: 'MH 367', from: 'TPE', to: 'KUL', depTime: '15:10', arrTime: '20:05' },
+        { date: '01/25', id: 'MH 485', from: 'KUL', to: 'MLE', depTime: '09:40', arrTime: '11:00' },
+        { date: '01/30', id: 'MH 484', from: 'MLE', to: 'KUL', depTime: '12:00', arrTime: '19:45' },
+        { date: '01/31', id: 'MH 366', from: 'KUL', to: 'TPE', depTime: '09:20', arrTime: '14:10' },
+        { date: '01/31', id: '高鐵 0841 次', from: '桃園', to: '左營', depTime: '16:34', arrTime: '18:25' },
       ];
       return (
         <div className="fade-in space-y-6">
           <h2 className="text-3xl font-bold serif text-[#4E342E] px-2">交通資訊</h2>
           {transports.map((t, i) => (
             <div key={i} 
-                 className="bg-white rounded-[2.5rem] border border-[#F5EBE0] p-7 flex justify-between items-center shadow-sm cursor-pointer hover:border-[#D8C4B6] transition-all"
+                 className="bg-white rounded-[2.5rem] border border-[#F5EBE0] p-7 flex flex-col shadow-sm cursor-pointer hover:border-[#D8C4B6] transition-all"
                  onClick={() => window.open(getGoogleMapsUrl(t.to), '_blank')}
             >
-              <div><div className="font-black text-lg text-[#4E342E]">{t.id}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase">{t.date} · {t.from} ➔ {t.to}</div></div>
-              <div className="text-right font-black text-[#4E342E] text-lg">{t.time}</div>
+              <div className="flex justify-between items-center mb-6">
+                 <div>
+                   <div className="font-black text-lg text-[#4E342E]">{t.id}</div>
+                   <div className="text-[10px] text-[#A68A71] font-bold uppercase tracking-widest">{t.date} · 2026</div>
+                 </div>
+                 <div className="w-10 h-10 bg-[#D8C4B6] rounded-xl flex items-center justify-center text-white">
+                   {t.id.includes('高鐵') ? <Train size={18} /> : <Plane size={18} />}
+                 </div>
+              </div>
+              
+              <div className="flex items-center justify-between gap-2 px-2">
+                <div className="flex flex-col flex-1 items-start">
+                  <div className="text-[10px] font-black text-[#D8C4B6] uppercase tracking-widest mb-1">From</div>
+                  <div className="font-bold text-base text-[#4E342E]">{t.from}</div>
+                  <div className="text-3xl font-black text-[#4E342E] tracking-tighter mt-1">{t.depTime}</div>
+                </div>
+                
+                <div className="opacity-20 flex-shrink-0 pt-6">
+                  <ArrowRight size={24} />
+                </div>
+                
+                <div className="flex flex-col flex-1 items-end text-right">
+                  <div className="text-[10px] font-black text-[#D8C4B6] uppercase tracking-widest mb-1">To</div>
+                  <div className="font-bold text-base text-[#4E342E]">{t.to}</div>
+                  <div className="text-3xl font-black text-[#4E342E] tracking-tighter mt-1">{t.arrTime}</div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
