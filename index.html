@@ -196,14 +196,16 @@
       { date: '1/27', title: '美居度假村：船潛冒險', isMaldives: true, activities: [{ id: '271', time: '08:30', title: '環礁船潛', loc: 'Kooddoo Jetty', note: '探索更遠的潛點' }] },
       { date: '1/28', title: '美居度假村：水下攝影', isMaldives: true, activities: [{ id: '281', time: '10:00', title: '珊瑚礁浮潛', loc: 'House Reef', note: '紀錄豐富生態' }] },
       { date: '1/29', title: '美居度假村：放鬆時光', isMaldives: true, activities: [{ id: '291', time: '11:00', title: '享受渡假村設施', loc: 'Pool Bar', note: '全包式餐飲服務' }] },
-      { date: '1/30', title: '馬爾地夫居民島：h78 飯店', activities: [{ id: '301', time: '12:00', title: '搭船前往居民島', loc: 'Hulhumale', note: '入住 h78 飯店' }] },
-      { date: '1/31', title: '平安賦歸', activities: [{ id: '18', time: '09:20', title: 'MH366 返台', loc: 'KLIA T1', note: '14:10 抵台' }] },
+      { date: '1/30', title: '馬爾地夫居民島：h78 飯店', activities: [{ id: '301', time: '12:00', title: '搭船前往居民島', loc: 'Hulhumale', note: '入住 h78 飯店' }, { id: '302', time: '19:45', title: '飛抵吉隆坡', loc: 'KLIA T1', note: 'MH484 抵達' }] },
+      { date: '1/31', title: '吉隆坡：Umi SplashMania 休息', activities: [{ id: '311', time: '12:00', title: 'SplashMania 玩樂', loc: 'SplashMania Waterpark', note: '享受水上設施' }, { id: '312', time: '18:00', title: '入住 Umi 民宿', loc: 'Umi SplashMania homestay', note: '溫馨休息空間' }] },
+      { date: '2/1', title: '平安賦歸', activities: [{ id: '18', time: '09:20', title: 'MH366 返台', loc: 'KLIA T1', note: '14:10 抵台' }] },
     ];
 
     const INITIAL_REC = [
       { category: '吉隆坡精選 KL Selection', location: 'KL', items: [
         { name: 'Village Park Restaurant', desc: '吉隆坡最好吃的椰漿飯，炸雞與醬汁完美結合。' },
-        { name: 'Petronas Twin Towers', desc: '最具代表性的地標夜景，震撼力十足。' }
+        { name: 'Petronas Twin Towers', desc: '最具代表性的地標夜景，震撼力十足。' },
+        { name: 'SplashMania Waterpark', desc: '吉隆坡近郊最新水上樂園，設施豐富刺激。' }
       ]},
       { category: '居民島探險 Hulhumale', location: 'MV', items: [
         { name: 'Hulhumale Beach', desc: '夕陽極美的公共沙灘，看在地人生活節奏。' },
@@ -213,13 +215,13 @@
 
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v43')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v43')) || INITIAL_PREP);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v43')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v44')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v44')) || INITIAL_PREP);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v44')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v43', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v43', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_expenses_v43', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v44', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v44', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_expenses_v44', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
@@ -385,7 +387,7 @@
           <div className="flex overflow-x-auto gap-3 pb-2 no-scrollbar snap-x">
             {itinerary.map((d, i) => (
               <button key={i} onClick={() => setDayIdx(i)} className={`flex-shrink-0 w-12 h-16 rounded-2xl flex flex-col items-center justify-center border transition-all ${dayIdx === i ? 'bg-[#4E342E] text-white shadow-lg' : 'bg-white text-[#A68A71] border-[#F5EBE0]'}`}>
-                <span className="text-[8px] font-black uppercase opacity-60">Jan</span><span className="text-lg font-black mt-1">{d.date.split('/')[1]}</span>
+                <span className="text-[8px] font-black uppercase opacity-60">{d.date.includes('/') ? 'Jan' : 'Feb'}</span><span className="text-lg font-black mt-1">{d.date.includes('/') ? d.date.split('/')[1] : d.date.split('.')[1]}</span>
               </button>
             ))}
           </div>
@@ -460,8 +462,8 @@
         { date: '01/23', id: 'MH 367', from: 'TPE', to: 'KUL', depTime: '15:10', arrTime: '20:05' },
         { date: '01/25', id: 'MH 485', from: 'KUL', to: 'MLE', depTime: '09:40', arrTime: '11:00' },
         { date: '01/30', id: 'MH 484', from: 'MLE', to: 'KUL', depTime: '12:00', arrTime: '19:45' },
-        { date: '01/31', id: 'MH 366', from: 'KUL', to: 'TPE', depTime: '09:20', arrTime: '14:10' },
-        { date: '01/31', id: '高鐵 0841 次', from: '桃園', to: '左營', depTime: '16:34', arrTime: '18:25' },
+        { date: '02/01', id: 'MH 366', from: 'KUL', to: 'TPE', depTime: '09:20', arrTime: '14:10' },
+        { date: '02/01', id: '高鐵 0841 次', from: '桃園', to: '左營', depTime: '16:34', arrTime: '18:25' },
       ];
       return (
         <div className="fade-in space-y-6">
@@ -487,7 +489,8 @@
       const hotels = [
         { nameZh: '吉隆坡孟沙假日酒店', nameEn: 'Holiday Inn Kuala Lumpur Bangsar', date: '1/23-1/25', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800', note: '時尚孟沙區，交通非常便利。' },
         { nameZh: '美居馬爾地夫度假村', nameEn: 'Mercure Maldives Kooddoo Resort', date: '1/25-1/29', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&q=80&w=800', note: '全包式水上別墅，潛水者天堂。' },
-        { nameZh: '馬爾地夫居民島 h78 飯店', nameEn: 'h78 Maldives', date: '1/30', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '海濱首選，銜接機場極度便利。' }
+        { nameZh: '馬爾地夫居民島 h78 飯店', nameEn: 'h78 Maldives', date: '1/30', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '海濱首選，銜接機場極度便利。' },
+        { nameZh: 'Umi SplashMania 溫馨民宿', nameEn: 'Umi SplashMania homestay', date: '1/31', image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=800', note: '鄰近 SplashMania 水上樂園，環境溫馨舒適，返台前的絕佳休憩站。' }
       ];
       return (
         <div className="fade-in space-y-8">
