@@ -56,25 +56,16 @@
     .checkbox-custom.checked { background-color: #D8C4B6; }
     .checkbox-custom.checked::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: white; font-size: 12px; }
 
-    .floating-action-button {
+    .modal-overlay {
       position: fixed;
-      right: 24px;
-      top: 100px;
-      z-index: 55;
-      width: 56px;
-      height: 56px;
-      border-radius: 28px;
-      background-color: #D8C4B6;
-      color: white;
+      inset: 0;
+      background: rgba(78, 52, 46, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 100;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(78, 52, 46, 0.2);
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .floating-action-button:active {
-      transform: scale(0.9) rotate(45deg);
-      box-shadow: 0 2px 6px rgba(78, 52, 46, 0.1);
+      padding: 20px;
     }
   </style>
 
@@ -113,12 +104,12 @@
         id: 'diving',
         category: '專業潛水 (Diving)',
         items: [
-          { name: '1 Single Boat Dive', price: 89, detail: '含全套裝備單次船潛 (Full Equipment)' },
-          { name: '3 Dive Package', price: 260, detail: '3次船潛套裝，含裝備' },
-          { name: '5 Dive Package', price: 419, detail: '5次船潛套裝，含裝備' },
-          { name: '10 Dive Package', price: 750, detail: '10次船潛套裝，含裝備' },
-          { name: '1 Dive After 5 Package', price: 82, detail: '5次套裝後加購價格' },
-          { name: '1 Dive After 10 Package', price: 75, detail: '10次套裝後加購價格' }
+          { name: '1 Single Boat Dive', price: 65, detail: 'Tanks & Weights ONLY' },
+          { name: '1 Single Boat Dive (Full Set)', price: 89, detail: '含 BCD, 呼吸器, 電腦錶, 防寒衣' },
+          { name: '3 Dive Package (Full Set)', price: 260, detail: '3次船潛套裝，含裝備' },
+          { name: '5 Dive Package (Full Set)', price: 419, detail: '5次船潛套裝，含裝備' },
+          { name: '10 Dive Package (Full Set)', price: 750, detail: '10次船潛套裝，含裝備' },
+          { name: 'Orientation Dive', price: 0, detail: '按法規少於30支或3個月沒潛需做氣瓶檢驗' }
         ]
       },
       {
@@ -130,11 +121,7 @@
           { name: 'Discover Scuba / Training Dive', price: 85, detail: 'DSD 完成後加購潛水' },
           { name: 'PADI Scuba Diver (SD)', price: 390, detail: '含 2 次船潛與證照' },
           { name: 'PADI Open Water Diver (OWD)', price: 650, detail: '初階證照課程，含 4 次船潛' },
-          { name: 'Referral Course', price: 325, detail: '轉介課程，含 4 次船潛' },
-          { name: 'Upgrade SD to Open Water', price: 420, detail: '從 SD 升級至 OWD' },
-          { name: 'PADI Advanced Open Water (AOW)', price: 550, detail: '進階證照課程，含 5 次船潛' },
-          { name: 'PADI Rescue Diver', price: 760, detail: '救援潛水員課程' },
-          { name: 'PADI Nitrox Course', price: 220, detail: '高氧課程 (含證照)' }
+          { name: 'PADI Advanced Open Water (AOW)', price: 550, detail: '進階證照課程，含 5 次船潛' }
         ]
       },
       {
@@ -147,8 +134,7 @@
           { name: 'Wakeboard Lesson', price: 55, detail: '滑水教學 (30分鐘)' },
           { name: 'Fun Tube Ride', price: 25, detail: '充氣拖曳設施 (15分鐘/每人)' },
           { name: 'Kayak', price: 0, detail: '獨木舟 (Free)' },
-          { name: 'Stand up paddle board (SUP)', price: 0, detail: '立槳 (Free)' },
-          { name: 'GoPro 11 Camera Rental (60m)', price: 20, detail: '攝影機租賃' }
+          { name: 'SUP Stand up paddle board', price: 0, detail: '立槳 (Free)' }
         ]
       },
       {
@@ -160,8 +146,7 @@
           { name: 'Dolphin Adventure', price: 60, detail: '90分鐘海豚追蹤之旅' },
           { name: 'Line Fishing Trip', price: 70, detail: '傳統海釣行程' },
           { name: 'Sunset Fishing', price: 70, detail: '黃昏海釣行程' },
-          { name: 'Sand Bank Trip', price: 100, detail: '夢幻無人沙洲 (180分鐘)' },
-          { name: 'Early Morning Trolling', price: 100, detail: '早晨拖釣行程' }
+          { name: 'Sand Bank Trip', price: 100, detail: '夢幻無人沙洲 (180分鐘)' }
         ]
       }
     ];
@@ -215,36 +200,25 @@
       { date: '1/31', title: '平安賦歸', activities: [{ id: '18', time: '09:20', title: 'MH366 返台', loc: 'KLIA T1', note: '14:10 抵台' }] },
     ];
 
-    const INITIAL_REC = [
-      { category: '吉隆坡精選 KL Selection', location: 'KL', items: [
-        { name: 'Village Park Restaurant', desc: '吉隆坡最好吃的椰漿飯，炸雞與醬汁完美結合。' },
-        { name: 'Petronas Twin Towers', desc: '最具代表性的地標夜景，震撼力十足。' }
-      ]},
-      { category: '居民島探險 Hulhumale', location: 'MV', items: [
-        { name: 'Hulhumale Beach', desc: '夕陽極美的公共沙灘，看在地人生活節奏。' },
-        { name: 'h78 Maldives Terrace', desc: '飯店頂樓餐廳，俯瞰機場島海景。' }
-      ]}
-    ];
-
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v39')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v39')) || INITIAL_PREP);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v39')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v40')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v40')) || INITIAL_PREP);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v40')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v39', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v39', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_expenses_v39', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v40', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v40', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_expenses_v40', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
           case 'PREPARATION': return <PreparationView prepList={prepList} setPrepList={setPrepList} />;
-          case 'ITINERARY': return <ItineraryView itinerary={itinerary} />;
+          case 'ITINERARY': return <ItineraryView itinerary={itinerary} setItinerary={setItinerary} />;
           case 'TRANSPORT': return <TransportView />;
           case 'ACCOMMODATION': return <AccommodationView />;
           case 'RECOMMENDATION': return <RecommendationView />;
           case 'EXPENSE': return <ExpenseView expenses={expenses} setExpenses={setExpenses} />;
-          default: return <ItineraryView itinerary={itinerary} />;
+          default: return <ItineraryView itinerary={itinerary} setItinerary={setItinerary} />;
         }
       };
 
@@ -284,9 +258,27 @@
 
     function PreparationView({ prepList, setPrepList }) {
       const categories = ['重要文件', '電子電器', '衣物穿搭', '個人用品', '常備藥品'];
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const [newItem, setNewItem] = useState({ item: '', category: '重要文件', note: '' });
+
+      const handleAddItem = () => {
+        if (!newItem.item.trim()) return;
+        setPrepList([...prepList, { ...newItem, id: 'custom-' + Date.now(), checked: false }]);
+        setIsModalOpen(false);
+        setNewItem({ item: '', category: '重要文件', note: '' });
+      };
+
       return (
         <div className="fade-in space-y-6">
-          <h2 className="text-3xl font-bold serif text-[#4E342E] px-2">準備清單</h2>
+          <div className="flex justify-between items-center px-2">
+            <h2 className="text-3xl font-bold serif text-[#4E342E]">準備清單</h2>
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all"
+            >
+              <Plus size={20} />
+            </button>
+          </div>
           <div className="space-y-8 pb-10">
             {categories.map(cat => (
               <div key={cat} className="space-y-3">
@@ -305,18 +297,57 @@
               </div>
             ))}
           </div>
+
+          {isModalOpen && (
+            <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+              <div className="bg-white w-full max-w-sm rounded-[2.5rem] p-8 space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+                <h3 className="text-xl font-bold serif text-[#4E342E]">新增準備項目</h3>
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">項目名稱</label>
+                    <input type="text" value={newItem.item} onChange={e => setNewItem({...newItem, item: e.target.value})} placeholder="例如：相機電池" />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">分類</label>
+                    <select value={newItem.category} onChange={e => setNewItem({...newItem, category: e.target.value})}>
+                      {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">備註</label>
+                    <input type="text" value={newItem.note} onChange={e => setNewItem({...newItem, note: e.target.value})} placeholder="選填備註" />
+                  </div>
+                </div>
+                <div className="flex gap-3 pt-4">
+                  <button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 font-bold text-[#A68A71] rounded-2xl border border-[#F5EBE0]">取消</button>
+                  <button onClick={handleAddItem} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">儲存項目</button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       );
     }
 
-    function ItineraryView({ itinerary }) {
+    function ItineraryView({ itinerary, setItinerary }) {
       const [dayIdx, setDayIdx] = useState(0);
       const [searchTerm, setSearchTerm] = useState('');
       const [showSearch, setShowSearch] = useState(false);
       const [isRefreshing, setIsRefreshing] = useState(false);
       const [showOthers, setShowOthers] = useState(false);
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const [newAct, setNewAct] = useState({ time: '', title: '', loc: '', note: '' });
       
       const day = itinerary[dayIdx];
+
+      const handleAddActivity = () => {
+        if (!newAct.title.trim()) return;
+        const updatedItinerary = [...itinerary];
+        updatedItinerary[dayIdx].activities.push({ ...newAct, id: 'act-' + Date.now() });
+        setItinerary(updatedItinerary);
+        setIsModalOpen(false);
+        setNewAct({ time: '', title: '', loc: '', note: '' });
+      };
 
       const handleRefresh = () => {
         setIsRefreshing(true);
@@ -330,23 +361,17 @@
       };
 
       const displayGroups = useMemo(() => {
-        // 如果沒有點擊更新且沒有在搜尋，只顯示第一組 (Diving)
         const groupsToProcess = (showOthers || searchTerm) ? RESORT_ACTIVITY_GROUPS : [RESORT_ACTIVITY_GROUPS[0]];
-        
         return groupsToProcess.map(group => {
           let items = group.items;
-          
           if (searchTerm) {
-            // 搜尋時顯示所有匹配項目，不限制 6 個
             items = items.filter(item => 
               item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
               item.detail.toLowerCase().includes(searchTerm.toLowerCase())
             );
           } else {
-            // 非搜尋時，每一列最多顯示 6 個
             items = items.slice(0, 6);
           }
-          
           return { ...group, items };
         }).filter(group => group.items.length > 0);
       }, [searchTerm, showOthers]);
@@ -360,8 +385,16 @@
               </button>
             ))}
           </div>
-          <div className="bg-white p-7 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm mb-6">
-            <h2 className="text-2xl font-bold text-[#4E342E] serif leading-tight mb-6">Day 0{dayIdx+1} {day.title}</h2>
+          <div className="bg-white p-7 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm mb-6 relative">
+            <div className="flex justify-between items-start mb-6">
+              <h2 className="text-2xl font-bold text-[#4E342E] serif leading-tight">Day 0{dayIdx+1} {day.title}</h2>
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="w-9 h-9 bg-[#FDFBF7] border border-[#F5EBE0] text-[#A68A71] rounded-xl flex items-center justify-center active:scale-95 transition-all shadow-sm"
+              >
+                <Plus size={18} />
+              </button>
+            </div>
             <div className="space-y-8 relative ml-1">
               <div className="absolute left-[17px] top-3 bottom-3 w-[1px] bg-[#F5EBE0]" />
               {day.activities.map(act => (
@@ -430,11 +463,36 @@
                     </div>
                   </div>
                 ))}
-                {!showOthers && !searchTerm && (
-                  <div className="text-center py-2 opacity-30 text-[10px] tracking-widest uppercase">
-                    更多課程與活動請點擊更新按鈕查看
+              </div>
+            </div>
+          )}
+
+          {isModalOpen && (
+            <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+              <div className="bg-white w-full max-w-sm rounded-[2.5rem] p-8 space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+                <h3 className="text-xl font-bold serif text-[#4E342E]">新增當日行程</h3>
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">時間</label>
+                    <input type="text" value={newAct.time} onChange={e => setNewAct({...newAct, time: e.target.value})} placeholder="例如：09:30" />
                   </div>
-                )}
+                  <div>
+                    <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">標題</label>
+                    <input type="text" value={newAct.title} onChange={e => setNewAct({...newAct, title: e.target.value})} placeholder="例如：景點參觀" />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">地點</label>
+                    <input type="text" value={newAct.loc} onChange={e => setNewAct({...newAct, loc: e.target.value})} placeholder="例如：雙子塔" />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">備註</label>
+                    <input type="text" value={newAct.note} onChange={e => setNewAct({...newAct, note: e.target.value})} placeholder="選填備註" />
+                  </div>
+                </div>
+                <div className="flex gap-3 pt-4">
+                  <button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 font-bold text-[#A68A71] rounded-2xl border border-[#F5EBE0]">取消</button>
+                  <button onClick={handleAddActivity} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">儲存行程</button>
+                </div>
               </div>
             </div>
           )}
