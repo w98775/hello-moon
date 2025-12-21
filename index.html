@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>2026 嶼海紀行 | 旅遊數位手冊</title>
+  <title>嶼海紀行 | 旅遊數位手冊</title>
   
   <!-- Libraries -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -100,11 +100,55 @@
       ClipboardCheck, Map as MapIcon, Plane, Bed, Sparkles, Plus,
       Compass, Wallet, X, Trash2, Clock, Star, Waves, Edit2,
       Calendar, MapPin, ExternalLink, Train, ArrowRight, ChevronRight,
-      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw
+      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy
     } from 'lucide-react';
 
     const USD_TO_TWD = 32.5;
     const MYR_TO_TWD = 7.5;
+
+    // 自費活動數據分組 (根據 PDF 資料)
+    const RESORT_ACTIVITY_GROUPS = [
+      {
+        id: 'teaching',
+        category: '潛水教學與課程',
+        items: [
+          { name: 'PADI Discover Scuba (DSD)', price: 140, detail: '泳池練習 + 1次船潛' },
+          { name: 'PADI Scuba Refresh', price: 105, detail: '技巧複習 + 1次船潛' },
+          { name: 'Single Boat Dive (Full Set)', price: 89, detail: '包含全套裝備單次船潛' },
+          { name: 'PADI Open Water Diver', price: 650, detail: '初階開放水域證照課程' }
+        ]
+      },
+      {
+        id: 'packages',
+        category: '潛水多日套裝',
+        items: [
+          { name: '3 Dive Package (Full Set)', price: 260, detail: '3次船潛套裝，含裝備' },
+          { name: '5 Dive Package (Full Set)', price: 419, detail: '5次船潛套裝，含裝備' },
+          { name: '10 Dive Package (Full Set)', price: 750, detail: '10次船潛套裝，含裝備' },
+          { name: 'Night Boat Dive', price: 100, detail: '深度/夜潛專長單次費用' }
+        ]
+      },
+      {
+        id: 'watersports',
+        category: '水上中心運動',
+        items: [
+          { name: 'Jetski Rental (30 mins)', price: 110, detail: '水上摩托車 30 分鐘租借' },
+          { name: 'Fun Tube Ride (15 mins)', price: 25, detail: '充氣拖曳圈 (每人/每次)' },
+          { name: 'Windsurfing Lesson (60m)', price: 70, detail: '風帆衝浪基礎教學' },
+          { name: 'GoPro 11 Camera Rental', price: 20, detail: '水下相機租借 60 分鐘' }
+        ]
+      },
+      {
+        id: 'excursions',
+        category: '精選出海行程',
+        items: [
+          { name: 'Snorkeling Trip', price: 60, detail: '90 分鐘浮潛出海行程' },
+          { name: 'Dolphin Adventure', price: 60, detail: '尋找海豚蹤影 90 分鐘' },
+          { name: 'Sunset Fishing', price: 70, detail: '傳統馬代黃昏海釣' },
+          { name: 'Sand Bank Trip', price: 100, detail: '夢幻無人沙洲 180 分鐘' }
+        ]
+      }
+    ];
 
     const INITIAL_PREP = [
       { id: 'p1', category: '重要文件', item: '護照正本 (效期6個月以上)', note: '建議影印一份 or 存手機雲端', checked: false },
@@ -164,7 +208,7 @@
       { category: '質感購物 Shopping', items: [
         { name: 'Central Market', rating: 4.4, desc: '中央藝術坊，購買傳統蠟染、手工藝品與紀念品的首選。' },
         { name: 'Pavilion Kuala Lumpur', rating: 4.7, desc: '柏威年廣場，武吉免登最奢華的購物中心。' },
-        { name: "Beryl's Chocolate", rating: 4.5, desc: '馬來西亞國寶級巧克力，推薦榴槤與海鹽口味。' }
+        { name: "Beryl's Chocolate", rating: 4.5, desc: '馬來西亞國寶級巧克力，推薦榴槤與海鹽焦糖口味。' }
       ]}
     ];
 
@@ -177,21 +221,21 @@
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
       const [itinerary, setItinerary] = useState(() => {
-        const saved = localStorage.getItem('my_trip_2026_itinerary_v5');
+        const saved = localStorage.getItem('my_trip_itinerary_v6');
         return saved ? JSON.parse(saved) : INITIAL_ITINERARY;
       });
       const [prepList, setPrepList] = useState(() => {
-        const saved = localStorage.getItem('my_trip_2026_prep_v5');
+        const saved = localStorage.getItem('my_trip_prep_v6');
         return saved ? JSON.parse(saved) : INITIAL_PREP;
       });
       const [expenses, setExpenses] = useState(() => {
-        const saved = localStorage.getItem('my_trip_2026_expenses_v5');
+        const saved = localStorage.getItem('my_trip_expenses_v6');
         return saved ? JSON.parse(saved) : [];
       });
 
-      useEffect(() => { localStorage.setItem('my_trip_2026_itinerary_v5', JSON.stringify(itinerary)); }, [itinerary]);
-      useEffect(() => { localStorage.setItem('my_trip_2026_prep_v5', JSON.stringify(prepList)); }, [prepList]);
-      useEffect(() => { localStorage.setItem('my_trip_2026_expenses_v5', JSON.stringify(expenses)); }, [expenses]);
+      useEffect(() => { localStorage.setItem('my_trip_itinerary_v6', JSON.stringify(itinerary)); }, [itinerary]);
+      useEffect(() => { localStorage.setItem('my_trip_prep_v6', JSON.stringify(prepList)); }, [prepList]);
+      useEffect(() => { localStorage.setItem('my_trip_expenses_v6', JSON.stringify(expenses)); }, [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
@@ -211,7 +255,7 @@
             <div className="max-w-xl mx-auto px-4 flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#D8C4B6] rounded-2xl flex items-center justify-center text-white shadow-md"><Compass size={20} /></div>
-                <div><h1 className="font-bold text-lg serif text-[#4E342E]">2026 嶼海紀行</h1><p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.2em]">Travel Planner</p></div>
+                <div><h1 className="font-bold text-lg serif text-[#4E342E]">嶼海紀行</h1><p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.2em]">Travel Planner</p></div>
               </div>
             </div>
           </header>
@@ -333,6 +377,9 @@
       const [showModal, setShowModal] = useState(false);
       const [editAct, setEditAct] = useState(null);
       const [formData, setFormData] = useState({ time: '08:00', title: '', loc: '', note: '' });
+      const [isRefreshing, setIsRefreshing] = useState(false);
+      // 狀態管理當前顯示的度假村自費活動組
+      const [activityGroupIdx, setActivityGroupIdx] = useState(0);
 
       const day = itinerary[dayIdx];
 
@@ -357,6 +404,20 @@
         }
       };
 
+      // 刷新邏輯：隨機切換活動類別
+      const handleResortRefresh = () => {
+        setIsRefreshing(true);
+        setTimeout(() => {
+          let nextIdx;
+          do {
+            nextIdx = Math.floor(Math.random() * RESORT_ACTIVITY_GROUPS.length);
+          } while (nextIdx === activityGroupIdx && RESORT_ACTIVITY_GROUPS.length > 1);
+          setActivityGroupIdx(nextIdx);
+          setIsRefreshing(false);
+        }, 600);
+      };
+
+      const currentActivityGroup = RESORT_ACTIVITY_GROUPS[activityGroupIdx];
       const getGoogleMapsUrl = (loc) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`;
 
       return (
@@ -403,17 +464,36 @@
 
           {day.isMaldives && (
             <div className="bg-[#4E342E] p-8 rounded-[2.5rem] text-white shadow-xl mb-6">
-              <h3 className="text-xl font-bold serif mb-6 flex items-center gap-3"><Waves className="text-[#D8C4B6]" /> 度假村精選自費活動</h3>
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h3 className="text-xl font-bold serif flex items-center gap-3"><Waves className="text-[#D8C4B6]" /> 度假村自費項目</h3>
+                  <p className="text-[9px] text-[#D8C4B6]/60 font-black uppercase tracking-widest mt-1">
+                    {currentActivityGroup.category}
+                  </p>
+                </div>
+                <button 
+                  onClick={handleResortRefresh}
+                  className={`w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-[#D8C4B6] hover:bg-white/20 active:scale-95 transition-all ${isRefreshing ? 'animate-spin' : ''}`}
+                >
+                  <RefreshCw size={18} />
+                </button>
+              </div>
               <div className="grid gap-4">
-                {[
-                  { name: '鯨鯊追蹤遊', price: 220 }, { name: '魟魚浮潛體驗', price: 115 }, 
-                  { name: '高空拖曳傘', price: 160 }, { name: '水上 SPA', price: 150 }
-                ].map((item, i) => (
-                  <div key={i} className="bg-white/5 p-4 rounded-2xl flex justify-between items-center border border-white/5">
-                    <h4 className="font-bold text-sm text-[#D8C4B6]">{item.name}</h4>
-                    <div className="text-right"><div className="text-lg font-black">${item.price}</div><div className="text-[9px] opacity-60 font-bold">≈ NT$ {(item.price * USD_TO_TWD).toLocaleString()}</div></div>
+                {currentActivityGroup.items.map((item, i) => (
+                  <div key={i} className="bg-white/5 p-4 rounded-2xl flex justify-between items-center border border-white/5 group hover:bg-white/10 transition-colors">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-sm text-[#D8C4B6] truncate">{item.name}</h4>
+                      <p className="text-[9px] text-white/40 mt-0.5 truncate">{item.detail}</p>
+                    </div>
+                    <div className="text-right pl-4">
+                      <div className="text-lg font-black text-white">${item.price}</div>
+                      <div className="text-[9px] opacity-60 font-bold">≈ NT$ {(item.price * USD_TO_TWD).toLocaleString()}</div>
+                    </div>
                   </div>
                 ))}
+              </div>
+              <div className="mt-6 text-[10px] text-white/30 italic text-center border-t border-white/5 pt-4">
+                * 實際價格以現場公告為準，需加計服務費及相關稅金。
               </div>
             </div>
           )}
@@ -576,7 +656,7 @@
                 </div>
                 <div className="flex gap-3 pt-4">
                   <button onClick={() => setShowModal(false)} className="flex-1 py-4 rounded-2xl bg-[#FDFBF7] text-[#A68A71] font-bold border border-[#F5EBE0]">取消</button>
-                  <button onClick={addExpense} className="flex-1 py-4 rounded-2xl bg-[#4E342E] text-white font-bold shadow-lg">儲存</button>
+                  <button onClick={handleSave} className="flex-1 py-4 rounded-2xl bg-[#4E342E] text-white font-bold shadow-lg">儲存</button>
                 </div>
               </div>
             </div>

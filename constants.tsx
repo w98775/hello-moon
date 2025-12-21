@@ -1,17 +1,16 @@
-
 import { TravelDay, Activity, ChecklistItem } from './types';
 
 export const USD_TO_TWD = 32.5;
 export const MYR_TO_TWD = 7.5; // 估計匯率，令吉對台幣
 
 export const MALDIVES_ACTIVITIES: Activity[] = [
-  { id: '1', nameEn: 'Whale Shark Safari', nameZh: '鯨鯊追蹤遊 (必去)', priceUsd: 220, description: '美居度假村鄰近南阿里環礁，是尋找海洋巨人的絕佳起點。', category: 'Excursion' },
-  { id: '2', nameEn: 'Manta Ray Snorkeling', nameZh: '魟魚浮潛體驗', priceUsd: 115, description: '與優雅的曼塔魟魚共游，觀察牠們迷人的滑行姿態。', category: 'Excursion' },
-  { id: '3', nameEn: 'Sunset Fishing', nameZh: '傳統黃昏海釣', priceUsd: 95, description: '馬爾地夫手釣體驗，釣到的魚可請度假村廚房代為烹調。', category: 'Excursion' },
-  { id: '4', nameEn: 'Parasailing', nameZh: '高空拖曳傘', priceUsd: 160, description: '從空中俯視如珍珠般的環礁景觀，風景絕佳。', category: 'Water Sports' },
-  { id: '5', nameEn: 'Discover Scuba Diving', nameZh: '體驗深潛 (免證照)', priceUsd: 195, description: '在美居度假村的專業潛水中心帶領下，探索夢幻海底世界。', category: 'Diving' },
-  { id: '6', nameEn: 'Sandbank Picnic', nameZh: '無人沙洲私人午餐', priceUsd: 285, description: '在純淨的白沙洲上享用奢華午宴，極致浪漫體驗。', category: 'Dining' },
-  { id: '7', nameEn: 'Balinese Massage', nameZh: '峇里島式舒壓按摩', priceUsd: 150, description: '渡假村水上 SPA 中心，聽著浪聲享受頂級按摩。', category: 'Wellness' },
+  { id: '1', nameEn: 'PADI Boat Diver Course', nameZh: 'PADI 船潛教學課程', priceUsd: 450, description: '專業船潛技巧教學，包含進出水、船上安全與定位導航。', category: 'Diving' },
+  { id: '2', nameEn: 'Private Instructor 1-on-1', nameZh: '專業教練 1對1 深度教學', priceUsd: 300, description: '針對個人水性量身打造的進階潛水技巧與呼吸調整教學。', category: 'Diving' },
+  { id: '3', nameEn: 'Speedboat 2-Tank Boat Dive', nameZh: '豪華快艇雙潛點船潛', priceUsd: 180, description: '搭乘快艇前往遠處清澈潛點，包含兩次下水與教學導覽。', category: 'Diving' },
+  { id: '4', nameEn: 'Shipwreck Navigation Guide', nameZh: '沉船探索教學導覽', priceUsd: 380, description: '沉船潛點專項導覽與水下導航實戰教學。', category: 'Diving' },
+  { id: '5', nameEn: 'Rescue Scuba Training', nameZh: '水下救援技術教學', priceUsd: 420, description: '學習如何處理水下突發狀況與基本自救互救技巧。', category: 'Diving' },
+  { id: '6', nameEn: 'Night Boat Dive Specialty', nameZh: '夜間船潛專長課程', priceUsd: 280, description: '在夜幕下學習如何利用燈光進行船潛溝通與導航。', category: 'Diving' },
+  { id: '7', nameEn: 'Deep Sea Teaching Dive', nameZh: '深海潛水實務課程', priceUsd: 320, description: '針對 20-30 米深度的壓力調適與氣體管理實務教學。', category: 'Diving' },
 ];
 
 export const PREPARATION_CHECKLIST: ChecklistItem[] = [
@@ -47,14 +46,21 @@ export const TRAVEL_ITINERARY: TravelDay[] = [
   },
   {
     date: '1/24',
-    title: '大馬文化與購物',
+    title: '吉隆坡：市中心探索',
     location: 'Kuala Lumpur City',
-    summary: '黑風洞參拜、武吉免登商圈血拼、孟沙區文青下午茶。',
+    summary: '谷中城換匯購物、頭療按摩、Village Park 椰漿飯與雙子塔夜景。',
     activities: [
-      { time: '09:00', title: '黑風洞彩虹階梯', locationName: 'Batu Caves' },
-      { time: '12:30', title: '推薦：肉骨茶午餐', locationName: 'Bukit Bintang', isRecommendation: true, rating: 4.4 },
-      { time: '16:00', title: '雙子星塔攝影', locationName: 'Petronas Twin Towers' },
-      { time: '19:00', title: 'Bangsar 區美食', locationName: 'Bangsar Village', isRecommendation: true, rating: 4.5 },
+      { time: '10:00', title: '谷中城 MaxMoney', locationName: 'Mid Valley Megamall' },
+      { time: '11:00', title: '谷中城華陽茶室', locationName: 'Mid Valley Megamall' },
+      { time: '12:00', title: '谷中城採購', locationName: 'Mid Valley Megamall' },
+      { time: '14:00', title: 'Philo頭療按摩', locationName: 'Philo Hair & Head Spa' },
+      { time: '16:00', title: 'Village Park Restaurant 炸雞椰漿飯', locationName: 'Uptown Damansara' },
+      { time: '17:30', title: '鬼仔巷', locationName: 'Kwai Chai Hong' },
+      { time: '18:30', title: 'REXKL書局', locationName: 'BookXcess at REXKL' },
+      { time: '19:30', title: '雙子塔', locationName: 'Petronas Twin Towers' },
+      { time: '20:30', title: '籠的傳人餐廳或三美肉骨茶', locationName: 'Pavilion KL' },
+      { time: '21:30', title: '柏威年廣場逛街', locationName: 'Pavilion Kuala Lumpur' },
+      { time: '22:30', title: '回飯店', locationName: 'Holiday Inn Bangsar' },
     ]
   },
   {
@@ -99,10 +105,10 @@ export const TRAVEL_ITINERARY: TravelDay[] = [
     date: '1/28',
     title: '最後的玻璃海記憶',
     location: 'Mercure Maldives',
-    summary: '高空拖曳傘俯瞰環礁、舒壓 SPA、沙灘燭光晚餐。',
+    summary: '初學者深潛體驗、舒壓 SPA、沙灘燭光晚餐。',
     isMaldivesResort: true,
     activities: [
-      { time: '10:00', title: '高空拖曳傘', locationName: 'Lagoon' },
+      { time: '10:00', title: '推薦：PADI 船潛教學課程', locationName: 'Dive Center', isRecommendation: true, rating: 4.8 },
       { time: '15:00', title: 'Suvadiva SPA', locationName: 'Wellness Center' },
       { time: '19:30', title: '沙灘私人晚宴', locationName: 'Private Beach' },
     ]
