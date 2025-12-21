@@ -111,16 +111,57 @@
     const RESORT_ACTIVITY_GROUPS = [
       {
         id: 'diving',
-        category: '專業潛水與課程 (Diving & Courses)',
+        category: '專業潛水 (Diving)',
         items: [
-          { name: 'Single Boat Dive (Full Set)', price: 89, detail: '包含全套裝備單次船潛' },
-          { name: '3 Dive Package (Full Set)', price: 260, detail: '3次船潛套裝，含裝備' },
-          { name: '5 Dive Package (Full Set)', price: 419, detail: '5次船潛套裝，含裝備' },
-          { name: '10 Dive Package (Full Set)', price: 750, detail: '10次船潛套裝，含裝備' },
-          { name: 'PADI Discover Scuba (DSD)', price: 140, detail: '初學者體驗潛水 (泳池+1次船潛)' },
-          { name: 'PADI Open Water Course', price: 650, detail: '初階開放水域證照課程' },
-          { name: 'PADI Advanced Open Water', price: 550, detail: '進階開放水域證照課程' },
-          { name: 'Night Boat Dive', price: 100, detail: '夜潛單次費用' }
+          { name: '1 Single Boat Dive', price: 89, detail: '含全套裝備單次船潛 (Full Equipment)' },
+          { name: '3 Dive Package', price: 260, detail: '3次船潛套裝，含裝備' },
+          { name: '5 Dive Package', price: 419, detail: '5次船潛套裝，含裝備' },
+          { name: '10 Dive Package', price: 750, detail: '10次船潛套裝，含裝備' },
+          { name: '1 Dive After 5 Package', price: 82, detail: '5次套裝後加購價格' },
+          { name: '1 Dive After 10 Package', price: 75, detail: '10次套裝後加購價格' }
+        ]
+      },
+      {
+        id: 'courses',
+        category: '證照課程 (PADI Courses)',
+        items: [
+          { name: 'PADI Scuba Refresh', price: 105, detail: '技巧複習 + 1次船潛' },
+          { name: 'PADI Discover Scuba (DSD)', price: 140, detail: '體驗潛水 (泳池+1次船潛)' },
+          { name: 'Discover Scuba / Training Dive', price: 85, detail: 'DSD 完成後加購潛水' },
+          { name: 'PADI Scuba Diver (SD)', price: 390, detail: '含 2 次船潛與證照' },
+          { name: 'PADI Open Water Diver (OWD)', price: 650, detail: '初階證照課程，含 4 次船潛' },
+          { name: 'Referral Course', price: 325, detail: '轉介課程，含 4 次船潛' },
+          { name: 'Upgrade SD to Open Water', price: 420, detail: '從 SD 升級至 OWD' },
+          { name: 'PADI Advanced Open Water (AOW)', price: 550, detail: '進階證照課程，含 5 次船潛' },
+          { name: 'PADI Rescue Diver', price: 760, detail: '救援潛水員課程' },
+          { name: 'PADI Nitrox Course', price: 220, detail: '高氧課程 (含證照)' }
+        ]
+      },
+      {
+        id: 'watersports',
+        category: '水上活動 (Water Sports)',
+        items: [
+          { name: 'Windsurfing Lesson', price: 70, detail: '風帆教學 (60分鐘)' },
+          { name: 'Jetski Rental 15m', price: 65, detail: '噴射摩托車租賃' },
+          { name: 'Jetski Rental 30m', price: 110, detail: '噴射摩托車租賃' },
+          { name: 'Wakeboard Lesson', price: 55, detail: '滑水教學 (30分鐘)' },
+          { name: 'Fun Tube Ride', price: 25, detail: '充氣拖曳設施 (15分鐘/每人)' },
+          { name: 'Kayak', price: 0, detail: '獨木舟 (Free)' },
+          { name: 'Stand up paddle board (SUP)', price: 0, detail: '立槳 (Free)' },
+          { name: 'GoPro 11 Camera Rental (60m)', price: 20, detail: '攝影機租賃' }
+        ]
+      },
+      {
+        id: 'excursions',
+        category: '精選出海行程 (Excursions)',
+        items: [
+          { name: 'Snorkeling Lesson', price: 20, detail: '浮潛教學 (30分鐘)' },
+          { name: 'Snorkeling Trip', price: 60, detail: '90分鐘浮潛出海 (含裝備)' },
+          { name: 'Dolphin Adventure', price: 60, detail: '90分鐘海豚追蹤之旅' },
+          { name: 'Line Fishing Trip', price: 70, detail: '傳統海釣行程' },
+          { name: 'Sunset Fishing', price: 70, detail: '黃昏海釣行程' },
+          { name: 'Sand Bank Trip', price: 100, detail: '夢幻無人沙洲 (180分鐘)' },
+          { name: 'Early Morning Trolling', price: 100, detail: '早晨拖釣行程' }
         ]
       }
     ];
@@ -187,13 +228,13 @@
 
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v37')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v37')) || INITIAL_PREP);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v37')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v39')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v39')) || INITIAL_PREP);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v39')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v37', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v37', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_expenses_v37', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v39', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v39', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_expenses_v39', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
@@ -213,7 +254,10 @@
             <div className="max-w-xl mx-auto px-4 flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#D8C4B6] rounded-2xl flex items-center justify-center text-white shadow-md"><Compass size={20} /></div>
-                <div><h1 className="font-bold text-lg serif text-[#4E342E]">嶼海紀行</h1><p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.2em]">Travel Hub v37</p></div>
+                <div>
+                  <h1 className="font-bold text-lg serif text-[#4E342E]">嶼海紀行</h1>
+                  <p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.2em]">A Serene Voyage Through Azure Horizons</p>
+                </div>
               </div>
             </div>
           </header>
@@ -270,22 +314,42 @@
       const [searchTerm, setSearchTerm] = useState('');
       const [showSearch, setShowSearch] = useState(false);
       const [isRefreshing, setIsRefreshing] = useState(false);
+      const [showOthers, setShowOthers] = useState(false);
       
       const day = itinerary[dayIdx];
 
       const handleRefresh = () => {
         setIsRefreshing(true);
+        setShowOthers(true); 
         setTimeout(() => setIsRefreshing(false), 800);
       };
 
-      const filteredActivities = useMemo(() => {
-        const group = RESORT_ACTIVITY_GROUPS[0];
-        if (!searchTerm) return group.items;
-        return group.items.filter(item => 
-          item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-          item.detail.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }, [searchTerm]);
+      const handleSearchToggle = () => {
+        setShowSearch(!showSearch);
+        if (!showSearch) setShowOthers(true); 
+      };
+
+      const displayGroups = useMemo(() => {
+        // 如果沒有點擊更新且沒有在搜尋，只顯示第一組 (Diving)
+        const groupsToProcess = (showOthers || searchTerm) ? RESORT_ACTIVITY_GROUPS : [RESORT_ACTIVITY_GROUPS[0]];
+        
+        return groupsToProcess.map(group => {
+          let items = group.items;
+          
+          if (searchTerm) {
+            // 搜尋時顯示所有匹配項目，不限制 6 個
+            items = items.filter(item => 
+              item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+              item.detail.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+          } else {
+            // 非搜尋時，每一列最多顯示 6 個
+            items = items.slice(0, 6);
+          }
+          
+          return { ...group, items };
+        }).filter(group => group.items.length > 0);
+      }, [searchTerm, showOthers]);
 
       return (
         <div className="fade-in space-y-6">
@@ -318,10 +382,10 @@
             <div className="bg-[#4E342E] p-8 rounded-[2.5rem] text-white shadow-xl mb-6 fade-in">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl font-bold serif flex items-center gap-3">
-                  <Waves className="text-[#D8C4B6]" /> 專業潛水與課程
+                  <Waves className="text-[#D8C4B6]" /> 自費表 (Activity Pricing)
                 </h3>
                 <div className="flex gap-2">
-                  <button onClick={() => setShowSearch(!showSearch)} className="w-9 h-9 bg-white/10 rounded-xl flex items-center justify-center text-[#D8C4B6] hover:bg-white/20 transition-all"><Search size={18} /></button>
+                  <button onClick={handleSearchToggle} className="w-9 h-9 bg-white/10 rounded-xl flex items-center justify-center text-[#D8C4B6] hover:bg-white/20 transition-all"><Search size={18} /></button>
                   <button onClick={handleRefresh} className={`w-9 h-9 bg-white/10 rounded-xl flex items-center justify-center text-[#D8C4B6] hover:bg-white/20 transition-all ${isRefreshing ? 'animate-spin' : ''}`}><RefreshCw size={18} /></button>
                 </div>
               </div>
@@ -332,27 +396,45 @@
                     type="text" 
                     value={searchTerm} 
                     onChange={(e) => setSearchTerm(e.target.value)} 
-                    placeholder="搜尋船潛或課程名稱..." 
+                    placeholder="搜尋潛水、課程、水上活動..." 
                     className="w-full bg-white/10 border-white/10 text-white placeholder:text-white/30 focus:border-[#D8C4B6] focus:bg-white/20"
                     autoFocus
                   />
                 </div>
               )}
 
-              <div className="grid gap-4">
-                {filteredActivities.map((item, i) => (
-                  <div key={i} className="bg-white/5 p-4 rounded-2xl flex justify-between items-center border border-white/5 hover:border-white/20 transition-all">
-                    <div className="flex-1 pr-4">
-                      <h4 className="font-bold text-sm text-[#D8C4B6]">{item.name}</h4>
-                      <p className="text-[9px] text-white/40 mt-0.5">{item.detail}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-lg font-black text-white">${item.price}</div>
-                      <div className="text-[9px] font-black text-[#D8C4B6]">≈ NT$ {Math.round(item.price * USD_TO_TWD).toLocaleString()}</div>
-                      <div className="text-[8px] opacity-40 font-bold uppercase mt-0.5">USD</div>
+              <div className="space-y-10">
+                {displayGroups.map((group) => (
+                  <div key={group.id} className="space-y-4">
+                    <h4 className="text-[10px] font-black text-[#D8C4B6] uppercase tracking-[0.2em] opacity-60 px-1">{group.category}</h4>
+                    <div className="grid gap-4">
+                      {group.items.map((item, i) => (
+                        <div key={i} className="bg-white/5 p-4 rounded-2xl flex justify-between items-center border border-white/5 hover:border-white/20 transition-all">
+                          <div className="flex-1 pr-4">
+                            <h4 className="font-bold text-sm text-[#D8C4B6]">{item.name}</h4>
+                            <p className="text-[9px] text-white/40 mt-0.5">{item.detail}</p>
+                          </div>
+                          <div className="text-right">
+                            {item.price > 0 ? (
+                              <>
+                                <div className="text-lg font-black text-white">${item.price}</div>
+                                <div className="text-[9px] font-black text-[#D8C4B6]">≈ NT$ {Math.round(item.price * USD_TO_TWD).toLocaleString()}</div>
+                                <div className="text-[8px] opacity-40 font-bold uppercase mt-0.5">USD</div>
+                              </>
+                            ) : (
+                              <div className="text-lg font-black text-white">FREE</div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
+                {!showOthers && !searchTerm && (
+                  <div className="text-center py-2 opacity-30 text-[10px] tracking-widest uppercase">
+                    更多課程與活動請點擊更新按鈕查看
+                  </div>
+                )}
               </div>
             </div>
           )}
