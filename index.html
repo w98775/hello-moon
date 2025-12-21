@@ -215,13 +215,13 @@
 
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v44')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v44')) || INITIAL_PREP);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v44')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v45')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v45')) || INITIAL_PREP);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v45')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v44', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v44', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_expenses_v44', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v45', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v45', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_expenses_v45', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
@@ -243,7 +243,7 @@
                 <div className="w-10 h-10 bg-[#D8C4B6] rounded-2xl flex items-center justify-center text-white shadow-md"><Compass size={20} /></div>
                 <div>
                   <h1 className="font-bold text-lg serif text-[#4E342E]">嶼海紀行</h1>
-                  <p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.2em]">A Serene Voyage Through Azure Horizons</p>
+                  <p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.3em]">Azure Reverie</p>
                 </div>
               </div>
             </div>
