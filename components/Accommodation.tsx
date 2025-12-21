@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Bed, MapPin, Calendar, Star, Info, Home, ExternalLink } from 'lucide-react';
 
-const Accommodation: React.FC = () => {
+const AccommodationView: React.FC = () => {
   const getGoogleMapsUrl = (name: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`;
 
   const hotels = [
@@ -122,4 +121,4 @@ const Accommodation: React.FC = () => {
   );
 };
 
-export default Accommodation;
+export default AccommodationView;

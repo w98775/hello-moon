@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { TabType } from './types';
 import Preparation from './components/Preparation';
 import Itinerary from './components/Itinerary';
 import Transport from './components/Transport';
-import Accommodation from './components/Accommodation';
+import AccommodationView from './components/Accommodation';
 import Recommendations from './components/Recommendations';
 import CurrencyConverter from './components/CurrencyConverter';
 import Chatbot from './components/Chatbot';
@@ -44,7 +43,7 @@ const App: React.FC = () => {
       case TabType.PREPARATION: return <Preparation />;
       case TabType.ITINERARY: return <Itinerary />;
       case TabType.TRANSPORT: return <Transport />;
-      case TabType.ACCOMMODATION: return <Accommodation />;
+      case TabType.ACCOMMODATION: return <AccommodationView />;
       case TabType.RECOMMENDATION: return <Recommendations />;
       case TabType.CURRENCY: return <CurrencyConverter />;
       default: return <Itinerary />;
@@ -62,7 +61,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FDFBF7] text-[#4E342E] selection:bg-[#EAE0D5] selection:text-[#4E342E]">
-      {/* Header - More compact for mobile */}
       <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled ? 'glass-effect shadow-sm py-2 border-b border-[#F5EBE0]' : 'bg-[#FDFBF7] py-4'}`}>
         <div className="max-w-4xl mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
@@ -70,7 +68,7 @@ const App: React.FC = () => {
                 <Compass size={18} />
              </div>
              <div>
-                <h1 className="font-bold text-lg serif tracking-tight text-[#4E342E]">2026 嶼海紀行</h1>
+                <h1 className="font-bold text-lg serif tracking-tight text-[#4E342E]">嶼海紀行</h1>
                 <p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.2em]">MY & MV Journey</p>
              </div>
           </div>
@@ -84,12 +82,10 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Content Area - Reduced Top Padding */}
       <main className="flex-grow pt-20 pb-28 max-w-4xl mx-auto w-full px-4">
         {renderContent()}
       </main>
 
-      {/* Bottom Navigation - Thinner and more sleek */}
       <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[96%] max-w-md z-50">
         <div className="glass-effect rounded-[2rem] shadow-xl border border-[#F5EBE0]/60 p-1.5 flex justify-between items-center">
           {navItems.map((item) => {
