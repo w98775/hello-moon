@@ -132,27 +132,39 @@
       { id: 'p4', category: '重要文件', item: '旅遊行程表/機票/飯店憑證', note: '紙本備份', checked: false },
       { id: 'p5', category: '重要文件', item: '海外旅遊保險單', note: '包含醫療與班機不便險', checked: false },
       { id: 'p6', category: '重要文件', item: '外幣現金 (美金/令吉)', note: '美金需2009年後新鈔', checked: false },
-      
       { id: 'p7', category: '電子電器', item: '萬用轉接頭 (英式三孔)', note: '馬爾地夫與馬來西亞通用', checked: false },
       { id: 'p8', category: '電子電器', item: '行動電源 (10000mAh+)', note: '出海行程電力備援', checked: false },
       { id: 'p10', category: '電子電器', item: 'GoPro 或 防水相機', note: '水下攝影靈魂', checked: false },
-      
       { id: 'p11', category: '衣物穿搭', item: '泳裝/比基尼 (2-3套)', note: '方便換洗', checked: false },
       { id: 'p12', category: '衣物穿搭', item: '水母衣 (長袖防磨衣)', note: '浮潛防曬防刮傷', checked: false },
       { id: 'p13', category: '衣物穿搭', item: '遮陽帽/墨鏡', note: '海邊強光必備', checked: false },
-      
       { id: 'p16', category: '個人用品', item: '海洋友善防曬油', note: 'SPF50+，不傷珊瑚', checked: false },
       { id: 'p17', category: '個人用品', item: '蘆薈修護凝膠', note: '曬後舒緩必備', checked: false },
       { id: 'p18', category: '個人用品', item: '浮潛三寶 (面鏡/呼吸管)', note: '衛生考量建議自備', checked: false },
       { id: 'p19', category: '個人用品', item: '防水袋 (10-20L)', note: '出海保護隨身物品', checked: false },
-      
       { id: 'p21', category: '常備藥品', item: '暈船藥 (強力型)', note: '馬代快艇/小飛機必備', checked: false },
       { id: 'p23', category: '常備藥品', item: '腸胃藥/止瀉藥', note: '預防水土不服', checked: false },
     ];
 
     const INITIAL_ITINERARY = [
       { date: '1/23', title: '啟程：吉隆坡孟沙', activities: [{ id: '1', time: '10:25', title: '高鐵左營 -> 桃園', loc: '高鐵桃園站', note: '12:18 抵達桃園' }, { id: '2', time: '15:10', title: 'MH367 起飛', loc: '桃園機場 T1', note: '20:05 抵達 KUL' }, { id: '3', time: '21:30', title: '飯店 Check-in', loc: 'Holiday Inn Bangsar', note: '吉隆坡第一晚' }] },
-      { date: '1/24', title: '吉隆坡：精選一日遊', activities: [{ id: '41', time: '10:00', title: '谷中城 MaxMoney', loc: 'Mid Valley Megamall', note: '換匯' }, { id: '45', time: '16:30', title: 'Village Park Restaurant 炸雞椰漿飯', loc: 'Uptown Damansara', note: '必吃大馬美食' }, { id: '48', time: '20:00', title: '雙子塔', loc: 'Petronas Twin Towers', note: '地標夜景' }] },
+      { 
+        date: '1/24', 
+        title: '吉隆坡：精選一日遊', 
+        activities: [
+          { id: '401', time: '10:00', title: '谷中城 MaxMoney', loc: 'Mid Valley Megamall', note: '換匯首選' },
+          { id: '402', time: '11:00', title: '谷中城華陽茶室', loc: 'Mid Valley Oriental Kopi', note: '必吃波羅包' },
+          { id: '403', time: '12:30', title: '谷中城採購', loc: 'Mid Valley Megamall', note: '採買伴手禮' },
+          { id: '404', time: '14:00', title: 'Philo headspa', loc: 'Philo Hair & Head Spa', note: '放鬆體驗' },
+          { id: '405', time: '16:30', title: 'Village Park Restaurant 炸雞椰漿飯', loc: 'Uptown Damansara', note: '炸雞必吃' },
+          { id: '406', time: '18:00', title: '鬼仔巷', loc: 'Kwai Chai Hong', note: '文化藝術區' },
+          { id: '407', time: '19:00', title: 'REXKL書局', loc: 'BookXcess at REXKL', note: '特色書局' },
+          { id: '408', time: '20:00', title: '雙子塔', loc: 'Petronas Twin Towers', note: '夜間攝影' },
+          { id: '409', time: '21:00', title: '籠的傳人餐廳或三美肉骨茶', loc: 'Pavilion KL / City', note: '晚餐時刻' },
+          { id: '410', time: '22:00', title: '柏威年廣場逛街', loc: 'Pavilion Kuala Lumpur', note: '市中心百貨' },
+          { id: '411', time: '23:00', title: '回飯店', loc: 'Holiday Inn Bangsar', note: '休整休息' }
+        ] 
+      },
       { date: '1/25', title: '飛向美居度假村', isMaldives: true, activities: [{ id: '7', time: '09:40', title: 'MH485 飛馬累', loc: 'KLIA T1', note: '11:00 抵達' }, { id: '8', time: '16:00', title: '入住美居度假村', loc: 'Mercure Maldives Kooddoo', note: '全包式度假開始' }] },
       { date: '1/26', title: '美居度假村：深海探索', isMaldives: true, activities: [{ id: '261', time: '09:00', title: '晨間潛水課程', loc: 'Dive Center', note: 'PADI 課程進度' }] },
       { date: '1/27', title: '美居度假村：船潛冒險', isMaldives: true, activities: [{ id: '271', time: '08:30', title: '環礁船潛', loc: 'Kooddoo Jetty', note: '探索更遠的潛點' }] },
@@ -175,13 +187,13 @@
 
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v36')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v36')) || INITIAL_PREP);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v36')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v37')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v37')) || INITIAL_PREP);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v37')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v36', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v36', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_expenses_v36', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v37', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v37', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_expenses_v37', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
@@ -201,7 +213,7 @@
             <div className="max-w-xl mx-auto px-4 flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#D8C4B6] rounded-2xl flex items-center justify-center text-white shadow-md"><Compass size={20} /></div>
-                <div><h1 className="font-bold text-lg serif text-[#4E342E]">嶼海紀行</h1><p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.2em]">Travel Hub v36</p></div>
+                <div><h1 className="font-bold text-lg serif text-[#4E342E]">嶼海紀行</h1><p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.2em]">Travel Hub v37</p></div>
               </div>
             </div>
           </header>
@@ -336,7 +348,8 @@
                     </div>
                     <div className="text-right">
                       <div className="text-lg font-black text-white">${item.price}</div>
-                      <div className="text-[8px] opacity-40 font-bold uppercase">USD</div>
+                      <div className="text-[9px] font-black text-[#D8C4B6]">≈ NT$ {Math.round(item.price * USD_TO_TWD).toLocaleString()}</div>
+                      <div className="text-[8px] opacity-40 font-bold uppercase mt-0.5">USD</div>
                     </div>
                   </div>
                 ))}
@@ -354,6 +367,7 @@
         { date: '01/25', id: 'MH 485', from: 'KUL', to: 'MLE', depTime: '09:40', arrTime: '11:00' },
         { date: '01/30', id: 'MH 484', from: 'MLE', to: 'KUL', depTime: '12:00', arrTime: '19:45' },
         { date: '01/31', id: 'MH 366', from: 'KUL', to: 'TPE', depTime: '09:20', arrTime: '14:10' },
+        { date: '01/31', id: '高鐵 0841 次', from: '桃園', to: '左營', depTime: '16:34', arrTime: '18:25' },
       ];
       return (
         <div className="fade-in space-y-6">
@@ -464,33 +478,39 @@
       const [convMode, setConvMode] = useState('USD');
       const totalTwd = expenses.reduce((sum, e) => sum + e.twd, 0);
 
+      const rate = convMode === 'USD' ? USD_TO_TWD : MYR_TO_TWD;
+      const result = Math.round((parseFloat(convVal) || 0) * rate);
+
       return (
         <div className="fade-in space-y-6 pb-20">
           <div className="bg-white p-8 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm space-y-6">
-            <h3 className="font-bold text-sm text-[#4E342E] flex items-center gap-2"><DollarSign size={16} className="text-[#D8C4B6]" /> 匯率換算</h3>
+            <h3 className="font-bold text-sm text-[#4E342E] flex items-center gap-2"><DollarSign size={16} className="text-[#D8C4B6]" /> 匯率快速換算</h3>
             
-            <div className="space-y-4">
-              <div className="bg-[#FDFBF7] p-5 rounded-3xl border border-[#F5EBE0]">
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-[10px] font-black text-[#A68A71] uppercase tracking-widest">美金 (USD) 1 : {USD_TO_TWD}</span>
-                  <div className={`px-2 py-0.5 rounded-md text-[8px] font-black ${convMode === 'USD' ? 'bg-[#4E342E] text-white' : 'bg-transparent text-[#D8C4B6]'}`}>SELECTED</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <input type="number" value={convMode === 'USD' ? convVal : ''} onChange={e => {setConvVal(e.target.value); setConvMode('USD');}} placeholder="輸入美金金額" className="flex-1 text-xl font-black bg-transparent py-1 border-b border-transparent focus:border-[#D8C4B6] transition-all" />
-                  <span className="text-xs font-bold text-[#A68A71]">≈ NT$ {convMode === 'USD' ? Math.round((parseFloat(convVal) || 0) * USD_TO_TWD).toLocaleString() : '0'}</span>
-                </div>
-              </div>
+            <div className="flex bg-[#FDFBF7] p-1.5 rounded-2xl border border-[#F5EBE0] mb-2">
+              <button 
+                onClick={() => setConvMode('USD')} 
+                className={`flex-1 py-2.5 rounded-xl text-xs font-black transition-all ${convMode === 'USD' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}
+              >
+                美金 USD
+              </button>
+              <button 
+                onClick={() => setConvMode('MYR')} 
+                className={`flex-1 py-2.5 rounded-xl text-xs font-black transition-all ${convMode === 'MYR' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}
+              >
+                令吉 MYR
+              </button>
+            </div>
 
-              <div className="bg-[#FDFBF7] p-5 rounded-3xl border border-[#F5EBE0]">
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-[10px] font-black text-[#A68A71] uppercase tracking-widest">令吉 (MYR) 1 : {MYR_TO_TWD}</span>
-                  <div className={`px-2 py-0.5 rounded-md text-[8px] font-black ${convMode === 'MYR' ? 'bg-[#4E342E] text-white' : 'bg-transparent text-[#D8C4B6]'}`}>SELECTED</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <input type="number" value={convMode === 'MYR' ? convVal : ''} onChange={e => {setConvVal(e.target.value); setConvMode('MYR');}} placeholder="輸入令吉金額" className="flex-1 text-xl font-black bg-transparent py-1 border-b border-transparent focus:border-[#D8C4B6] transition-all" />
-                  <span className="text-xs font-bold text-[#A68A71]">≈ NT$ {convMode === 'MYR' ? Math.round((parseFloat(convVal) || 0) * MYR_TO_TWD).toLocaleString() : '0'}</span>
-                </div>
-              </div>
+            <div className="text-center space-y-3 py-4">
+              <div className="text-[10px] font-black text-[#A68A71] uppercase tracking-[0.2em]">1 {convMode} : {rate} TWD</div>
+              <input 
+                type="number" 
+                value={convVal} 
+                onChange={e => setConvVal(e.target.value)} 
+                placeholder={`輸入 ${convMode} 金額`} 
+                className="text-center font-black text-3xl py-2 bg-transparent border-b-2 border-[#F5EBE0] focus:border-[#D8C4B6] transition-all w-full" 
+              />
+              <div className="text-xl font-black text-[#4E342E] mt-4">≈ NT$ {result.toLocaleString()}</div>
             </div>
           </div>
 
