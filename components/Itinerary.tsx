@@ -63,7 +63,10 @@ const Itinerary: React.FC = () => {
                     {act.isRecommendation ? <Star size={16} fill="currentColor" /> : <Clock size={16} />}
                   </div>
                 </div>
-                <div className="flex-1 pb-1">
+                <div 
+                  className="flex-1 pb-1 cursor-pointer hover:opacity-75 transition-opacity"
+                  onClick={() => window.open(getGoogleMapsUrl(act.locationName || act.title), '_blank')}
+                >
                   <div className="flex items-center justify-between gap-2 mb-1">
                     <div className="flex items-center gap-2">
                       <span className="text-[11px] font-black text-[#D8C4B6] tracking-wider">{act.time}</span>
@@ -75,13 +78,10 @@ const Itinerary: React.FC = () => {
                     </div>
                   </div>
                   <h4 className="font-bold text-base text-[#4E342E] leading-snug mb-2">{act.title}</h4>
-                  <button 
-                    onClick={() => window.open(getGoogleMapsUrl(act.locationName), '_blank')}
-                    className="flex items-center gap-1.5 text-[#A68A71] text-[11px] font-bold hover:text-[#4E342E] transition-colors"
-                  >
+                  <div className="flex items-center gap-1.5 text-[#A68A71] text-[11px] font-bold">
                     <MapPin size={12} className="text-[#D8C4B6]" />
                     <span className="underline underline-offset-4 decoration-[#F5EBE0] decoration-2">{act.locationName}</span>
-                  </button>
+                  </div>
                 </div>
               </div>
             ))}

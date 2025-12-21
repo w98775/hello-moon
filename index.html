@@ -105,6 +105,9 @@
 
     const USD_TO_TWD = 32.5;
     const MYR_TO_TWD = 7.5;
+    
+    // 全域輔助函數：跳轉 Google Maps
+    const getGoogleMapsUrl = (name) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`;
 
     // 自費活動數據分組
     const RESORT_ACTIVITY_GROUPS = [
@@ -323,7 +326,7 @@
           {showModal && (
             <div className="fixed inset-0 z-[60] flex items-center justify-center px-4">
               <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowModal(false)} />
-              <div className="relative bg-white w-full max-w-sm p-8 rounded-[2.5rem] shadow-2xl space-y-4 -translate-y-12">
+              <div className="relative bg-white w-full max-sm p-8 rounded-[2.5rem] shadow-2xl space-y-4 -translate-y-12">
                 <h3 className="text-xl font-bold serif text-center">{editItem ? '編輯項目' : '新增項目'}</h3>
                 <select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
                   {['重要文件', '電子電器', '衣物穿搭', '馬爾地夫專屬', '個人藥品', '生活用品'].map(c => <option key={c} value={c}>{c}</option>)}
@@ -382,10 +385,13 @@
               {day.activities.map(act => (
                 <div key={act.id} className="flex gap-5 relative z-10 group">
                   <div className="w-9 h-9 rounded-xl border-2 border-[#F5EBE0] bg-white flex items-center justify-center text-[#4E342E] shrink-0"><Clock size={16} /></div>
-                  <div className="flex-1">
+                  <div 
+                    className="flex-1 cursor-pointer hover:opacity-75 transition-opacity"
+                    onClick={() => window.open(getGoogleMapsUrl(act.loc || act.title), '_blank')}
+                  >
                     <div className="flex justify-between items-start">
                       <span className="text-[10px] font-black text-[#D8C4B6]">{act.time}</span>
-                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
                         <button onClick={() => { setEditAct(act); setFormData(act); setShowModal(true); }} className="text-[#D8C4B6]"><Edit2 size={14} /></button>
                         <button onClick={() => { const ni = [...itinerary]; ni[dayIdx].activities = ni[dayIdx].activities.filter(a => a.id !== act.id); setItinerary(ni); }} className="text-red-200"><Trash2 size={14} /></button>
                       </div>
@@ -421,7 +427,7 @@
           {showModal && (
             <div className="fixed inset-0 z-[60] flex items-center justify-center px-4">
               <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowModal(false)} />
-              <div className="relative bg-white w-full max-w-sm p-8 rounded-[2.5rem] shadow-2xl space-y-4 -translate-y-12">
+              <div className="relative bg-white w-full max-sm p-8 rounded-[2.5rem] shadow-2xl space-y-4 -translate-y-12">
                 <h3 className="text-xl font-bold serif text-center">{editAct ? '編輯活動' : '新增活動'}</h3>
                 <div><label className="text-[10px] font-bold text-[#A68A71] ml-2 block">時間</label>
                 <select value={formData.time} onChange={e => setFormData({...formData, time: e.target.value})}>{TIME_OPTIONS.map(time => <option key={time} value={time}>{time}</option>)}</select></div>
@@ -507,18 +513,21 @@
 
     function TransportView() {
       const transports = [
-        { date: '01/23', id: '高鐵 0818', from: '左營', to: '桃園', time: '10:25-12:18' },
+        { date: '01/23', id: '高鐵 0818 次', from: '左營', to: '桃園', time: '10:25-12:18' },
         { date: '01/23', id: 'MH 367', from: 'TPE', to: 'KUL', time: '15:10-20:05' },
         { date: '01/25', id: 'MH 485', from: 'KUL', to: 'MLE', time: '09:40-11:00' },
         { date: '01/30', id: 'MH 484', from: 'MLE', to: 'KUL', time: '12:00-19:45' },
         { date: '01/31', id: 'MH 366', from: 'KUL', to: 'TPE', time: '09:20-14:10' },
-        { date: '01/31', id: '高鐵 0841', from: '桃園', to: '左營', time: '16:34-18:25' },
+        { date: '01/31', id: '高鐵 0841 次', from: '桃園', to: '左營', time: '16:34-18:25' },
       ];
       return (
         <div className="fade-in space-y-6">
           <h2 className="text-3xl font-bold serif text-[#4E342E] px-2">交通資訊</h2>
           {transports.map((t, i) => (
-            <div key={i} className="bg-white rounded-[2.5rem] border border-[#F5EBE0] p-7 flex justify-between items-center shadow-sm">
+            <div key={i} 
+                 className="bg-white rounded-[2.5rem] border border-[#F5EBE0] p-7 flex justify-between items-center shadow-sm cursor-pointer hover:border-[#D8C4B6] transition-all"
+                 onClick={() => window.open(getGoogleMapsUrl(t.to), '_blank')}
+            >
               <div><div className="font-black text-lg text-[#4E342E]">{t.id}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase">{t.date} · {t.from} ➔ {t.to}</div></div>
               <div className="text-right font-black text-[#4E342E] text-lg">{t.time}</div>
             </div>
@@ -529,18 +538,62 @@
 
     function AccommodationView() {
       const hotels = [
-        { nameZh: '吉隆坡孟沙假日酒店 (1/23-25)', date: '1/23-1/25', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800', note: '位於時尚孟沙區，頂樓泳池視野極佳，下樓即是購物商商場。' },
-        { nameZh: '美居馬爾地夫渡假村 (1/25-29)', date: '1/25-1/29', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&q=80&w=800', note: '全包式水上別墅，位於卡夫阿里夫環礁。水下生態極其豐富。' },
-        { nameZh: 'h78 居民島飯店 (1/29-30)', date: '1/29-1/30', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '海濱首排飯店，鄰近機場，服務親切且早餐優質。' },
-        { nameZh: 'Umi 質感民宿 (1/30-31)', date: '1/30-31', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800', note: '靠近吉隆坡機場周邊，環境清幽。' }
+        { 
+          nameZh: '吉隆坡孟沙假日酒店 (1/23-25)', 
+          nameEn: 'Holiday Inn Kuala Lumpur Bangsar',
+          date: '1/23-1/25', 
+          image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800', 
+          note: '位於時尚孟沙區，頂樓泳池視野極佳，下樓即是購物商商場。' 
+        },
+        { 
+          nameZh: '美居馬爾地夫渡假村 (1/25-29)', 
+          nameEn: 'Mercure Maldives Kooddoo Resort',
+          date: '1/25-1/29', 
+          image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&q=80&w=800', 
+          note: '全包式水上別墅，位於卡夫阿里夫環礁。水下生態極其豐富。' 
+        },
+        { 
+          nameZh: 'h78 居民島飯店 (1/29-30)', 
+          nameEn: 'h78 Maldives',
+          date: '1/29-1/30', 
+          image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', 
+          note: '海濱首排飯店，鄰近機場，服務親切且早餐優質。' 
+        },
+        { 
+          nameZh: 'Umi 質感民宿 (1/30-31)', 
+          nameEn: 'Umi SplashMania Homestay',
+          date: '1/30-31', 
+          image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800', 
+          note: '靠近吉隆坡機場周邊，環境清幽。' 
+        }
       ];
+      
       return (
         <div className="fade-in space-y-8">
           <h2 className="text-3xl font-bold serif text-[#4E342E] px-2">住宿安排</h2>
           {hotels.map((h, i) => (
             <div key={i} className="bg-white rounded-[3rem] overflow-hidden shadow-sm border border-[#F5EBE0]">
               <div className="h-64 overflow-hidden relative"><img src={h.image} className="w-full h-full object-cover" /></div>
-              <div className="p-8"><h3 className="text-xl font-bold text-[#4E342E] serif leading-tight">{h.nameZh}</h3><div className="text-xs text-[#A68A71] flex items-center gap-2 my-4"><Calendar size={14} /> {h.date}</div><p className="bg-[#FDFBF7] p-4 rounded-2xl border border-[#F5EBE0] text-xs italic text-[#4E342E]">{h.note}</p></div>
+              <div className="p-8">
+                <div className="flex justify-between items-start mb-4">
+                   <div className="flex-1">
+                      <h3 className="text-xl font-bold text-[#4E342E] serif leading-tight">{h.nameZh}</h3>
+                      <p className="text-[10px] text-[#A68A71] font-bold uppercase tracking-tight mt-1 opacity-60">{h.nameEn}</p>
+                   </div>
+                   <div className="flex flex-col items-center ml-4">
+                     <button 
+                      onClick={() => window.open(getGoogleMapsUrl(h.nameEn || h.nameZh), '_blank')}
+                      className="w-12 h-12 bg-[#4E342E] text-white rounded-2xl flex items-center justify-center shadow-lg active:scale-95 transition-all"
+                      title="導航"
+                    >
+                      <Compass size={24} />
+                    </button>
+                    <span className="text-[10px] font-bold text-[#A68A71] mt-1">導航</span>
+                   </div>
+                </div>
+                <div className="text-xs text-[#A68A71] flex items-center gap-2 mb-6"><Calendar size={14} /> {h.date}</div>
+                <p className="bg-[#FDFBF7] p-4 rounded-2xl border border-[#F5EBE0] text-xs italic text-[#4E342E] leading-relaxed">{h.note}</p>
+              </div>
             </div>
           ))}
         </div>
