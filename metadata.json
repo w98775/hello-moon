@@ -1,0 +1,7 @@
+{
+  "name": "Luxury Maldives & KL Travel Hub",
+  "description": "A comprehensive travel dashboard for a journey through Kuala Lumpur and the Maldives, featuring AI-powered recommendations, itinerary planning, and preparation checklists.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
