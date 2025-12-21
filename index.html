@@ -106,9 +106,8 @@
     const USD_TO_TWD = 32.5;
     const MYR_TO_TWD = 7.5;
 
-    // --- 詳細準備清單初始資料 ---
     const INITIAL_PREP = [
-      { id: 'p1', category: '重要文件', item: '護護正本 (效期6個月以上)', note: '建議影印一份 or 存手機雲端', checked: false },
+      { id: 'p1', category: '重要文件', item: '護照正本 (效期6個月以上)', note: '建議影印一份 or 存手機雲端', checked: false },
       { id: 'p2', category: '重要文件', item: '馬爾地夫 IMUGA 申報', note: '入境前96小時內填寫 (入境與出境都要)', checked: false },
       { id: 'p3', category: '重要文件', item: '馬來西亞 MDAC 電子卡', note: '抵達前3天內填寫', checked: false },
       { id: 'p4', category: '重要文件', item: '機票與飯店憑證', note: '包含自費行程確認單', checked: false },
@@ -127,19 +126,19 @@
       { date: '1/23', title: '啟程：吉隆坡孟沙', activities: [{ id: '1', time: '10:25', title: '高鐵左營 -> 桃園', loc: '高鐵左營站', note: '12:18 抵達桃園' }, { id: '2', time: '15:10', title: 'MH367 起飛', loc: '桃園機場 T1', note: '20:05 抵達 KUL' }, { id: '3', time: '21:30', title: '飯店 Check-in', loc: 'Holiday Inn Bangsar', note: '吉隆坡第一晚' }] },
       { 
         date: '1/24', 
-        title: '吉隆坡：谷中城與經典漫遊', 
+        title: '吉隆坡：市中心探索', 
         activities: [
-          { id: '41', time: '09:30', title: '谷中城 MaxMoney', loc: 'Mid Valley Megamall', note: '辦理換匯/換錢' },
-          { id: '42', time: '10:30', title: '華陽茶室 Oriental Kopi', loc: 'Mid Valley Megamall', note: '必吃蛋塔與波蘿包' },
-          { id: '43', time: '11:30', title: '谷中城採購', loc: 'Mid Valley Megamall', note: '大型商場購物' },
-          { id: '44', time: '14:00', title: 'Philo 頭療按摩', loc: 'Philo Hair & Head Spa', note: '舒壓放鬆行程' },
-          { id: '45', time: '15:30', title: 'Village Park Restaurant', loc: 'Uptown Damansara', note: '炸雞椰漿飯名店' },
-          { id: '46', time: '17:00', title: '鬼仔巷 Kwai Chai Hong', loc: 'Chinatown KL', note: '懷舊老街攝影' },
-          { id: '47', time: '18:00', title: 'REXKL 書局', loc: 'BookXcess @ REXKL', note: '迷宮書店拍照' },
-          { id: '48', time: '19:30', title: '雙子塔拍照', loc: 'Petronas Twin Towers', note: '吉隆坡地標夜景' },
-          { id: '49', time: '20:30', title: '籠的傳人 或 三美肉骨茶', loc: 'KLCC / Pavilion', note: '精選晚餐' },
-          { id: '410', time: '21:30', title: '柏威年廣場逛街', loc: 'Pavilion Kuala Lumpur', note: '時尚購物聖地' },
-          { id: '411', time: '23:00', title: '回飯店', loc: 'Holiday Inn Bangsar', note: '結束充實的一天' }
+          { id: '41', time: '10:00', title: '谷中城 MaxMoney', loc: 'Mid Valley Megamall', note: '換匯' },
+          { id: '42', time: '11:00', title: '谷中城華陽茶室', loc: 'Mid Valley Megamall', note: '早午餐，推薦蛋塔' },
+          { id: '43', time: '12:00', title: '谷中城採購', loc: 'Mid Valley Megamall', note: '採購當地必需品' },
+          { id: '44', time: '14:00', title: 'Philo頭療按摩', loc: 'Philo Hair & Head Spa', note: '舒緩長途飛行疲勞' },
+          { id: '45', time: '16:00', title: 'Village Park Restaurant 炸雞椰漿飯', loc: 'Uptown Damansara', note: '吉隆坡最強椰漿飯' },
+          { id: '46', time: '17:30', title: '鬼仔巷', loc: 'Kwai Chai Hong', note: '懷舊壁畫與歷史建築' },
+          { id: '47', time: '18:30', title: 'REXKL書局', loc: 'BookXcess at REXKL', note: '迷宮般的特色書店' },
+          { id: '48', time: '19:30', title: '雙子塔', loc: 'Petronas Twin Towers', note: '打卡夜景拍照' },
+          { id: '49', time: '20:30', title: '籠的傳人餐廳或三美肉骨茶', loc: 'Pavilion KL / Klang', note: '晚餐精選' },
+          { id: '410', time: '21:30', title: '柏威年廣場逛街', loc: 'Pavilion Kuala Lumpur', note: '精品質感血拼' },
+          { id: '411', time: '22:30', title: '回飯店', loc: 'Holiday Inn Bangsar', note: '早點休息' }
         ] 
       },
       { date: '1/25', title: '飛向美居渡假村', isMaldives: true, activities: [{ id: '7', time: '09:40', title: 'MH485 飛馬累', loc: 'KLIA T1', note: '11:00 抵達' }, { id: '8', time: '16:00', title: '入住美居渡假村', loc: 'Mercure Maldives Kooddoo', note: '全包式度假村開始' }] },
@@ -169,14 +168,12 @@
       ]}
     ];
 
-    // --- Helper for Time Dropdown ---
     const TIME_OPTIONS = Array.from({ length: 48 }, (_, i) => {
       const h = Math.floor(i / 2).toString().padStart(2, '0');
       const m = (i % 2 === 0 ? '00' : '30');
       return `${h}:${m}`;
     });
 
-    // --- 主程式 ---
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
       const [itinerary, setItinerary] = useState(() => {
@@ -241,7 +238,6 @@
       );
     };
 
-    // --- 準備分頁 ---
     const PreparationView = ({ prepList, setPrepList }) => {
       const [showModal, setShowModal] = useState(false);
       const [editItem, setEditItem] = useState(null);
@@ -332,7 +328,6 @@
       );
     };
 
-    // --- 行程分頁 ---
     const ItineraryView = ({ itinerary, setItinerary }) => {
       const [dayIdx, setDayIdx] = useState(0);
       const [showModal, setShowModal] = useState(false);
@@ -361,6 +356,8 @@
           setItinerary(newItinerary);
         }
       };
+
+      const getGoogleMapsUrl = (loc) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`;
 
       return (
         <div className="fade-in space-y-6">
@@ -396,7 +393,7 @@
                       </div>
                     </div>
                     <h4 className="font-bold text-base text-[#4E342E]">{act.title}</h4>
-                    {act.loc && <button onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(act.loc)}`)} className="text-[10px] text-[#A68A71] flex items-center gap-1 mt-1 font-bold hover:underline"><MapPin size={10} /> {act.loc}</button>}
+                    {act.loc && <button onClick={() => window.open(getGoogleMapsUrl(act.loc), '_blank')} className="text-[10px] text-[#A68A71] flex items-center gap-1 mt-1 font-bold hover:underline"><MapPin size={10} /> {act.loc}</button>}
                     {act.note && <p className="mt-2 text-[10px] text-[#A68A71] italic bg-[#FDFBF7] p-2 rounded-lg border border-[#F5EBE0]">註：{act.note}</p>}
                   </div>
                 </div>
@@ -455,35 +452,44 @@
       );
     };
 
-    // --- 住宿分頁 ---
-    const AccommodationView = () => (
-      <div className="fade-in space-y-8">
-        <h2 className="text-3xl font-bold serif text-[#4E342E] px-2">住宿安排</h2>
-        {[
-          { name: 'Holiday Inn Kuala Lumpur Bangsar, an IHG Hotel', nameZh: '吉隆坡孟沙假日酒店 (1/23-25)', date: '1/23-1/25', image: 'https://images.unsplash.com/photo-1551882547-ff43c63e17e5?auto=format&fit=crop&q=80&w=800', note: '【吉隆坡文青區】位於時尚的孟沙區，頂樓泳池視野極佳，下樓即是購物商場。' },
-          { name: 'Mercure Maldives Kooddoo Resort', nameZh: '美居馬爾地夫渡假村 (1/25-29)', date: '1/25-1/29', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&q=80&w=800', note: '【全包式水上別墅】位於卡夫阿里夫環礁。美居是高CP值的選擇，水下生態極其豐富。' },
-          { name: 'h78 Maldives (Hulhumale)', nameZh: 'h78 居民島飯店 (1/29-30)', date: '1/29-1/30', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '【海濱首排】胡魯馬累最受歡迎的飯店之一，鄰近機場，服務親切且早餐優質。' },
-          { name: 'Umi Homestay SplashMania', nameZh: 'Umi 質感民宿 (1/30-31)', date: '1/30-1/31', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800', note: '【溫馨休憩站】靠近吉隆坡機場周邊，環境清幽，適合作為歸台前的最後休整地。' },
-        ].map((h, i) => (
-          <div key={i} className="bg-white rounded-[3rem] overflow-hidden shadow-sm border border-[#F5EBE0] group">
-            <div className="h-64 overflow-hidden relative">
-              <img src={h.image} alt={h.nameZh} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
-              <div className="absolute top-6 right-6 bg-white/95 backdrop-blur px-4 py-2 rounded-2xl text-[12px] font-black text-[#4E342E] flex items-center gap-2 shadow-sm">
-                <Star size={14} className="text-[#D8C4B6]" fill="currentColor" /> 4.5
+    const AccommodationView = () => {
+      const getGoogleMapsUrl = (loc) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`;
+      const hotels = [
+        { name: 'Holiday Inn Kuala Lumpur Bangsar by IHG', nameZh: '吉隆坡孟沙假日酒店 (1/23-25)', date: '1/23-1/25', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800', note: '【吉隆坡文青區】位於時尚的孟沙區，頂樓泳池視野極佳，下樓即是購物商場。' },
+        { name: 'Mercure Maldives Kooddoo Resort', nameZh: '美居馬爾地夫渡假村 (1/25-29)', date: '1/25-1/29', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&q=80&w=800', note: '【全包式水上別墅】位於卡夫阿里夫環礁。美居是高CP值的選擇，水下生態極其豐富。' },
+        { name: 'h78 Maldives (Hulhumale)', nameZh: 'h78 居民島飯店 (1/29-30)', date: '1/29-1/30', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '【海濱首排】胡魯馬累最受歡迎的飯店之一，鄰近機場，服務親切且早餐優質。' },
+        { name: 'Umi Homestay SplashMania', nameZh: 'Umi 質感民宿 (1/30-31)', date: '1/30-31', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800', note: '【溫馨休憩站】靠近吉隆坡機場周邊，環境清幽，適合作為歸台前的最後休整地。' },
+      ];
+      
+      return (
+        <div className="fade-in space-y-8">
+          <h2 className="text-3xl font-bold serif text-[#4E342E] px-2">住宿安排</h2>
+          {hotels.map((h, i) => (
+            <div key={i} className="bg-white rounded-[3rem] overflow-hidden shadow-sm border border-[#F5EBE0] group">
+              <div className="h-64 overflow-hidden relative">
+                <img src={h.image} alt={h.nameZh} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+              </div>
+              <div className="p-8">
+                <h3 className="text-xl font-bold text-[#4E342E] serif leading-tight">{h.nameZh}</h3>
+                <p className="text-[10px] text-[#A68A71] font-black uppercase tracking-tight mb-4">{h.name}</p>
+                
+                <button 
+                  onClick={() => window.open(getGoogleMapsUrl(h.name), '_blank')}
+                  className="flex items-center gap-3 text-[#A68A71] text-xs mb-8 font-bold hover:text-[#4E342E] transition-all bg-[#FDFBF7] px-5 py-2.5 rounded-full border border-slate-100 shadow-sm active:scale-95 group/btn"
+                >
+                  <Compass size={16} className="text-[#D8C4B6] group-hover/btn:rotate-45 transition-transform" />
+                  <span>導航</span>
+                </button>
+
+                <div className="text-xs text-[#A68A71] flex items-center gap-2 mb-4"><Calendar size={14} /> {h.date}</div>
+                <div className="bg-[#FDFBF7] p-4 rounded-2xl border border-[#F5EBE0] text-xs leading-relaxed italic text-[#4E342E]">「{h.note}」</div>
               </div>
             </div>
-            <div className="p-8">
-              <h3 className="text-xl font-bold text-[#4E342E] serif leading-tight">{h.nameZh}</h3>
-              <p className="text-[10px] text-[#A68A71] font-black uppercase tracking-tight mb-2">{h.name}</p>
-              <div className="text-xs text-[#A68A71] flex items-center gap-2 mb-4"><Calendar size={14} /> {h.date}</div>
-              <div className="bg-[#FDFBF7] p-4 rounded-2xl border border-[#F5EBE0] text-xs leading-relaxed italic text-[#4E342E]">「{h.note}」</div>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
+          ))}
+        </div>
+      );
+    };
 
-    // --- 交通分頁 ---
     const TransportView = () => (
       <div className="fade-in space-y-6">
         <h2 className="text-3xl font-bold serif text-[#4E342E] px-2">交通資訊</h2>
@@ -503,7 +509,6 @@
       </div>
     );
 
-    // --- 記帳/換算分頁 ---
     const ExpenseView = ({ expenses, setExpenses }) => {
       const [showModal, setShowModal] = useState(false);
       const [item, setItem] = useState({ title: '', amount: '', currency: 'USD' });
@@ -521,7 +526,6 @@
 
       return (
         <div className="fade-in space-y-6 pb-20">
-          {/* 匯率換算 */}
           <div className="bg-white p-7 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm space-y-4">
             <h3 className="font-bold text-sm text-[#4E342E] flex items-center gap-2"><DollarSign size={16} className="text-[#D8C4B6]" /> 匯率換算</h3>
             <div className="flex bg-[#FDFBF7] p-1.5 rounded-2xl border border-[#F5EBE0]">
@@ -533,7 +537,6 @@
             </div>
           </div>
 
-          {/* 總支出資訊卡片（移至明細上方） */}
           <div className="bg-[#4E342E] p-8 rounded-[3rem] text-white shadow-2xl">
             <div className="flex justify-between items-end">
               <div><p className="text-[10px] font-black opacity-50 uppercase tracking-widest mb-1">Total Spending</p><h2 className="text-4xl font-black">NT$ {totalTwd.toLocaleString()}</h2></div>
@@ -541,13 +544,11 @@
             </div>
           </div>
 
-          {/* 支出明細標題 */}
           <div className="flex justify-between items-center px-2">
             <h2 className="text-xl font-bold serif text-[#4E342E]">支出明細</h2>
             <button onClick={() => setShowModal(true)} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg active:scale-95"><Plus size={20} /></button>
           </div>
 
-          {/* 支出明細列表 */}
           <div className="space-y-3 min-h-[100px]">
             {expenses.map(e => (
               <div key={e.id} className="bg-white p-5 rounded-2xl border border-[#F5EBE0] flex justify-between items-center group">
@@ -584,7 +585,6 @@
       );
     };
 
-    // --- 推薦分頁 ---
     const RecommendationView = () => {
       const [list, setList] = useState(INITIAL_REC);
       const [isRefreshing, setIsRefreshing] = useState(false);
@@ -618,7 +618,7 @@
                 </div>
                 <div className="grid gap-4">
                   {cat.items.map((item, i) => (
-                    <div key={i} className="bg-white p-7 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm active:scale-98 transition-transform cursor-pointer group" onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name)}`)}>
+                    <div key={i} className="bg-white p-7 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm active:scale-98 transition-transform cursor-pointer group" onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name)}`, '_blank')}>
                       <div className="flex justify-between items-start mb-2">
                         <h4 className="font-bold text-lg text-[#4E342E] group-hover:text-[#D8C4B6] transition-colors leading-tight">{item.name}</h4>
                         <div className="flex items-center gap-1 text-[10px] font-black text-amber-500 bg-amber-50 px-2 py-1 rounded-lg"><Star size={10} fill="currentColor" /> {item.rating}</div>
