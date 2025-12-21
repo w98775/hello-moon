@@ -173,10 +173,10 @@
     ];
 
     const INITIAL_ITINERARY = [
-      { date: '1/23', title: '啟程：吉隆坡孟沙', activities: [{ id: '1', time: '10:25', title: '高鐵左營 -> 桃園', loc: '高鐵桃園站', note: '12:18 抵達桃園' }, { id: '2', time: '15:10', title: 'MH367 起飛', loc: '桃園機場 T1', note: '20:05 抵達 KUL' }, { id: '3', time: '21:30', title: '飯店 Check-in', loc: 'Holiday Inn Bangsar', note: '吉隆坡第一晚' }] },
+      { date: '1/23', title: '吉隆坡孟沙', activities: [{ id: '1', time: '10:25', title: '高鐵左營 -> 桃園', loc: '高鐵桃園站', note: '12:18 抵達桃園' }, { id: '2', time: '15:10', title: 'MH367 起飛', loc: '桃園機場 T1', note: '20:05 抵達 KUL' }, { id: '3', time: '21:30', title: '飯店 Check-in', loc: 'Holiday Inn Bangsar', note: '吉隆坡第一晚' }] },
       { 
         date: '1/24', 
-        title: '吉隆坡：精選一日遊', 
+        title: '精選一日遊', 
         activities: [
           { id: '401', time: '10:00', title: '谷中城 MaxMoney', loc: 'Mid Valley Megamall', note: '換匯首選' },
           { id: '402', time: '11:00', title: '谷中城華陽茶室', loc: 'Mid Valley Oriental Kopi', note: '必吃波羅包' },
@@ -192,36 +192,48 @@
         ] 
       },
       { date: '1/25', title: '飛向美居度假村', isMaldives: true, activities: [{ id: '7', time: '09:40', title: 'MH485 飛馬累', loc: 'KLIA T1', note: '11:00 抵達' }, { id: '8', time: '16:00', title: '入住美居度假村', loc: 'Mercure Maldives Kooddoo', note: '全包式度假開始' }] },
-      { date: '1/26', title: '美居度假村：深海探索', isMaldives: true, activities: [{ id: '261', time: '09:00', title: '晨間潛水課程', loc: 'Dive Center', note: 'PADI 課程進度' }] },
-      { date: '1/27', title: '美居度假村：船潛冒險', isMaldives: true, activities: [{ id: '271', time: '08:30', title: '環礁船潛', loc: 'Kooddoo Jetty', note: '探索更遠的潛點' }] },
-      { date: '1/28', title: '美居度假村：水下攝影', isMaldives: true, activities: [{ id: '281', time: '10:00', title: '珊瑚礁浮潛', loc: 'House Reef', note: '紀錄豐富生態' }] },
-      { date: '1/29', title: '美居度假村：放鬆時光', isMaldives: true, activities: [{ id: '291', time: '11:00', title: '享受渡假村設施', loc: 'Pool Bar', note: '全包式餐飲服務' }] },
-      { date: '1/30', title: '馬爾地夫居民島：h78 飯店', activities: [{ id: '301', time: '12:00', title: '搭船前往居民島', loc: 'Hulhumale', note: '入住 h78 飯店' }, { id: '302', time: '19:45', title: '飛抵吉隆坡', loc: 'KLIA T1', note: 'MH484 抵達' }] },
-      { date: '1/31', title: '吉隆坡：Umi SplashMania 休息', activities: [{ id: '311', time: '12:00', title: 'SplashMania 玩樂', loc: 'SplashMania Waterpark', note: '享受水上設施' }, { id: '312', time: '18:00', title: '入住 Umi 民宿', loc: 'Umi SplashMania homestay', note: '溫馨休息空間' }] },
-      { date: '2/1', title: '平安賦歸', activities: [{ id: '18', time: '09:20', title: 'MH366 返台', loc: 'KLIA T1', note: '14:10 抵台' }] },
+      { date: '1/26', title: '深海探索', isMaldives: true, activities: [{ id: '261', time: '09:00', title: '晨間潛水課程', loc: 'Dive Center', note: 'PADI 課程進度' }] },
+      { date: '1/27', title: '船潛冒險', isMaldives: true, activities: [{ id: '271', time: '08:30', title: '環礁船潛', loc: 'Kooddoo Jetty', note: '探索更遠的潛點' }] },
+      { date: '1/28', title: '水下攝影', isMaldives: true, activities: [{ id: '281', time: '10:00', title: '珊瑚礁浮潛', loc: 'House Reef', note: '紀錄豐富生態' }] },
+      { date: '1/29', title: '放鬆時光', isMaldives: true, activities: [{ id: '291', time: '11:00', title: '享受渡假村設施', loc: 'Pool Bar', note: '全包式餐飲服務' }] },
+      { date: '1/30', title: 'h78 飯店', activities: [{ id: '301', time: '12:00', title: '搭船前往居民島', loc: 'Hulhumale', note: '入住 h78 飯店' }, { id: '302', time: '19:45', title: '飛抵吉隆坡', loc: 'KLIA T1', note: 'MH484 抵達' }] },
+      { date: '1/31', title: 'Umi SplashMania 休息', activities: [{ id: '311', time: '12:00', title: 'SplashMania 玩樂', loc: 'SplashMania Waterpark', note: '享受水上設施' }, { id: '312', time: '18:00', title: '入住 Umi 民宿', loc: 'Umi SplashMania homestay', note: '溫馨休息空間' }] },
     ];
 
-    const INITIAL_REC = [
-      { category: '吉隆坡精選 KL Selection', location: 'KL', items: [
-        { name: 'Village Park Restaurant', desc: '吉隆坡最好吃的椰漿飯，炸雞與醬汁完美結合。' },
-        { name: 'Petronas Twin Towers', desc: '最具代表性的地標夜景，震撼力十足。' },
-        { name: 'SplashMania Waterpark', desc: '吉隆坡近郊最新水上樂園，設施豐富刺激。' }
-      ]},
-      { category: '居民島探險 Hulhumale', location: 'MV', items: [
-        { name: 'Hulhumale Beach', desc: '夕陽極美的公共沙灘，看在地人生活節奏。' },
-        { name: 'h78 Maldives Terrace', desc: '飯店頂樓餐廳，俯瞰機場島海景。' }
-      ]}
+    const REC_POOLS = [
+      [
+        { category: '吉隆坡精選 KL Selection', location: 'KL', items: [
+          { name: 'Village Park Restaurant', desc: '吉隆坡最好吃的椰漿飯，炸雞與醬汁完美結合。' },
+          { name: 'Petronas Twin Towers', desc: '最具代表性的地標夜景，震撼力十足。' },
+          { name: 'SplashMania Waterpark', desc: '吉隆坡近郊最新水上樂園，設施豐富刺激。' }
+        ]},
+        { category: '居民島探險 Hulhumale', location: 'MV', items: [
+          { name: 'Hulhumale Beach', desc: '夕陽極美的公共沙灘，看在地人生活節奏。' },
+          { name: 'h78 Maldives Terrace', desc: '飯店頂樓餐廳，俯瞰機場島海景。' }
+        ]}
+      ],
+      [
+        { category: '吉隆坡文化 KL Culture', location: 'KL', items: [
+          { name: 'Batu Caves', desc: '黑風洞，壯觀的石灰岩洞穴與彩色階梯。' },
+          { name: 'Jalan Alor', desc: '亞羅街夜市，體驗在地大排檔美食文化。' },
+          { name: 'Thean Hou Temple', desc: '天后宮，融合現代與傳統的華人廟宇，俯瞰市景。' }
+        ]},
+        { category: '馬爾地夫休閒 Chill MV', location: 'MV', items: [
+          { name: 'Local Market', desc: '體驗馬爾地夫當地市集，感受熱帶水果與香料。' },
+          { name: 'Central Park', desc: 'Hulhumale 中央公園，綠意盎然的放鬆去處。' }
+        ]}
+      ]
     ];
 
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v45')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v45')) || INITIAL_PREP);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v45')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v46')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v46')) || INITIAL_PREP);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v46')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v45', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v45', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_expenses_v45', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v46', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v46', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_expenses_v46', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
@@ -273,19 +285,37 @@
       const categories = ['重要文件', '電子電器', '衣物穿搭', '個人用品', '常備藥品'];
       const [isModalOpen, setIsModalOpen] = useState(false);
       const [newItem, setNewItem] = useState({ item: '', category: '重要文件', note: '' });
+      const [editingId, setEditingId] = useState(null);
 
-      const handleAddItem = () => {
+      const handleSaveItem = () => {
         if (!newItem.item.trim()) return;
-        setPrepList([...prepList, { ...newItem, id: 'custom-' + Date.now(), checked: false }]);
+        if (editingId) {
+          setPrepList(prepList.map(p => p.id === editingId ? { ...p, ...newItem } : p));
+        } else {
+          setPrepList([...prepList, { ...newItem, id: 'custom-' + Date.now(), checked: false }]);
+        }
         setIsModalOpen(false);
         setNewItem({ item: '', category: '重要文件', note: '' });
+        setEditingId(null);
+      };
+
+      const handleEdit = (item) => {
+        setNewItem({ item: item.item, category: item.category, note: item.note });
+        setEditingId(item.id);
+        setIsModalOpen(true);
+      };
+
+      const handleDelete = (id) => {
+        if (confirm('確定要刪除此項目嗎？')) {
+          setPrepList(prepList.filter(p => p.id !== id));
+        }
       };
 
       return (
         <div className="fade-in space-y-6">
           <div className="flex justify-between items-center px-2">
             <h2 className="text-3xl font-bold serif text-[#4E342E]">準備清單</h2>
-            <button onClick={() => setIsModalOpen(true)} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all"><Plus size={20} /></button>
+            <button onClick={() => { setEditingId(null); setNewItem({ item: '', category: '重要文件', note: '' }); setIsModalOpen(true); }} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all"><Plus size={20} /></button>
           </div>
           <div className="space-y-8 pb-10">
             {categories.map(cat => (
@@ -293,11 +323,15 @@
                 <h3 className="text-[10px] font-black text-[#A68A71] uppercase tracking-[0.2em] px-2">{cat}</h3>
                 <div className="grid gap-2">
                   {prepList.filter(p => p.category === cat).map(p => (
-                    <div key={p.id} className="bg-white p-4 rounded-2xl border border-[#F5EBE0] flex items-center gap-4 shadow-sm hover:border-[#D8C4B6] transition-all">
+                    <div key={p.id} className="bg-white p-4 rounded-2xl border border-[#F5EBE0] flex items-center gap-4 shadow-sm hover:border-[#D8C4B6] transition-all group">
                       <div className={`checkbox-custom flex-shrink-0 ${p.checked ? 'checked' : ''}`} onClick={() => setPrepList(prepList.map(item => item.id === p.id ? {...item, checked: !item.checked} : item))} />
-                      <div className={p.checked ? 'opacity-40' : ''}>
+                      <div className={`flex-1 ${p.checked ? 'opacity-40' : ''}`}>
                         <div className={`font-bold text-sm ${p.checked ? 'line-through' : ''}`}>{p.item}</div>
                         <div className="text-[10px] text-[#A68A71] italic">{p.note}</div>
+                      </div>
+                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onClick={(e) => { e.stopPropagation(); handleEdit(p); }} className="text-[#A68A71] hover:text-[#4E342E]"><Edit2 size={16} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); handleDelete(p.id); }} className="text-[#A68A71] hover:text-red-500"><Trash2 size={16} /></button>
                       </div>
                     </div>
                   ))}
@@ -308,7 +342,7 @@
           {isModalOpen && (
             <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
               <div className="bg-white w-full max-w-sm rounded-[2.5rem] p-8 space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
-                <h3 className="text-xl font-bold serif text-[#4E342E]">新增準備項目</h3>
+                <h3 className="text-xl font-bold serif text-[#4E342E]">{editingId ? '編輯準備項目' : '新增準備項目'}</h3>
                 <div className="space-y-3">
                   <div>
                     <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">項目名稱</label>
@@ -325,7 +359,7 @@
                 </div>
                 <div className="flex gap-3 pt-4">
                   <button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 font-bold text-[#A68A71] rounded-2xl border border-[#F5EBE0]">取消</button>
-                  <button onClick={handleAddItem} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">儲存項目</button>
+                  <button onClick={handleSaveItem} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">{editingId ? '更新項目' : '儲存項目'}</button>
                 </div>
               </div>
             </div>
@@ -342,6 +376,7 @@
       const [showOthers, setShowOthers] = useState(false);
       const [isModalOpen, setIsModalOpen] = useState(false);
       const [newAct, setNewAct] = useState({ time: '09:00', title: '', loc: '', note: '' });
+      const [editingActId, setEditingActId] = useState(null);
       const day = itinerary[dayIdx];
 
       const timeOptions = useMemo(() => {
@@ -354,13 +389,33 @@
         return options;
       }, []);
 
-      const handleAddActivity = () => {
+      const handleSaveActivity = () => {
         if (!newAct.title.trim()) return;
         const updatedItinerary = [...itinerary];
-        updatedItinerary[dayIdx].activities.push({ ...newAct, id: 'act-' + Date.now() });
+        if (editingActId) {
+          updatedItinerary[dayIdx].activities = updatedItinerary[dayIdx].activities.map(a => a.id === editingActId ? { ...a, ...newAct } : a);
+        } else {
+          updatedItinerary[dayIdx].activities.push({ ...newAct, id: 'act-' + Date.now() });
+        }
+        updatedItinerary[dayIdx].activities.sort((a, b) => a.time.localeCompare(b.time));
         setItinerary(updatedItinerary);
         setIsModalOpen(false);
         setNewAct({ time: '09:00', title: '', loc: '', note: '' });
+        setEditingActId(null);
+      };
+
+      const handleEditActivity = (act) => {
+        setNewAct({ time: act.time, title: act.title, loc: act.loc, note: act.note });
+        setEditingActId(act.id);
+        setIsModalOpen(true);
+      };
+
+      const handleDeleteActivity = (id) => {
+        if (confirm('確定要刪除此行程嗎？')) {
+          const updatedItinerary = [...itinerary];
+          updatedItinerary[dayIdx].activities = updatedItinerary[dayIdx].activities.filter(a => a.id !== id);
+          setItinerary(updatedItinerary);
+        }
       };
 
       const handleRefresh = () => {
@@ -394,18 +449,22 @@
           <div className="bg-white p-7 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm mb-6 relative">
             <div className="flex justify-between items-start mb-6">
               <h2 className="text-2xl font-bold text-[#4E342E] serif leading-tight">Day 0{dayIdx+1} {day.title}</h2>
-              <button onClick={() => setIsModalOpen(true)} className="w-9 h-9 bg-[#FDFBF7] border border-[#F5EBE0] text-[#A68A71] rounded-xl flex items-center justify-center active:scale-95 transition-all shadow-sm"><Plus size={18} /></button>
+              <button onClick={() => { setEditingActId(null); setNewAct({ time: '09:00', title: '', loc: '', note: '' }); setIsModalOpen(true); }} className="w-9 h-9 bg-[#FDFBF7] border border-[#F5EBE0] text-[#A68A71] rounded-xl flex items-center justify-center active:scale-95 transition-all shadow-sm"><Plus size={18} /></button>
             </div>
             <div className="space-y-8 relative ml-1">
               <div className="absolute left-[17px] top-3 bottom-3 w-[1px] bg-[#F5EBE0]" />
               {day.activities.map(act => (
-                <div key={act.id} className="flex gap-5 relative z-10">
+                <div key={act.id} className="flex gap-5 relative z-10 group">
                   <div className="w-9 h-9 rounded-xl border-2 border-[#F5EBE0] bg-white flex items-center justify-center text-[#4E342E] shrink-0"><Clock size={16} /></div>
                   <div className="flex-1 cursor-pointer" onClick={() => window.open(getGoogleMapsUrl(act.loc || act.title), '_blank')}>
                     <span className="text-[10px] font-black text-[#D8C4B6]">{act.time}</span>
                     <h4 className="font-bold text-base text-[#4E342E]">{act.title}</h4>
                     {act.loc && <div className="text-[10px] text-[#A68A71] flex items-center gap-1 mt-1 font-bold"><MapPin size={10} /> {act.loc}</div>}
                     {act.note && <p className="text-[10px] text-[#A68A71] italic mt-1">{act.note}</p>}
+                  </div>
+                  <div className="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity justify-center">
+                    <button onClick={(e) => { e.stopPropagation(); handleEditActivity(act); }} className="text-[#A68A71] hover:text-[#4E342E]"><Edit2 size={16} /></button>
+                    <button onClick={(e) => { e.stopPropagation(); handleDeleteActivity(act.id); }} className="text-[#A68A71] hover:text-red-500"><Trash2 size={16} /></button>
                   </div>
                 </div>
               ))}
@@ -441,14 +500,14 @@
           {isModalOpen && (
             <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
               <div className="bg-white w-full max-w-sm rounded-[2.5rem] p-8 space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
-                <h3 className="text-xl font-bold serif text-[#4E342E]">新增當日行程</h3>
+                <h3 className="text-xl font-bold serif text-[#4E342E]">{editingActId ? '編輯當日行程' : '新增當日行程'}</h3>
                 <div className="space-y-3">
                   <div><label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">時間</label><select value={newAct.time} onChange={e => setNewAct({...newAct, time: e.target.value})}>{timeOptions.map(t => <option key={t} value={t}>{t}</option>)}</select></div>
                   <div><label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">標題</label><input type="text" value={newAct.title} onChange={e => setNewAct({...newAct, title: e.target.value})} placeholder="例如：景點參觀" /></div>
                   <div><label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">地點</label><input type="text" value={newAct.loc} onChange={e => setNewAct({...newAct, loc: e.target.value})} placeholder="例如：雙子塔" /></div>
                   <div><label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">備註</label><input type="text" value={newAct.note} onChange={e => setNewAct({...newAct, note: e.target.value})} placeholder="選填備註" /></div>
                 </div>
-                <div className="flex gap-3 pt-4"><button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 font-bold text-[#A68A71] rounded-2xl border border-[#F5EBE0]">取消</button><button onClick={handleAddActivity} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">儲存行程</button></div>
+                <div className="flex gap-3 pt-4"><button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 font-bold text-[#A68A71] rounded-2xl border border-[#F5EBE0]">取消</button><button onClick={handleSaveActivity} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">{editingActId ? '更新行程' : '儲存行程'}</button></div>
               </div>
             </div>
           )}
@@ -461,9 +520,7 @@
         { date: '01/23', id: '高鐵 0818 次', from: '左營', to: '桃園', depTime: '10:25', arrTime: '12:18' },
         { date: '01/23', id: 'MH 367', from: 'TPE', to: 'KUL', depTime: '15:10', arrTime: '20:05' },
         { date: '01/25', id: 'MH 485', from: 'KUL', to: 'MLE', depTime: '09:40', arrTime: '11:00' },
-        { date: '01/30', id: 'MH 484', from: 'MLE', to: 'KUL', depTime: '12:00', arrTime: '19:45' },
-        { date: '02/01', id: 'MH 366', from: 'KUL', to: 'TPE', depTime: '09:20', arrTime: '14:10' },
-        { date: '02/01', id: '高鐵 0841 次', from: '桃園', to: '左營', depTime: '16:34', arrTime: '18:25' },
+        { date: '01/30', id: 'MH 484', from: 'MLE', to: 'KUL', depTime: '12:00', arrTime: '19:45' }
       ];
       return (
         <div className="fade-in space-y-6">
@@ -514,24 +571,46 @@
 
     function RecommendationView() {
       const [filter, setFilter] = useState('ALL');
+      const [poolIdx, setPoolIdx] = useState(0);
+      const [isRefreshing, setIsRefreshing] = useState(false);
+
+      const currentRecs = REC_POOLS[poolIdx];
+
       const filteredRecs = useMemo(() => {
-        if (filter === 'ALL') return INITIAL_REC;
-        return INITIAL_REC.filter(cat => cat.location === filter);
-      }, [filter]);
+        if (filter === 'ALL') return currentRecs;
+        return currentRecs.filter(cat => cat.location === filter);
+      }, [filter, poolIdx]);
+
+      const handleUpdateRecs = () => {
+        setIsRefreshing(true);
+        setTimeout(() => {
+          setPoolIdx((prev) => (prev + 1) % REC_POOLS.length);
+          setIsRefreshing(false);
+        }, 500);
+      };
 
       return (
         <div className="fade-in space-y-8">
-          <div className="flex justify-between items-center px-2">
-            <h2 className="text-3xl font-bold serif text-[#4E342E]">在地推薦</h2>
-            <div className="bg-white/50 p-1 rounded-xl border border-[#F5EBE0] flex">
-              <button onClick={() => setFilter('KL')} className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all ${filter === 'KL' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>吉隆坡</button>
-              <button onClick={() => setFilter('MV')} className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all ${filter === 'MV' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>居民島</button>
-              <button onClick={() => setFilter('ALL')} className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all ${filter === 'ALL' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>全部</button>
-            </div>
+          <div className="space-y-4 px-2">
+             <div className="flex justify-between items-center">
+                <h2 className="text-3xl font-bold serif text-[#4E342E]">在地推薦</h2>
+                <button onClick={handleUpdateRecs} className={`flex items-center gap-2 px-4 py-2 bg-[#D8C4B6] text-white rounded-xl shadow-md active:scale-95 transition-all ${isRefreshing ? 'opacity-80' : ''}`}>
+                  <RefreshCw size={16} className={isRefreshing ? 'animate-spin' : ''} />
+                  <span className="text-xs font-bold">更換行程</span>
+                </button>
+             </div>
+             <p className="text-xs text-[#A68A71] font-bold uppercase tracking-widest">景點與行程推薦 Attractions & Plans</p>
           </div>
+
+          <div className="bg-white/50 p-1 rounded-xl border border-[#F5EBE0] flex mx-2">
+            <button onClick={() => setFilter('KL')} className={`flex-1 py-2 rounded-lg text-[10px] font-black transition-all ${filter === 'KL' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>吉隆坡</button>
+            <button onClick={() => setFilter('MV')} className={`flex-1 py-2 rounded-lg text-[10px] font-black transition-all ${filter === 'MV' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>居民島</button>
+            <button onClick={() => setFilter('ALL')} className={`flex-1 py-2 rounded-lg text-[10px] font-black transition-all ${filter === 'ALL' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>全部</button>
+          </div>
+
           <div className="space-y-10">
             {filteredRecs.map((cat, idx) => (
-              <section key={idx} className="space-y-4">
+              <section key={idx} className="space-y-4 fade-in">
                 <h3 className="font-bold text-lg text-[#4E342E] serif flex items-center gap-2 px-2"><Utensils size={18} className="text-[#A68A71]" /> {cat.category}</h3>
                 <div className="grid gap-4">
                   {cat.items.map((item, i) => (
