@@ -110,96 +110,88 @@
 
     const RESORT_ACTIVITY_GROUPS = [
       {
-        id: 'teaching',
-        category: '潛水教學與課程',
+        id: 'diving',
+        category: '專業潛水與課程 (Diving & Courses)',
         items: [
-          { name: 'PADI Discover Scuba (DSD)', price: 140, detail: '泳池練習 + 1次船潛' },
-          { name: 'PADI Scuba Refresh', price: 105, detail: '技巧複習 + 1次船潛' },
           { name: 'Single Boat Dive (Full Set)', price: 89, detail: '包含全套裝備單次船潛' },
-          { name: 'PADI Open Water Diver', price: 650, detail: '初階開放水域證照課程' }
-        ]
-      },
-      {
-        id: 'excursions',
-        category: '精選出海行程',
-        items: [
-          { name: 'Snorkeling Trip', price: 60, detail: '90 分鐘浮潛出海行程' },
-          { name: 'Dolphin Adventure', price: 60, detail: '尋找海豚蹤影 90 分鐘' },
-          { name: 'Sunset Fishing', price: 70, detail: '傳統馬代黃昏海釣' },
-          { name: 'Sand Bank Trip', price: 100, detail: '夢幻無人沙洲 180 分鐘' }
+          { name: '3 Dive Package (Full Set)', price: 260, detail: '3次船潛套裝，含裝備' },
+          { name: '5 Dive Package (Full Set)', price: 419, detail: '5次船潛套裝，含裝備' },
+          { name: '10 Dive Package (Full Set)', price: 750, detail: '10次船潛套裝，含裝備' },
+          { name: 'PADI Discover Scuba (DSD)', price: 140, detail: '初學者體驗潛水 (泳池+1次船潛)' },
+          { name: 'PADI Open Water Course', price: 650, detail: '初階開放水域證照課程' },
+          { name: 'PADI Advanced Open Water', price: 550, detail: '進階開放水域證照課程' },
+          { name: 'Night Boat Dive', price: 100, detail: '夜潛單次費用' }
         ]
       }
     ];
 
     const INITIAL_PREP = [
       { id: 'p1', category: '重要文件', item: '護照正本 (效期6個月以上)', note: '建議拍照存手機雲端備份', checked: false },
-      { id: 'p2', category: '重要文件', item: '馬爾地夫 IMUGA 申報', note: '抵達/離開前96小時內填寫', checked: false },
+      { id: 'p2', category: '重要文件', item: '馬爾地夫 IMUGA 申報', note: '抵達前96小時內填寫', checked: false },
       { id: 'p3', category: '重要文件', item: '馬來西亞 MDAC 電子卡', note: '抵達前3天內填寫', checked: false },
-      { id: 'p4', category: '重要文件', item: '海外旅遊保險', note: '包含醫療與班機不便險', checked: false },
-      { id: 'p5', category: '電子電器', item: '萬用轉接頭 (英式三孔)', note: '馬爾地夫與馬來西亞通用', checked: false },
-      { id: 'p6', category: '馬爾地夫專屬', item: '海洋友善防曬油', note: '保護珊瑚礁必備', checked: false },
-      { id: 'p7', category: '馬爾地夫專屬', item: '防水袋 (10-20L)', note: '出海保護隨身物品', checked: false },
-      { id: 'p8', category: '個人藥品', item: '暈船藥 (強力型)', note: '馬代內陸船/快艇必備', checked: false },
+      { id: 'p4', category: '重要文件', item: '旅遊行程表/機票/飯店憑證', note: '紙本備份', checked: false },
+      { id: 'p5', category: '重要文件', item: '海外旅遊保險單', note: '包含醫療與班機不便險', checked: false },
+      { id: 'p6', category: '重要文件', item: '外幣現金 (美金/令吉)', note: '美金需2009年後新鈔', checked: false },
+      
+      { id: 'p7', category: '電子電器', item: '萬用轉接頭 (英式三孔)', note: '馬爾地夫與馬來西亞通用', checked: false },
+      { id: 'p8', category: '電子電器', item: '行動電源 (10000mAh+)', note: '出海行程電力備援', checked: false },
+      { id: 'p10', category: '電子電器', item: 'GoPro 或 防水相機', note: '水下攝影靈魂', checked: false },
+      
+      { id: 'p11', category: '衣物穿搭', item: '泳裝/比基尼 (2-3套)', note: '方便換洗', checked: false },
+      { id: 'p12', category: '衣物穿搭', item: '水母衣 (長袖防磨衣)', note: '浮潛防曬防刮傷', checked: false },
+      { id: 'p13', category: '衣物穿搭', item: '遮陽帽/墨鏡', note: '海邊強光必備', checked: false },
+      
+      { id: 'p16', category: '個人用品', item: '海洋友善防曬油', note: 'SPF50+，不傷珊瑚', checked: false },
+      { id: 'p17', category: '個人用品', item: '蘆薈修護凝膠', note: '曬後舒緩必備', checked: false },
+      { id: 'p18', category: '個人用品', item: '浮潛三寶 (面鏡/呼吸管)', note: '衛生考量建議自備', checked: false },
+      { id: 'p19', category: '個人用品', item: '防水袋 (10-20L)', note: '出海保護隨身物品', checked: false },
+      
+      { id: 'p21', category: '常備藥品', item: '暈船藥 (強力型)', note: '馬代快艇/小飛機必備', checked: false },
+      { id: 'p23', category: '常備藥品', item: '腸胃藥/止瀉藥', note: '預防水土不服', checked: false },
     ];
 
     const INITIAL_ITINERARY = [
-      { date: '1/23', title: '啟程：吉隆坡孟沙', activities: [{ id: '1', time: '10:25', title: '高鐵左營 -> 桃園', loc: '高鐵左營站', note: '12:18 抵達桃園' }, { id: '2', time: '15:10', title: 'MH367 起飛', loc: '桃園機場 T1', note: '20:05 抵達 KUL' }, { id: '3', time: '21:30', title: '飯店 Check-in', loc: 'Holiday Inn Bangsar', note: '吉隆坡第一晚' }] },
-      { 
-        date: '1/24', 
-        title: '吉隆坡：精選一日遊', 
-        activities: [
-          { id: '41', time: '10:00', title: '谷中城 MaxMoney', loc: 'Mid Valley Megamall', note: '換匯' },
-          { id: '42', time: '11:00', title: '谷中城華陽茶室', loc: 'Mid Valley Megamall', note: '道地早午餐' },
-          { id: '43', time: '12:30', title: '谷中城採購', loc: 'Mid Valley Megamall', note: '伴手禮與備品' },
-          { id: '44', time: '14:00', title: 'Philo頭療按摩', loc: 'Philo Hair & Head Spa', note: '極致放鬆體驗' },
-          { id: '45', time: '16:30', title: 'Village Park Restaurant 炸雞椰漿飯', loc: 'Uptown Damansara', note: '必吃大馬美食' },
-          { id: '46', time: '18:00', title: '鬼仔巷', loc: 'Kwai Chai Hong', note: '文化藝術打卡' },
-          { id: '47', time: '19:00', title: 'REXKL書局', loc: 'BookXcess at REXKL', note: '特色書局' },
-          { id: '48', time: '20:00', title: '雙子塔', loc: 'Petronas Twin Towers', note: '地標夜景' },
-          { id: '49', time: '21:00', title: '籠的傳人或三美肉骨茶', loc: 'Pavilion KL', note: '晚餐選擇' },
-          { id: '50', time: '22:00', title: '柏威年廣場逛街', loc: 'Pavilion Kuala Lumpur', note: '市中心百貨' },
-          { id: '51', time: '23:00', title: '回飯店', loc: 'Holiday Inn Bangsar', note: '休整休息' }
-        ] 
-      },
-      { date: '1/25', title: '飛向美居渡假村', isMaldives: true, activities: [{ id: '7', time: '09:40', title: 'MH485 飛馬累', loc: 'KLIA T1', note: '11:00 抵達' }, { id: '8', time: '16:00', title: '入住美居渡假村', loc: 'Mercure Maldives Kooddoo', note: '全包式度假開始' }] },
-      { date: '1/26', title: '渡假村休閒', isMaldives: true, activities: [{ id: '9', time: '09:00', title: '別墅外浮潛', loc: 'Villa Reef', note: '探索水下生態' }] },
-      { date: '1/27', title: '海洋冒險：鯨鯊', isMaldives: true, activities: [{ id: '11', time: '08:30', title: '鯨鯊追蹤遊 (自費)', loc: 'Gaafu Alifu Atoll', note: '一生必看震撼景色' }] },
-      { date: '1/28', title: '環礁之美', isMaldives: true, activities: [{ id: '12', time: '10:00', title: '高空拖曳傘 (自費)', loc: 'Lagoon', note: '俯瞰環礁美景' }] },
-      { date: '1/29', title: '居民島停留', activities: [{ id: '14', time: '11:00', title: '搭船前往居民島', loc: 'Hulhumale', note: '入住 h78' }] },
-      { date: '1/30', title: '返程：大馬 Umi', activities: [{ id: '16', time: '12:00', title: 'MH484 返大馬', loc: 'Velana Airport', note: '19:45 抵達吉隆坡' }] },
+      { date: '1/23', title: '啟程：吉隆坡孟沙', activities: [{ id: '1', time: '10:25', title: '高鐵左營 -> 桃園', loc: '高鐵桃園站', note: '12:18 抵達桃園' }, { id: '2', time: '15:10', title: 'MH367 起飛', loc: '桃園機場 T1', note: '20:05 抵達 KUL' }, { id: '3', time: '21:30', title: '飯店 Check-in', loc: 'Holiday Inn Bangsar', note: '吉隆坡第一晚' }] },
+      { date: '1/24', title: '吉隆坡：精選一日遊', activities: [{ id: '41', time: '10:00', title: '谷中城 MaxMoney', loc: 'Mid Valley Megamall', note: '換匯' }, { id: '45', time: '16:30', title: 'Village Park Restaurant 炸雞椰漿飯', loc: 'Uptown Damansara', note: '必吃大馬美食' }, { id: '48', time: '20:00', title: '雙子塔', loc: 'Petronas Twin Towers', note: '地標夜景' }] },
+      { date: '1/25', title: '飛向美居度假村', isMaldives: true, activities: [{ id: '7', time: '09:40', title: 'MH485 飛馬累', loc: 'KLIA T1', note: '11:00 抵達' }, { id: '8', time: '16:00', title: '入住美居度假村', loc: 'Mercure Maldives Kooddoo', note: '全包式度假開始' }] },
+      { date: '1/26', title: '美居度假村：深海探索', isMaldives: true, activities: [{ id: '261', time: '09:00', title: '晨間潛水課程', loc: 'Dive Center', note: 'PADI 課程進度' }] },
+      { date: '1/27', title: '美居度假村：船潛冒險', isMaldives: true, activities: [{ id: '271', time: '08:30', title: '環礁船潛', loc: 'Kooddoo Jetty', note: '探索更遠的潛點' }] },
+      { date: '1/28', title: '美居度假村：水下攝影', isMaldives: true, activities: [{ id: '281', time: '10:00', title: '珊瑚礁浮潛', loc: 'House Reef', note: '紀錄豐富生態' }] },
+      { date: '1/29', title: '美居度假村：放鬆時光', isMaldives: true, activities: [{ id: '291', time: '11:00', title: '享受渡假村設施', loc: 'Pool Bar', note: '全包式餐飲服務' }] },
+      { date: '1/30', title: '馬爾地夫居民島：h78 飯店', activities: [{ id: '301', time: '12:00', title: '搭船前往居民島', loc: 'Hulhumale', note: '入住 h78 飯店' }] },
       { date: '1/31', title: '平安賦歸', activities: [{ id: '18', time: '09:20', title: 'MH366 返台', loc: 'KLIA T1', note: '14:10 抵台' }] },
     ];
 
     const INITIAL_REC = [
-      { category: '吉隆坡美食 Gourmet KL', items: [
-        { name: 'Village Park Restaurant', rating: 4.6, desc: '吉隆坡最好吃的椰漿飯，炸雞與醬汁完美結合。' },
-        { name: 'Nasi Lemak Wanjo', rating: 4.6, desc: '甘榜峇魯傳統風味，在地人的宵夜早餐。' }
+      { category: '吉隆坡精選 KL Selection', location: 'KL', items: [
+        { name: 'Village Park Restaurant', desc: '吉隆坡最好吃的椰漿飯，炸雞與醬汁完美結合。' },
+        { name: 'Petronas Twin Towers', desc: '最具代表性的地標夜景，震撼力十足。' }
       ]},
-      { category: '吉隆坡景點 Must-See KL', items: [
-        { name: 'Petronas Twin Towers', rating: 4.8, desc: '吉隆坡最具代表性的地標夜景。' },
-        { name: 'REXKL BookXcess', rating: 4.5, desc: '由舊戲院改造的迷宮書局，極具特色。' }
+      { category: '居民島探險 Hulhumale', location: 'MV', items: [
+        { name: 'Hulhumale Beach', desc: '夕陽極美的公共沙灘，看在地人生活節奏。' },
+        { name: 'h78 Maldives Terrace', desc: '飯店頂樓餐廳，俯瞰機場島海景。' }
       ]}
     ];
 
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v34')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v34')) || INITIAL_PREP);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v34')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v36')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v36')) || INITIAL_PREP);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v36')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v34', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v34', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_expenses_v34', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v36', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v36', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_expenses_v36', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
           case 'PREPARATION': return <PreparationView prepList={prepList} setPrepList={setPrepList} />;
-          case 'ITINERARY': return <ItineraryView itinerary={itinerary} setItinerary={setItinerary} />;
+          case 'ITINERARY': return <ItineraryView itinerary={itinerary} />;
           case 'TRANSPORT': return <TransportView />;
           case 'ACCOMMODATION': return <AccommodationView />;
           case 'RECOMMENDATION': return <RecommendationView />;
           case 'EXPENSE': return <ExpenseView expenses={expenses} setExpenses={setExpenses} />;
-          default: return <ItineraryView itinerary={itinerary} setItinerary={setItinerary} />;
+          default: return <ItineraryView itinerary={itinerary} />;
         }
       };
 
@@ -209,7 +201,7 @@
             <div className="max-w-xl mx-auto px-4 flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#D8C4B6] rounded-2xl flex items-center justify-center text-white shadow-md"><Compass size={20} /></div>
-                <div><h1 className="font-bold text-lg serif text-[#4E342E]">嶼海紀行</h1><p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.2em]">Travel Hub v34</p></div>
+                <div><h1 className="font-bold text-lg serif text-[#4E342E]">嶼海紀行</h1><p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.2em]">Travel Hub v36</p></div>
               </div>
             </div>
           </header>
@@ -235,82 +227,53 @@
     };
 
     function PreparationView({ prepList, setPrepList }) {
-      const [showModal, setShowModal] = useState(false);
-      const [editItem, setEditItem] = useState(null);
-      const [formData, setFormData] = useState({ category: '重要文件', item: '', note: '' });
-
-      const handleSave = () => {
-        if (!formData.item) return;
-        if (editItem) setPrepList(prepList.map(p => p.id === editItem.id ? { ...p, ...formData } : p));
-        else setPrepList([...prepList, { ...formData, id: Date.now().toString(), checked: false }]);
-        setShowModal(false); setEditItem(null); setFormData({ category: '重要文件', item: '', note: '' });
-      };
-
+      const categories = ['重要文件', '電子電器', '衣物穿搭', '個人用品', '常備藥品'];
       return (
         <div className="fade-in space-y-6">
           <h2 className="text-3xl font-bold serif text-[#4E342E] px-2">準備清單</h2>
-          <button onClick={() => { setEditItem(null); setShowModal(true); }} className="floating-action-button"><Plus size={32} /></button>
-          <div className="space-y-6 pb-10">
-            {['重要文件', '電子電器', '衣物穿搭', '馬爾地夫專屬', '個人藥品', '生活用品'].map(cat => {
-              const items = prepList.filter(p => p.category === cat);
-              if (items.length === 0) return null;
-              return (
-                <div key={cat} className="space-y-3">
-                  <h3 className="text-[10px] font-black text-[#A68A71] uppercase tracking-[0.2em] px-2">{cat}</h3>
-                  <div className="grid gap-2">
-                    {items.map(p => (
-                      <div key={p.id} className="bg-white p-4 rounded-2xl border border-[#F5EBE0] flex items-center justify-between shadow-sm group">
-                        <div className="flex items-center gap-4 flex-1" onClick={() => setPrepList(prepList.map(item => item.id === p.id ? {...item, checked: !item.checked} : item))}>
-                          <div className={`checkbox-custom ${p.checked ? 'checked' : ''}`} />
-                          <div className={p.checked ? 'opacity-40' : ''}>
-                            <div className={`font-bold text-sm ${p.checked ? 'line-through' : ''}`}>{p.item}</div>
-                            <div className="text-[10px] text-[#A68A71] italic">{p.note}</div>
-                          </div>
-                        </div>
-                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button onClick={() => { setEditItem(p); setFormData(p); setShowModal(true); }} className="text-[#D8C4B6]"><Edit2 size={14} /></button>
-                          <button onClick={() => setPrepList(prepList.filter(item => item.id !== p.id))} className="text-red-200"><Trash2 size={14} /></button>
-                        </div>
+          <div className="space-y-8 pb-10">
+            {categories.map(cat => (
+              <div key={cat} className="space-y-3">
+                <h3 className="text-[10px] font-black text-[#A68A71] uppercase tracking-[0.2em] px-2">{cat}</h3>
+                <div className="grid gap-2">
+                  {prepList.filter(p => p.category === cat).map(p => (
+                    <div key={p.id} className="bg-white p-4 rounded-2xl border border-[#F5EBE0] flex items-center gap-4 shadow-sm hover:border-[#D8C4B6] transition-all">
+                      <div className={`checkbox-custom flex-shrink-0 ${p.checked ? 'checked' : ''}`} onClick={() => setPrepList(prepList.map(item => item.id === p.id ? {...item, checked: !item.checked} : item))} />
+                      <div className={p.checked ? 'opacity-40' : ''}>
+                        <div className={`font-bold text-sm ${p.checked ? 'line-through' : ''}`}>{p.item}</div>
+                        <div className="text-[10px] text-[#A68A71] italic">{p.note}</div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              );
-            })}
-          </div>
-          {showModal && (
-            <div className="fixed inset-0 z-[60] flex items-center justify-center px-4">
-              <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowModal(false)} />
-              <div className="relative bg-white w-full max-sm p-8 rounded-[2.5rem] shadow-2xl space-y-4 -translate-y-12">
-                <h3 className="text-xl font-bold serif text-center">{editItem ? '編輯項目' : '新增項目'}</h3>
-                <select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
-                  {['重要文件', '電子電器', '衣物穿搭', '馬爾地夫專屬', '個人藥品', '生活用品'].map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-                <input type="text" value={formData.item} onChange={e => setFormData({...formData, item: e.target.value})} placeholder="例如：護照" />
-                <input type="text" value={formData.note} onChange={e => setFormData({...formData, note: e.target.value})} placeholder="例如：備份" />
-                <div className="flex gap-3 pt-4"><button onClick={() => setShowModal(false)} className="flex-1 py-4 rounded-2xl bg-[#FDFBF7]">取消</button><button onClick={handleSave} className="flex-1 py-4 rounded-2xl bg-[#4E342E] text-white">儲存</button></div>
               </div>
-            </div>
-          )}
+            ))}
+          </div>
         </div>
       );
     }
 
-    function ItineraryView({ itinerary, setItinerary }) {
+    function ItineraryView({ itinerary }) {
       const [dayIdx, setDayIdx] = useState(0);
-      const [showModal, setShowModal] = useState(false);
-      const [editAct, setEditAct] = useState(null);
-      const [formData, setFormData] = useState({ time: '08:00', title: '', loc: '', note: '' });
+      const [searchTerm, setSearchTerm] = useState('');
+      const [showSearch, setShowSearch] = useState(false);
+      const [isRefreshing, setIsRefreshing] = useState(false);
+      
       const day = itinerary[dayIdx];
 
-      const handleSave = () => {
-        if (!formData.title) return;
-        const newItinerary = [...itinerary];
-        if (editAct) newItinerary[dayIdx].activities = newItinerary[dayIdx].activities.map(a => a.id === editAct.id ? { ...formData, id: a.id } : a);
-        else newItinerary[dayIdx].activities.push({ ...formData, id: Date.now().toString() });
-        newItinerary[dayIdx].activities.sort((a, b) => a.time.localeCompare(b.time));
-        setItinerary(newItinerary); setShowModal(false); setEditAct(null);
+      const handleRefresh = () => {
+        setIsRefreshing(true);
+        setTimeout(() => setIsRefreshing(false), 800);
       };
+
+      const filteredActivities = useMemo(() => {
+        const group = RESORT_ACTIVITY_GROUPS[0];
+        if (!searchTerm) return group.items;
+        return group.items.filter(item => 
+          item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+          item.detail.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }, [searchTerm]);
 
       return (
         <div className="fade-in space-y-6">
@@ -321,49 +284,62 @@
               </button>
             ))}
           </div>
-          <button onClick={() => { setEditAct(null); setFormData({ time: '08:00', title: '', loc: '', note: '' }); setShowModal(true); }} className="floating-action-button"><Plus size={32} /></button>
           <div className="bg-white p-7 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm mb-6">
-            <div className="mb-6"><div className="text-[10px] font-black text-[#A68A71] mb-1">Day 0{dayIdx + 1} · {day.date}</div><h2 className="text-2xl font-bold text-[#4E342E] serif leading-tight">{day.title}</h2></div>
+            <h2 className="text-2xl font-bold text-[#4E342E] serif leading-tight mb-6">Day 0{dayIdx+1} {day.title}</h2>
             <div className="space-y-8 relative ml-1">
               <div className="absolute left-[17px] top-3 bottom-3 w-[1px] bg-[#F5EBE0]" />
               {day.activities.map(act => (
-                <div key={act.id} className="flex gap-5 relative z-10 group">
+                <div key={act.id} className="flex gap-5 relative z-10">
                   <div className="w-9 h-9 rounded-xl border-2 border-[#F5EBE0] bg-white flex items-center justify-center text-[#4E342E] shrink-0"><Clock size={16} /></div>
                   <div className="flex-1 cursor-pointer" onClick={() => window.open(getGoogleMapsUrl(act.loc || act.title), '_blank')}>
-                    <div className="flex justify-between items-start">
-                      <span className="text-[10px] font-black text-[#D8C4B6]">{act.time}</span>
-                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity" onClick={e => e.stopPropagation()}>
-                        <button onClick={() => { setEditAct(act); setFormData(act); setShowModal(true); }} className="text-[#D8C4B6]"><Edit2 size={14} /></button>
-                      </div>
-                    </div>
+                    <span className="text-[10px] font-black text-[#D8C4B6]">{act.time}</span>
                     <h4 className="font-bold text-base text-[#4E342E]">{act.title}</h4>
                     {act.loc && <div className="text-[10px] text-[#A68A71] flex items-center gap-1 mt-1 font-bold"><MapPin size={10} /> {act.loc}</div>}
-                    {act.note && <p className="mt-2 text-[10px] text-[#A68A71] italic bg-[#FDFBF7] p-2 rounded-lg border border-[#F5EBE0]">註：{act.note}</p>}
+                    {act.note && <p className="text-[10px] text-[#A68A71] italic mt-1">{act.note}</p>}
                   </div>
                 </div>
               ))}
             </div>
           </div>
+          
           {day.isMaldives && (
-            <div className="bg-[#4E342E] p-8 rounded-[2.5rem] text-white shadow-xl mb-6">
-              <h3 className="text-xl font-bold serif flex items-center gap-3 mb-4"><Waves className="text-[#D8C4B6]" /> 度假村自費推薦</h3>
+            <div className="bg-[#4E342E] p-8 rounded-[2.5rem] text-white shadow-xl mb-6 fade-in">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl font-bold serif flex items-center gap-3">
+                  <Waves className="text-[#D8C4B6]" /> 專業潛水與課程
+                </h3>
+                <div className="flex gap-2">
+                  <button onClick={() => setShowSearch(!showSearch)} className="w-9 h-9 bg-white/10 rounded-xl flex items-center justify-center text-[#D8C4B6] hover:bg-white/20 transition-all"><Search size={18} /></button>
+                  <button onClick={handleRefresh} className={`w-9 h-9 bg-white/10 rounded-xl flex items-center justify-center text-[#D8C4B6] hover:bg-white/20 transition-all ${isRefreshing ? 'animate-spin' : ''}`}><RefreshCw size={18} /></button>
+                </div>
+              </div>
+
+              {showSearch && (
+                <div className="mb-6 fade-in">
+                  <input 
+                    type="text" 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    placeholder="搜尋船潛或課程名稱..." 
+                    className="w-full bg-white/10 border-white/10 text-white placeholder:text-white/30 focus:border-[#D8C4B6] focus:bg-white/20"
+                    autoFocus
+                  />
+                </div>
+              )}
+
               <div className="grid gap-4">
-                {RESORT_ACTIVITY_GROUPS[0].items.map((item, i) => (
-                  <div key={i} className="bg-white/5 p-4 rounded-2xl flex justify-between items-center border border-white/5">
-                    <div><h4 className="font-bold text-sm text-[#D8C4B6]">{item.name}</h4><p className="text-[9px] text-white/40 mt-0.5">{item.detail}</p></div>
-                    <div className="text-right"><div className="text-lg font-black text-white">${item.price}</div></div>
+                {filteredActivities.map((item, i) => (
+                  <div key={i} className="bg-white/5 p-4 rounded-2xl flex justify-between items-center border border-white/5 hover:border-white/20 transition-all">
+                    <div className="flex-1 pr-4">
+                      <h4 className="font-bold text-sm text-[#D8C4B6]">{item.name}</h4>
+                      <p className="text-[9px] text-white/40 mt-0.5">{item.detail}</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-black text-white">${item.price}</div>
+                      <div className="text-[8px] opacity-40 font-bold uppercase">USD</div>
+                    </div>
                   </div>
                 ))}
-              </div>
-            </div>
-          )}
-          {showModal && (
-            <div className="fixed inset-0 z-[60] flex items-center justify-center px-4">
-              <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowModal(false)} />
-              <div className="relative bg-white w-full max-sm p-8 rounded-[2.5rem] shadow-2xl space-y-4 -translate-y-12">
-                <input type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} placeholder="活動名稱" />
-                <input type="text" value={formData.loc} onChange={e => setFormData({...formData, loc: e.target.value})} placeholder="地點" />
-                <div className="flex gap-3 pt-4"><button onClick={() => setShowModal(false)} className="flex-1 py-4 rounded-2xl bg-[#FDFBF7]">取消</button><button onClick={handleSave} className="flex-1 py-4 rounded-2xl bg-[#4E342E] text-white">儲存</button></div>
               </div>
             </div>
           )}
@@ -378,26 +354,16 @@
         { date: '01/25', id: 'MH 485', from: 'KUL', to: 'MLE', depTime: '09:40', arrTime: '11:00' },
         { date: '01/30', id: 'MH 484', from: 'MLE', to: 'KUL', depTime: '12:00', arrTime: '19:45' },
         { date: '01/31', id: 'MH 366', from: 'KUL', to: 'TPE', depTime: '09:20', arrTime: '14:10' },
-        { date: '01/31', id: '高鐵 0841 次', from: '桃園', to: '左營', depTime: '16:34', arrTime: '18:25' },
       ];
       return (
         <div className="fade-in space-y-6">
           <h2 className="text-3xl font-bold serif text-[#4E342E] px-2">交通資訊</h2>
           {transports.map((t, i) => (
-            <div key={i} 
-                 className="bg-white rounded-[2.5rem] border border-[#F5EBE0] p-7 flex flex-col shadow-sm cursor-pointer hover:border-[#D8C4B6] transition-all"
-                 onClick={() => window.open(getGoogleMapsUrl(t.to), '_blank')}
-            >
+            <div key={i} className="bg-white rounded-[2.5rem] border border-[#F5EBE0] p-7 flex flex-col shadow-sm cursor-pointer hover:border-[#D8C4B6] transition-all" onClick={() => window.open(getGoogleMapsUrl(t.to), '_blank')}>
               <div className="flex justify-between items-center mb-6">
-                 <div>
-                   <div className="font-black text-lg text-[#4E342E]">{t.id}</div>
-                   <div className="text-[10px] text-[#A68A71] font-bold uppercase tracking-widest">{t.date} · 2026</div>
-                 </div>
-                 <div className="w-10 h-10 bg-[#D8C4B6] rounded-xl flex items-center justify-center text-white">
-                   {t.id.includes('高鐵') ? <Train size={18} /> : <Plane size={18} />}
-                 </div>
+                 <div><div className="font-black text-lg text-[#4E342E]">{t.id}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase tracking-widest">{t.date}</div></div>
+                 <div className="w-10 h-10 bg-[#D8C4B6] rounded-xl flex items-center justify-center text-white">{t.id.includes('高鐵') ? <Train size={18} /> : <Plane size={18} />}</div>
               </div>
-              
               <div className="flex items-center justify-between gap-2 px-2">
                 <div className="flex flex-col flex-1 items-start">
                   <div className="font-bold text-base text-[#4E342E]">{t.from}</div>
@@ -417,10 +383,9 @@
 
     function AccommodationView() {
       const hotels = [
-        { nameZh: '吉隆坡孟沙假日酒店', date: '1/23-1/25', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800', note: '時尚孟沙區，下樓即商場。' },
-        { nameZh: '美居馬爾地夫渡假村', date: '1/25-1/29', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&q=80&w=800', note: '全包式水上別墅。' },
-        { nameZh: 'h78 居民島飯店', date: '1/29-1/30', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '沙灘第一排。' },
-        { nameZh: 'Umi 質感民宿', date: '1/30-31', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800', note: '近機場休整。' }
+        { nameZh: '吉隆坡孟沙假日酒店', nameEn: 'Holiday Inn Kuala Lumpur Bangsar', date: '1/23-1/25', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800', note: '時尚孟沙區，下樓即商場，交通非常便利。' },
+        { nameZh: '美居馬爾地夫度假村', nameEn: 'Mercure Maldives Kooddoo Resort', date: '1/25-1/29', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&q=80&w=800', note: '全包式水上別墅，環礁生態極佳，潛水者天堂。' },
+        { nameZh: '馬爾地夫居民島 h78 飯店', nameEn: 'h78 Maldives', date: '1/30', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '居民島海濱首選，交通銜接機場極度便利。' }
       ];
       return (
         <div className="fade-in space-y-8">
@@ -429,12 +394,15 @@
             <div key={i} className="bg-white rounded-[3rem] overflow-hidden shadow-sm border border-[#F5EBE0]">
               <div className="h-48 overflow-hidden"><img src={h.image} className="w-full h-full object-cover" /></div>
               <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
-                   <h3 className="text-xl font-bold text-[#4E342E] serif">{h.nameZh}</h3>
-                   <button onClick={() => window.open(getGoogleMapsUrl(h.nameZh), '_blank')} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg"><Compass size={20} /></button>
+                <div className="flex justify-between items-start mb-1">
+                   <div className="flex-1 pr-4">
+                     <h3 className="text-xl font-bold text-[#4E342E] serif leading-tight">{h.nameZh}</h3>
+                     <p className="text-[10px] text-[#A68A71] font-bold uppercase tracking-tight mt-1 opacity-60">{h.nameEn}</p>
+                   </div>
+                   <button onClick={() => window.open(getGoogleMapsUrl(h.nameEn), '_blank')} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all"><Compass size={20} /></button>
                 </div>
-                <div className="text-xs text-[#A68A71] flex items-center gap-2 mb-4"><Calendar size={14} /> {h.date}</div>
-                <p className="bg-[#FDFBF7] p-4 rounded-2xl border border-[#F5EBE0] text-xs italic text-[#4E342E]">{h.note}</p>
+                <div className="text-xs text-[#A68A71] flex items-center gap-2 my-4"><Calendar size={14} /> {h.date}</div>
+                <p className="bg-[#FDFBF7] p-4 rounded-2xl border border-[#F5EBE0] text-xs italic text-[#4E342E] leading-relaxed">{h.note}</p>
               </div>
             </div>
           ))}
@@ -443,72 +411,107 @@
     }
 
     function RecommendationView() {
+      const [filter, setFilter] = useState('ALL');
+      const [isRefreshing, setIsRefreshing] = useState(false);
+
+      const handleRefresh = () => {
+        setIsRefreshing(true);
+        setTimeout(() => setIsRefreshing(false), 800);
+      };
+
+      const filteredRecs = useMemo(() => {
+        if (filter === 'ALL') return INITIAL_REC;
+        return INITIAL_REC.filter(cat => cat.location === filter);
+      }, [filter]);
+
       return (
         <div className="fade-in space-y-8">
-          <h2 className="text-3xl font-bold serif text-[#4E342E] px-2">在地推薦</h2>
-          {INITIAL_REC.map((cat, idx) => (
-            <section key={idx} className="space-y-4">
-              <h3 className="font-bold text-lg text-[#4E342E] serif flex items-center gap-2 px-2"><Utensils size={18} /> {cat.category}</h3>
-              <div className="grid gap-4">
-                {cat.items.map((item, i) => (
-                  <div key={i} className="bg-white p-6 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm cursor-pointer" onClick={() => window.open(getGoogleMapsUrl(item.name), '_blank')}>
-                    <div className="flex justify-between items-center mb-2"><h4 className="font-bold text-[#4E342E]">{item.name}</h4><div className="text-[10px] font-black text-amber-500 bg-amber-50 px-2 py-1 rounded-lg"><Star size={10} fill="currentColor" /> {item.rating}</div></div>
-                    <p className="text-xs text-[#A68A71] leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
+          <div className="flex justify-between items-center px-2">
+            <h2 className="text-3xl font-bold serif text-[#4E342E]">在地推薦</h2>
+            <div className="flex gap-2">
+              <div className="bg-white/50 p-1 rounded-xl border border-[#F5EBE0] flex">
+                <button onClick={() => setFilter('KL')} className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all ${filter === 'KL' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>吉隆坡</button>
+                <button onClick={() => setFilter('MV')} className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all ${filter === 'MV' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>居民島</button>
+                <button onClick={() => setFilter('ALL')} className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all ${filter === 'ALL' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>全部</button>
               </div>
-            </section>
-          ))}
+              <button onClick={handleRefresh} className={`w-10 h-10 bg-[#D8C4B6] text-white rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-all ${isRefreshing ? 'animate-spin' : ''}`}><RefreshCw size={20} /></button>
+            </div>
+          </div>
+
+          <div className="space-y-10">
+            {filteredRecs.map((cat, idx) => (
+              <section key={idx} className="space-y-4">
+                <h3 className="font-bold text-lg text-[#4E342E] serif flex items-center gap-2 px-2">
+                  <Utensils size={18} className="text-[#A68A71]" /> {cat.category}
+                </h3>
+                <div className="grid gap-4">
+                  {cat.items.map((item, i) => (
+                    <div key={i} className="bg-white p-6 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm cursor-pointer hover:border-[#D8C4B6] transition-all" onClick={() => window.open(getGoogleMapsUrl(item.name), '_blank')}>
+                      <h4 className="font-bold text-[#4E342E] text-base mb-2">{item.name}</h4>
+                      <p className="text-xs text-[#A68A71] leading-relaxed italic">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
         </div>
       );
     }
 
     function ExpenseView({ expenses, setExpenses }) {
-      const [showModal, setShowModal] = useState(false);
-      const [item, setItem] = useState({ title: '', amount: '', currency: 'USD' });
       const [convVal, setConvVal] = useState('');
+      const [convMode, setConvMode] = useState('USD');
       const totalTwd = expenses.reduce((sum, e) => sum + e.twd, 0);
-
-      const addExpense = () => {
-        if (!item.title || !item.amount) return;
-        const rate = item.currency === 'USD' ? USD_TO_TWD : MYR_TO_TWD;
-        setExpenses([{ ...item, id: Date.now(), twd: Math.round(parseFloat(item.amount) * rate) }, ...expenses]);
-        setShowModal(false);
-      };
 
       return (
         <div className="fade-in space-y-6 pb-20">
-          <div className="bg-white p-7 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm space-y-4">
-            <h3 className="font-bold text-sm text-[#4E342E] flex items-center gap-2"><DollarSign size={16} /> 匯率換算 (USD: {USD_TO_TWD} | MYR: {MYR_TO_TWD})</h3>
-            <div className="text-center">
-              <input type="number" value={convVal} onChange={e => setConvVal(e.target.value)} placeholder="輸入美金金額" className="text-center font-black text-xl py-2 bg-transparent border-b-2 border-[#D8C4B6]" />
-              <div className="mt-2 text-[11px] font-black text-[#A68A71]">≈ NT$ {Math.round((parseFloat(convVal) || 0) * USD_TO_TWD).toLocaleString()}</div>
+          <div className="bg-white p-8 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm space-y-6">
+            <h3 className="font-bold text-sm text-[#4E342E] flex items-center gap-2"><DollarSign size={16} className="text-[#D8C4B6]" /> 匯率換算</h3>
+            
+            <div className="space-y-4">
+              <div className="bg-[#FDFBF7] p-5 rounded-3xl border border-[#F5EBE0]">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-[10px] font-black text-[#A68A71] uppercase tracking-widest">美金 (USD) 1 : {USD_TO_TWD}</span>
+                  <div className={`px-2 py-0.5 rounded-md text-[8px] font-black ${convMode === 'USD' ? 'bg-[#4E342E] text-white' : 'bg-transparent text-[#D8C4B6]'}`}>SELECTED</div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <input type="number" value={convMode === 'USD' ? convVal : ''} onChange={e => {setConvVal(e.target.value); setConvMode('USD');}} placeholder="輸入美金金額" className="flex-1 text-xl font-black bg-transparent py-1 border-b border-transparent focus:border-[#D8C4B6] transition-all" />
+                  <span className="text-xs font-bold text-[#A68A71]">≈ NT$ {convMode === 'USD' ? Math.round((parseFloat(convVal) || 0) * USD_TO_TWD).toLocaleString() : '0'}</span>
+                </div>
+              </div>
+
+              <div className="bg-[#FDFBF7] p-5 rounded-3xl border border-[#F5EBE0]">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-[10px] font-black text-[#A68A71] uppercase tracking-widest">令吉 (MYR) 1 : {MYR_TO_TWD}</span>
+                  <div className={`px-2 py-0.5 rounded-md text-[8px] font-black ${convMode === 'MYR' ? 'bg-[#4E342E] text-white' : 'bg-transparent text-[#D8C4B6]'}`}>SELECTED</div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <input type="number" value={convMode === 'MYR' ? convVal : ''} onChange={e => {setConvVal(e.target.value); setConvMode('MYR');}} placeholder="輸入令吉金額" className="flex-1 text-xl font-black bg-transparent py-1 border-b border-transparent focus:border-[#D8C4B6] transition-all" />
+                  <span className="text-xs font-bold text-[#A68A71]">≈ NT$ {convMode === 'MYR' ? Math.round((parseFloat(convVal) || 0) * MYR_TO_TWD).toLocaleString() : '0'}</span>
+                </div>
+              </div>
             </div>
           </div>
+
           <div className="bg-[#4E342E] p-8 rounded-[3rem] text-white shadow-2xl flex justify-between items-center">
-            <div><p className="text-[10px] font-black opacity-50 uppercase">總支出預估</p><h2 className="text-3xl font-black">NT$ {totalTwd.toLocaleString()}</h2></div>
-            <Wallet size={32} className="opacity-20" />
+            <div><p className="text-[10px] font-black opacity-50 uppercase tracking-widest">總支出預估</p><h2 className="text-3xl font-black mt-1">NT$ {totalTwd.toLocaleString()}</h2></div>
+            <Wallet size={40} className="opacity-10" />
           </div>
-          <div className="flex justify-between items-center px-2"><h2 className="text-xl font-bold serif text-[#4E342E]">支出明細</h2><button onClick={() => setShowModal(true)} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg"><Plus size={20} /></button></div>
+
+          <div className="flex justify-between items-center px-2">
+            <h2 className="text-xl font-bold serif text-[#4E342E]">支出明細</h2>
+            <button className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all"><Plus size={20} /></button>
+          </div>
+
           <div className="space-y-3">
             {expenses.map(e => (
-              <div key={e.id} className="bg-white p-5 rounded-2xl border border-[#F5EBE0] flex justify-between items-center">
-                <div><div className="font-bold text-[#4E342E] text-sm">{e.title}</div><div className="text-[10px] text-[#A68A71]">{e.currency} {e.amount}</div></div>
+              <div key={e.id} className="bg-white p-5 rounded-2xl border border-[#F5EBE0] flex justify-between items-center shadow-sm">
+                <div><div className="font-bold text-[#4E342E] text-sm">{e.title}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase">{e.currency} {e.amount}</div></div>
                 <div className="text-right font-black text-[#4E342E]">NT$ {e.twd.toLocaleString()}</div>
               </div>
             ))}
           </div>
-          {showModal && (
-            <div className="fixed inset-0 z-[60] flex items-center justify-center px-4">
-              <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowModal(false)} />
-              <div className="relative bg-white w-full max-sm p-8 rounded-[2.5rem] shadow-2xl space-y-4 -translate-y-12">
-                <input type="text" value={item.title} onChange={e => setItem({...item, title: e.target.value})} placeholder="項目" />
-                <input type="number" value={item.amount} onChange={e => setItem({...item, amount: e.target.value})} placeholder="金額" />
-                <select value={item.currency} onChange={e => setItem({...item, currency: e.target.value})}><option value="USD">USD</option><option value="MYR">MYR</option></select>
-                <div className="flex gap-3 pt-4"><button onClick={() => setShowModal(false)} className="flex-1 py-4 rounded-2xl bg-[#FDFBF7]">取消</button><button onClick={addExpense} className="flex-1 py-4 rounded-2xl bg-[#4E342E] text-white">儲存</button></div>
-              </div>
-            </div>
-          )}
         </div>
       );
     }
