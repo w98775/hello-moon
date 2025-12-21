@@ -202,13 +202,13 @@
 
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v40')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v40')) || INITIAL_PREP);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v40')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v41')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v41')) || INITIAL_PREP);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v41')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v40', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v40', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_expenses_v40', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v41', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v41', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_expenses_v41', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
@@ -336,9 +336,20 @@
       const [isRefreshing, setIsRefreshing] = useState(false);
       const [showOthers, setShowOthers] = useState(false);
       const [isModalOpen, setIsModalOpen] = useState(false);
-      const [newAct, setNewAct] = useState({ time: '', title: '', loc: '', note: '' });
+      const [newAct, setNewAct] = useState({ time: '09:00', title: '', loc: '', note: '' });
       
       const day = itinerary[dayIdx];
+
+      const timeOptions = useMemo(() => {
+        const options = [];
+        for (let h = 0; h < 24; h++) {
+          for (let m = 0; m < 60; m += 30) {
+            const time = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+            options.push(time);
+          }
+        }
+        return options;
+      }, []);
 
       const handleAddActivity = () => {
         if (!newAct.title.trim()) return;
@@ -346,7 +357,7 @@
         updatedItinerary[dayIdx].activities.push({ ...newAct, id: 'act-' + Date.now() });
         setItinerary(updatedItinerary);
         setIsModalOpen(false);
-        setNewAct({ time: '', title: '', loc: '', note: '' });
+        setNewAct({ time: '09:00', title: '', loc: '', note: '' });
       };
 
       const handleRefresh = () => {
@@ -474,7 +485,9 @@
                 <div className="space-y-3">
                   <div>
                     <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">時間</label>
-                    <input type="text" value={newAct.time} onChange={e => setNewAct({...newAct, time: e.target.value})} placeholder="例如：09:30" />
+                    <select value={newAct.time} onChange={e => setNewAct({...newAct, time: e.target.value})}>
+                      {timeOptions.map(t => <option key={t} value={t}>{t}</option>)}
+                    </select>
                   </div>
                   <div>
                     <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">標題</label>
