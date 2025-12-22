@@ -181,7 +181,7 @@
           { id: '401', time: '10:00', title: '谷中城 MaxMoney', loc: 'MaxMoney Mid Valley', note: '換匯首選' },
           { id: '402', time: '11:00', title: '谷中城華陽茶室', loc: 'Mid Valley Oriental Kopi', note: '必吃波羅包' },
           { id: '403', time: '12:30', title: '谷中城採購', loc: 'Mid Valley Megamall', note: '採買伴手禮' },
-          { id: '404', time: '14:00', title: 'Philo headspa', loc: 'Philo HeadSpa - Uptown Branch', note: '放鬆體驗' },
+          { id: '404', time: '14:00', title: 'Philo headspa', loc: 'Philo Hair & Head Spa', note: '放鬆體驗' },
           { id: '405', time: '16:30', title: 'Village Park Restaurant 炸雞椰漿飯', loc: 'Uptown Damansara', note: '炸雞必吃' },
           { id: '406', time: '18:00', title: '鬼仔巷', loc: 'Kwai Chai Hong', note: '文化藝術區' },
           { id: '407', time: '19:00', title: 'REXKL書局', loc: 'BookXcess at REXKL', note: '特色書局' },
@@ -716,8 +716,8 @@
       const hotels = [
         { nameZh: '吉隆坡孟沙假日酒店', nameEn: 'Holiday Inn Kuala Lumpur Bangsar', date: '1/23-1/25', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800', note: '時尚孟沙區，交通非常便利。' },
         { nameZh: '美居馬爾地夫度假村', nameEn: 'Mercure Maldives Kooddoo Resort', date: '1/25-1/29', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&q=80&w=800', note: '全包式水上別墅，潛水者天堂。' },
-        { nameZh: '馬爾地夫居民島 h78 飯店', nameEn: 'h78 Maldives', date: '1/29', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '海濱首選，銜接機場極度便利。' },
-        { nameZh: 'Umi SplashMania 溫馨民宿', nameEn: 'Umi SplashMania homestay', date: '1/30', image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=800', note: '鄰近 SplashMania 水上樂園，環境溫馨舒適，返台前的絕佳休憩站。' }
+        { nameZh: '馬爾地夫居民島 h78 飯店', nameEn: 'h78 Maldives', date: '1/30', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '海濱首選，銜接機場極度便利。' },
+        { nameZh: 'Umi SplashMania 溫馨民宿', nameEn: 'Umi SplashMania homestay', date: '1/30-2/1', image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=800', note: '鄰近 SplashMania 水上樂園，環境溫馨舒適，返台前的絕佳休憩站。' }
       ];
       return (
         <div className="fade-in space-y-8">
@@ -799,9 +799,52 @@
     function ExpenseView({ expenses, setExpenses }) {
       const [convVal, setConvVal] = useState('');
       const [convMode, setConvMode] = useState('USD');
-      const totalTwd = expenses.reduce((sum, e) => sum + e.twd, 0);
+      
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const [newExpense, setNewExpense] = useState({ title: '', currency: 'TWD', amount: '' });
+      const [editingId, setEditingId] = useState(null);
+
+      const totalTwd = expenses.reduce((sum, e) => sum + (e.twd || 0), 0);
       const rate = convMode === 'USD' ? USD_TO_TWD : MYR_TO_TWD;
       const result = Math.round((parseFloat(convVal) || 0) * rate);
+
+      const handleSaveExpense = () => {
+        if (!newExpense.title.trim() || !newExpense.amount) return;
+        
+        let twdAmount = 0;
+        const amount = parseFloat(newExpense.amount);
+        if (newExpense.currency === 'USD') twdAmount = amount * USD_TO_TWD;
+        else if (newExpense.currency === 'MYR') twdAmount = amount * MYR_TO_TWD;
+        else twdAmount = amount; 
+
+        const expenseData = {
+            ...newExpense,
+            amount: amount,
+            twd: Math.round(twdAmount)
+        };
+
+        if (editingId) {
+            setExpenses(expenses.map(e => e.id === editingId ? { ...expenseData, id: editingId } : e));
+        } else {
+            setExpenses([...expenses, { ...expenseData, id: 'exp-' + Date.now() }]);
+        }
+        
+        setIsModalOpen(false);
+        setNewExpense({ title: '', currency: 'TWD', amount: '' });
+        setEditingId(null);
+      };
+
+      const handleDeleteExpense = (id) => {
+          if (confirm('確定要刪除此筆支出嗎？')) {
+              setExpenses(expenses.filter(e => e.id !== id));
+          }
+      };
+
+      const handleEdit = (exp) => {
+          setNewExpense({ title: exp.title, currency: exp.currency, amount: exp.amount });
+          setEditingId(exp.id);
+          setIsModalOpen(true);
+      };
 
       return (
         <div className="fade-in space-y-6 pb-20">
@@ -823,16 +866,52 @@
           </div>
           <div className="flex justify-between items-center px-2">
             <h2 className="text-xl font-bold serif text-[#4E342E]">支出明細</h2>
-            <button className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg transition-all"><Plus size={20} /></button>
+            <button onClick={() => { setEditingId(null); setNewExpense({ title: '', currency: 'TWD', amount: '' }); setIsModalOpen(true); }} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg transition-all"><Plus size={20} /></button>
           </div>
           <div className="space-y-3">
             {expenses.map(e => (
-              <div key={e.id} className="bg-white p-5 rounded-2xl border border-[#F5EBE0] flex justify-between items-center shadow-sm">
+              <div key={e.id} className="bg-white p-5 rounded-2xl border border-[#F5EBE0] flex justify-between items-center shadow-sm cursor-pointer hover:border-[#D8C4B6] transition-all group relative">
+                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all bg-white pl-2">
+                    <button onClick={(ev) => { ev.stopPropagation(); handleEdit(e); }} className="p-2 text-[#A68A71] hover:text-[#4E342E] transition-all"><Edit2 size={16} /></button>
+                    <button onClick={(ev) => { ev.stopPropagation(); handleDeleteExpense(e.id); }} className="p-2 text-[#A68A71] hover:text-red-500 transition-all"><Trash2 size={16} /></button>
+                </div>
                 <div><div className="font-bold text-[#4E342E] text-sm">{e.title}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase">{e.currency} {e.amount}</div></div>
                 <div className="text-right font-black text-[#4E342E]">NT$ {e.twd.toLocaleString()}</div>
               </div>
             ))}
           </div>
+
+          {isModalOpen && (
+            <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+              <div className="bg-white w-full max-w-sm rounded-[2.5rem] p-8 space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+                <h3 className="text-xl font-bold serif text-[#4E342E]">{editingId ? '編輯支出' : '新增支出'}</h3>
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">項目名稱</label>
+                    <input type="text" value={newExpense.title} onChange={e => setNewExpense({...newExpense, title: e.target.value})} placeholder="例如：晚餐" />
+                  </div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="col-span-1">
+                      <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">幣別</label>
+                      <select value={newExpense.currency} onChange={e => setNewExpense({...newExpense, currency: e.target.value})}>
+                        <option value="TWD">TWD</option>
+                        <option value="USD">USD</option>
+                        <option value="MYR">MYR</option>
+                      </select>
+                    </div>
+                    <div className="col-span-2">
+                        <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">金額</label>
+                        <input type="number" value={newExpense.amount} onChange={e => setNewExpense({...newExpense, amount: e.target.value})} placeholder="輸入金額" />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-3 pt-4">
+                  <button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 font-bold text-[#A68A71] rounded-2xl border border-[#F5EBE0]">取消</button>
+                  <button onClick={handleSaveExpense} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">{editingId ? '更新' : '儲存'}</button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       );
     }
