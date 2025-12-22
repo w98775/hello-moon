@@ -178,7 +178,7 @@
         date: '1/24', 
         title: '精選一日遊', 
         activities: [
-          { id: '401', time: '10:00', title: '谷中城 MaxMoney', loc: 'Mid Valley Megamall', note: '換匯首選' },
+          { id: '401', time: '10:00', title: '谷中城 MaxMoney', loc: 'MaxMoney Mid Valley', note: '換匯首選' },
           { id: '402', time: '11:00', title: '谷中城華陽茶室', loc: 'Mid Valley Oriental Kopi', note: '必吃波羅包' },
           { id: '403', time: '12:30', title: '谷中城採購', loc: 'Mid Valley Megamall', note: '採買伴手禮' },
           { id: '404', time: '14:00', title: 'Philo headspa', loc: 'Philo Hair & Head Spa', note: '放鬆體驗' },
@@ -195,16 +195,17 @@
       { date: '1/26', title: '深海探索', isMaldives: true, activities: [{ id: '261', time: '09:00', title: '晨間潛水課程', loc: 'Dive Center', note: 'PADI 課程進度' }] },
       { date: '1/27', title: '船潛冒險', isMaldives: true, activities: [{ id: '271', time: '08:30', title: '環礁船潛', loc: 'Kooddoo Jetty', note: '探索更遠的潛點' }] },
       { date: '1/28', title: '水下攝影', isMaldives: true, activities: [{ id: '281', time: '10:00', title: '珊瑚礁浮潛', loc: 'House Reef', note: '紀錄豐富生態' }] },
-      { date: '1/29', title: '放鬆時光', isMaldives: true, activities: [{ id: '291', time: '11:00', title: '享受渡假村設施', loc: 'Pool Bar', note: '全包式餐飲服務' }] },
-      { date: '1/30', title: 'h78 飯店', activities: [{ id: '301', time: '12:00', title: '搭船前往居民島', loc: 'Hulhumale', note: '入住 h78 飯店' }, { id: '302', time: '19:45', title: '飛抵吉隆坡', loc: 'KLIA T1', note: 'MH484 抵達' }] },
+      { date: '1/29', title: '放鬆時光', isMaldives: true, activities: [{ id: '291', time: '11:00', title: '享受渡假村設施', loc: 'Pool Bar', note: '全包式餐飲服務' }, { id: '301', time: '14:00', title: '搭船前往居民島', loc: 'Maafushi Mid Valley', note: '入住 h78 飯店' }] },
+      { date: '1/30', title: '飛往居民島', activities: [{ id: '302', time: '19:45', title: '飛抵吉隆坡', loc: 'KLIA T1', note: 'MH484 抵達' }] },
       { date: '1/31', title: 'Umi SplashMania 休息', activities: [{ id: '311', time: '12:00', title: 'SplashMania 玩樂', loc: 'SplashMania Waterpark', note: '享受水上設施' }, { id: '312', time: '18:00', title: '入住 Umi 民宿', loc: 'Umi SplashMania homestay', note: '溫馨休息空間' }] },
     ];
 
     const INITIAL_TRANSPORTS = [
-      { date: '01/23', id: '高鐵 0818 次', from: '左營', to: '桃園', depTime: '10:25', arrTime: '12:18', type: 'Train' },
-      { date: '01/23', id: 'MH 367', from: 'TPE', to: 'KUL', depTime: '15:10', arrTime: '20:05', type: 'Plane' },
-      { date: '01/25', id: 'MH 485', from: 'KUL', to: 'MLE', depTime: '09:40', arrTime: '11:00', type: 'Plane' },
-      { date: '01/30', id: 'MH 484', from: 'MLE', to: 'KUL', depTime: '12:00', arrTime: '19:45', type: 'Plane' }
+      { localId: 't1', date: '01/23', id: '高鐵 0818 次', from: '左營', to: '桃園', depTime: '10:25', arrTime: '12:18', type: 'Train' },
+      { localId: 't2', date: '01/23', id: 'MH 367', from: 'TPE', to: 'KUL', depTime: '15:10', arrTime: '20:05', type: 'Plane' },
+      { localId: 't3', date: '01/25', id: 'MH 485', from: 'KUL', to: 'MLE', depTime: '09:40', arrTime: '11:00', type: 'Plane' },
+      { localId: 't4', date: '01/30', id: 'MH 484', from: 'MLE', to: 'KUL', depTime: '12:00', arrTime: '19:45', type: 'Plane' },
+      { localId: 't5', date: '01/31', id: '高鐵 0841 次', from: '桃園', to: '左營', depTime: '16:34', arrTime: '18:25', type: 'Train' }
     ];
 
     const REC_POOLS = [
@@ -234,15 +235,15 @@
 
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v47')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v47')) || INITIAL_PREP);
-      const [transports, setTransports] = useState(() => JSON.parse(localStorage.getItem('trip_transport_v47')) || INITIAL_TRANSPORTS);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v47')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v48')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v48')) || INITIAL_PREP);
+      const [transports, setTransports] = useState(() => JSON.parse(localStorage.getItem('trip_transport_v48')) || INITIAL_TRANSPORTS);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v48')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v47', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v47', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_transport_v47', JSON.stringify(transports)), [transports]);
-      useEffect(() => localStorage.setItem('trip_expenses_v47', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v48', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v48', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_transport_v48', JSON.stringify(transports)), [transports]);
+      useEffect(() => localStorage.setItem('trip_expenses_v48', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
@@ -427,6 +428,16 @@
         }
       };
 
+      const handleDeleteCurrent = () => {
+         if (confirm('確定要刪除此行程嗎？')) {
+          const updatedItinerary = [...itinerary];
+          updatedItinerary[dayIdx].activities = updatedItinerary[dayIdx].activities.filter(a => a.id !== editingActId);
+          setItinerary(updatedItinerary);
+          setIsModalOpen(false);
+          setEditingActId(null);
+        }
+      };
+
       const handleRefresh = () => {
         setIsRefreshing(true);
         setShowOthers(true); 
@@ -516,7 +527,21 @@
                   <div><label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">地點</label><input type="text" value={newAct.loc} onChange={e => setNewAct({...newAct, loc: e.target.value})} placeholder="例如：雙子塔" /></div>
                   <div><label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">備註</label><input type="text" value={newAct.note} onChange={e => setNewAct({...newAct, note: e.target.value})} placeholder="選填備註" /></div>
                 </div>
-                <div className="flex gap-3 pt-4"><button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 font-bold text-[#A68A71] rounded-2xl border border-[#F5EBE0]">取消</button><button onClick={handleSaveActivity} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">{editingActId ? '更新行程' : '儲存行程'}</button></div>
+                <div className="space-y-3 pt-2">
+                  <div className="flex gap-3">
+                    <button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 font-bold text-[#A68A71] rounded-2xl border border-[#F5EBE0]">取消</button>
+                    <button onClick={handleSaveActivity} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">{editingActId ? '更新行程' : '儲存行程'}</button>
+                  </div>
+                  {editingActId && (
+                    <button 
+                      onClick={handleDeleteCurrent}
+                      className="w-full py-3 font-bold text-[#ef4444] bg-red-50 rounded-2xl border border-red-100 flex items-center justify-center gap-2 active:scale-95 transition-all"
+                    >
+                      <Trash2 size={16} />
+                      刪除此行程
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -527,17 +552,47 @@
     function TransportView({ transports, setTransports }) {
       const [isModalOpen, setIsModalOpen] = useState(false);
       const [newTransport, setNewTransport] = useState({ id: '', type: 'Plane', date: '01/23', from: '', to: '', depTime: '', arrTime: '' });
+      const [editingId, setEditingId] = useState(null);
 
-      const handleAddTransport = () => {
+      const handleSaveTransport = () => {
         if (!newTransport.id.trim() || !newTransport.from.trim() || !newTransport.to.trim()) return;
-        setTransports([...transports, { ...newTransport, localId: Date.now() }]);
+        
+        if (editingId) {
+          setTransports(transports.map(t => (t.localId || t.id) === editingId ? { ...newTransport, localId: editingId } : t));
+        } else {
+          setTransports([...transports, { ...newTransport, localId: 'trans-' + Date.now() }]);
+        }
+        
         setIsModalOpen(false);
         setNewTransport({ id: '', type: 'Plane', date: '01/23', from: '', to: '', depTime: '', arrTime: '' });
+        setEditingId(null);
+      };
+
+      const handleEdit = (t) => {
+        setNewTransport({ 
+          id: t.id, 
+          type: t.type, 
+          date: t.date, 
+          from: t.from, 
+          to: t.to, 
+          depTime: t.depTime, 
+          arrTime: t.arrTime 
+        });
+        setEditingId(t.localId || t.id);
+        setIsModalOpen(true);
       };
 
       const handleDeleteTransport = (id) => {
         if (confirm('確定要刪除此交通行程嗎？')) {
           setTransports(transports.filter(t => (t.localId || t.id) !== id));
+        }
+      };
+      
+      const handleDeleteCurrent = () => {
+         if (confirm('確定要刪除此交通行程嗎？')) {
+          setTransports(transports.filter(t => (t.localId || t.id) !== editingId));
+          setIsModalOpen(false);
+          setEditingId(null);
         }
       };
 
@@ -553,17 +608,25 @@
         <div className="fade-in space-y-6">
           <div className="flex justify-between items-center px-2">
             <h2 className="text-3xl font-bold serif text-[#4E342E]">交通資訊</h2>
-            <button onClick={() => setIsModalOpen(true)} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all"><Plus size={20} /></button>
+            <button onClick={() => { setEditingId(null); setNewTransport({ id: '', type: 'Plane', date: '01/23', from: '', to: '', depTime: '', arrTime: '' }); setIsModalOpen(true); }} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-all"><Plus size={20} /></button>
           </div>
 
           {transports.map((t, i) => (
             <div key={t.localId || i} className="bg-white rounded-[2.5rem] border border-[#F5EBE0] p-7 flex flex-col shadow-sm cursor-pointer hover:border-[#D8C4B6] transition-all group relative" onClick={() => window.open(getGoogleMapsUrl(t.to), '_blank')}>
-              <button 
-                onClick={(e) => { e.stopPropagation(); handleDeleteTransport(t.localId || t.id); }} 
-                className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 p-2 text-[#A68A71] hover:text-red-500 transition-all"
-              >
-                <Trash2 size={18} />
-              </button>
+              <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                <button 
+                  onClick={(e) => { e.stopPropagation(); handleEdit(t); }} 
+                  className="p-2 text-[#A68A71] hover:text-[#4E342E] transition-all"
+                >
+                  <Edit2 size={18} />
+                </button>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); handleDeleteTransport(t.localId || t.id); }} 
+                  className="p-2 text-[#A68A71] hover:text-red-500 transition-all"
+                >
+                  <Trash2 size={18} />
+                </button>
+              </div>
               <div className="flex justify-between items-center mb-6">
                  <div><div className="font-black text-lg text-[#4E342E]">{t.id}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase tracking-widest">{t.date}</div></div>
                  <div className="w-10 h-10 bg-[#D8C4B6] rounded-xl flex items-center justify-center text-white">{getIcon(t.type)}</div>
@@ -585,7 +648,7 @@
           {isModalOpen && (
             <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
               <div className="bg-white w-full max-w-sm rounded-[2.5rem] p-8 space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
-                <h3 className="text-xl font-bold serif text-[#4E342E]">新增交通資訊</h3>
+                <h3 className="text-xl font-bold serif text-[#4E342E]">{editingId ? '編輯交通資訊' : '新增交通資訊'}</h3>
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-3">
                     <div>
@@ -626,9 +689,20 @@
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-3 pt-4">
-                  <button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 font-bold text-[#A68A71] rounded-2xl border border-[#F5EBE0]">取消</button>
-                  <button onClick={handleAddTransport} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">儲存交通</button>
+                <div className="space-y-3 pt-2">
+                  <div className="flex gap-3">
+                    <button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 font-bold text-[#A68A71] rounded-2xl border border-[#F5EBE0]">取消</button>
+                    <button onClick={handleSaveTransport} className="flex-1 py-3 font-bold bg-[#D8C4B6] text-white rounded-2xl shadow-md">{editingId ? '更新交通' : '儲存交通'}</button>
+                  </div>
+                   {editingId && (
+                    <button 
+                      onClick={handleDeleteCurrent}
+                      className="w-full py-3 font-bold text-[#ef4444] bg-red-50 rounded-2xl border border-red-100 flex items-center justify-center gap-2 active:scale-95 transition-all"
+                    >
+                      <Trash2 size={16} />
+                      刪除此行程
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
