@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#FDFBF7">
   <meta name="format-detection" content="telephone=no">
   <meta name="application-name" content="嶼海紀行">
+  <!-- 使用公開的 URL 連結，確保加入主畫面時能正常顯示圖示，無需本地圖檔 -->
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3125/3125848.png"> 
   
   <title>嶼海紀行</title>
@@ -74,6 +75,12 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+    }
+    /* 強制確保按鈕可點擊 */
+    .clickable-widget {
+      pointer-events: auto !important;
+      cursor: pointer !important;
+      touch-action: manipulation; 
     }
   </style>
 
@@ -359,8 +366,9 @@
       const [tipIdx, setTipIdx] = useState(0);
       const [selectedCat, setSelectedCat] = useState(null);
       const [showScrollTop, setShowScrollTop] = useState(false);
+      // New state to control the visibility of the minimized tip bubble
+      const [showMinimizedTip, setShowMinimizedTip] = useState(true);
 
-      // Auto rotate tips when search is closed
       useEffect(() => {
         if (showSearch) return;
         const interval = setInterval(() => {
@@ -369,7 +377,6 @@
         return () => clearInterval(interval);
       }, [showSearch]);
 
-      // Scroll to Top Logic
       useEffect(() => {
         const handleScroll = () => {
           if (window.scrollY > 300) {
@@ -386,7 +393,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       };
 
-      // Smart Search Logic
       const keywordMap = {
         '錢': ['匯率', '美金', '馬幣', '小費', '刷卡', '現金', '花費'],
         '交通': ['Grab', '計程車', '捷運', '地鐵', '機場', '飛機', '船'],
@@ -421,33 +427,33 @@
       return (
         <div className="fixed bottom-24 right-4 z-[9999] flex flex-col items-end gap-2">
           
-          {/* 1. Search Panel - Frosted Glass Glassmorphism */}
+          {/* 1. Search Panel */}
           <div 
-            className={`bg-white/40 backdrop-blur-xl border border-white/30 p-4 rounded-2xl rounded-br-none shadow-2xl mb-1 w-72 pointer-events-auto transition-all duration-300 origin-bottom-right ${showSearch ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4 pointer-events-none absolute invisible'}`}
+            className={`bg-white/80 backdrop-blur-xl border border-white/50 p-4 rounded-2xl rounded-br-none shadow-2xl mb-1 w-72 pointer-events-auto transition-all duration-300 origin-bottom-right ${showSearch ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4 pointer-events-none absolute invisible'}`}
             style={{ display: showSearch ? 'block' : 'none' }}
           >
             <div className="space-y-3">
-              <div className="flex justify-between items-center pb-2 border-b border-[#4E342E]/10">
-                <h3 className="text-xs font-black text-[#4E342E] uppercase tracking-widest drop-shadow-sm">Travel Tips 旅遊小幫手</h3>
-                <button onClick={() => setShowSearch(false)} className="clickable-widget p-1"><X size={16} className="text-[#4E342E]" /></button>
+              <div className="flex justify-between items-center pb-2 border-b border-[#F5EBE0]/50">
+                <h3 className="text-xs font-black text-[#A68A71] uppercase tracking-widest">Travel Tips</h3>
+                <button onClick={() => setShowSearch(false)} className="clickable-widget p-1"><X size={16} className="text-[#A68A71]" /></button>
               </div>
               
-              <div className="flex items-center gap-2 bg-white/50 rounded-xl px-3 py-2 border border-white/20">
-                <Search size={14} className="text-[#4E342E]" />
+              <div className="flex items-center gap-2 bg-white/50 rounded-xl px-3 py-2 border border-white/60">
+                <Search size={14} className="text-[#A68A71]" />
                 <input 
                   type="text" 
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="搜尋錢、交通、天氣..."
-                  className="clickable-widget text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#4E342E]/40"
+                  className="clickable-widget text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#D8C4B6]"
                 />
-                {query && <button onClick={() => setQuery('')} className="clickable-widget"><X size={12} className="text-[#4E342E]" /></button>}
+                {query && <button onClick={() => setQuery('')} className="clickable-widget"><X size={12} className="text-[#A68A71]" /></button>}
               </div>
 
               <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
                 <button 
                   onClick={() => setSelectedCat(null)}
-                  className={`clickable-widget flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all ${!selectedCat ? 'bg-[#4E342E] text-white' : 'bg-white/40 text-[#4E342E] border border-white/20'}`}
+                  className={`clickable-widget flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all ${!selectedCat ? 'bg-[#4E342E] text-white' : 'bg-white/60 text-[#A68A71] border border-white/60'}`}
                 >
                   全部
                 </button>
@@ -455,7 +461,7 @@
                   <button 
                     key={cat.id}
                     onClick={() => setSelectedCat(selectedCat === cat.id ? null : cat.id)}
-                    className={`clickable-widget flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1 ${selectedCat === cat.id ? 'bg-[#D8C4B6] text-white shadow-sm' : 'bg-white/40 text-[#4E342E] border border-white/20'}`}
+                    className={`clickable-widget flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1 ${selectedCat === cat.id ? 'bg-[#D8C4B6] text-white' : 'bg-white/60 text-[#A68A71] border border-white/60'}`}
                   >
                     <cat.icon size={10} /> {cat.name}
                   </button>
@@ -465,13 +471,13 @@
               <div className="min-h-[100px] max-h-60 overflow-y-auto no-scrollbar space-y-2 pr-1">
                 {filteredTips.length > 0 ? (
                   filteredTips.map((tip, i) => (
-                    <div key={i} className="flex gap-3 py-2 border-b border-[#4E342E]/5 last:border-0 group">
-                      <div className="mt-0.5 text-[#4E342E]/60"><Tag size={12} /></div>
-                      <p className="text-xs text-[#4E342E] font-medium leading-relaxed drop-shadow-sm">{tip.text}</p>
+                    <div key={i} className="flex gap-3 py-2 border-b border-[#F5EBE0]/50 last:border-0 group">
+                      <div className="mt-0.5 text-[#D8C4B6]"><Tag size={12} /></div>
+                      <p className="text-xs text-[#4E342E] leading-relaxed">{tip.text}</p>
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-6 text-[#4E342E]/60 text-xs">
+                  <div className="text-center py-6 text-[#A68A71] text-xs">
                     <p>找不到相關資訊 🐢</p>
                     <p className="text-[9px] mt-1 opacity-60">試試「錢」或「交通」等關鍵字</p>
                   </div>
@@ -480,10 +486,17 @@
             </div>
           </div>
 
-          {/* 2. Minimized Bubble - High Transparency Frosted Glass */}
-          {!showSearch && (
-             <div className="bg-white/25 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-2xl rounded-br-none shadow-xl mb-2 max-w-[200px] transition-all duration-500 animate-in fade-in slide-in-from-bottom-2 pointer-events-auto">
-                <p className="text-[10px] font-bold text-[#4E342E] line-clamp-2 leading-relaxed drop-shadow-sm">
+          {/* 2. Minimized Bubble with X Button */}
+          {!showSearch && showMinimizedTip && (
+             <div className="bg-white/80 backdrop-blur-xl border border-white/50 px-4 py-2 rounded-2xl rounded-br-none shadow-lg mb-2 max-w-[200px] transition-all duration-500 animate-in fade-in slide-in-from-bottom-2 pointer-events-auto relative group">
+                <button 
+                  onClick={(e) => { e.stopPropagation(); setShowMinimizedTip(false); }}
+                  className="clickable-widget absolute -top-2 -right-2 bg-[#A68A71] text-white rounded-full p-0.5 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                  aria-label="Close Tip"
+                >
+                  <X size={10} />
+                </button>
+                <p className="text-[10px] font-bold text-[#4E342E] line-clamp-2 leading-relaxed">
                   {TRAVEL_TIPS_DATA[tipIdx].text}
                 </p>
              </div>
@@ -492,16 +505,23 @@
           {/* 3. Control Buttons - Stacked Vertically */}
           <div className="flex flex-col items-center gap-3 pointer-events-auto mt-2">
             <button 
-              onClick={(e) => { e.stopPropagation(); setTipIdx(prev => (prev + 1) % TRAVEL_TIPS_DATA.length); }}
-              className="clickable-widget w-12 h-12 bg-[#4E342E] rounded-full shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all border-2 border-white/20"
-              aria-label="Next Tip"
+              onClick={(e) => { 
+                e.stopPropagation(); 
+                if (!showMinimizedTip) {
+                  setShowMinimizedTip(true); 
+                } else {
+                  setTipIdx(prev => (prev + 1) % TRAVEL_TIPS_DATA.length); 
+                }
+              }}
+              className="clickable-widget w-12 h-12 bg-[#4E342E] rounded-full shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all border-2 border-[#D8C4B6] cursor-pointer z-[110]"
+              aria-label={showMinimizedTip ? "Next Tip" : "Show Tip"}
             >
               <Bot size={24} />
             </button>
 
             <button 
               onClick={(e) => { e.stopPropagation(); setShowSearch(!showSearch); }}
-              className={`clickable-widget w-12 h-12 bg-white/40 backdrop-blur-lg text-[#4E342E] rounded-full shadow-lg flex items-center justify-center border-2 border-white/30 transition-all hover:scale-110 active:scale-95 ${showSearch ? 'ring-2 ring-[#D8C4B6] bg-[#FDFBF7]/80' : ''}`}
+              className={`clickable-widget w-12 h-12 bg-white text-[#4E342E] rounded-full shadow-lg flex items-center justify-center border-2 border-[#F5EBE0] transition-all hover:scale-110 active:scale-95 cursor-pointer z-[110] ${showSearch ? 'ring-2 ring-[#D8C4B6] bg-white' : ''}`}
               aria-label="Search Tips"
             >
               {showSearch ? <X size={20} /> : <Lightbulb size={20} />}
@@ -511,7 +531,7 @@
             {showScrollTop && (
               <button 
                 onClick={scrollToTop}
-                className="clickable-widget w-12 h-12 bg-[#D8C4B6] rounded-full shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all animate-in fade-in slide-in-from-bottom-4 border-2 border-white/20"
+                className="clickable-widget w-12 h-12 bg-[#D8C4B6] rounded-full shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all animate-in fade-in slide-in-from-bottom-4 z-[110]"
                 aria-label="Scroll to top"
               >
                 <ArrowUp size={24} />
@@ -521,6 +541,8 @@
         </div>
       );
     }
+    
+    // ... (PreparationView, ItineraryView, TransportView, AccommodationView, RecommendationView, ExpenseView, App remain the same) ...
 
     function PreparationView({ prepList, setPrepList }) {
       const categories = ['重要文件', '電子電器', '衣物穿搭', '個人用品', '常備藥品'];
@@ -954,7 +976,7 @@
         { nameZh: '吉隆坡孟沙假日酒店', nameEn: 'Holiday Inn Kuala Lumpur Bangsar', date: '1/23-1/25', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800', note: '時尚孟沙區，交通非常便利。' },
         { nameZh: '美居馬爾地夫度假村', nameEn: 'Mercure Maldives Kooddoo Resort', date: '1/25-1/29', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&q=80&w=800', note: '全包式水上別墅，潛水者天堂。' },
         { nameZh: '馬爾地夫居民島 h78 飯店', nameEn: 'h78 Maldives', date: '1/29-1/30', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '海濱首選，銜接機場極度便利。' },
-        { nameZh: 'Umi SplashMania 民宿', nameEn: 'Umi SplashMania homestay', date: '1/30-1/31', image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=800', note: '鄰近 SplashMania 水上樂園，環境溫馨舒適，返台前的絕佳休憩站。' }
+        { nameZh: 'Umi SplashMania 溫馨民宿', nameEn: 'Umi SplashMania homestay', date: '1/30-1/31', image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=800', note: '鄰近 SplashMania 水上樂園，環境溫馨舒適，返台前的絕佳休憩站。' }
       ];
       return (
         <div className="fade-in space-y-8">
@@ -1107,12 +1129,8 @@
           </div>
           <div className="space-y-3">
             {expenses.map(e => (
-              <div key={e.id} className="bg-white p-5 rounded-2xl border border-[#F5EBE0] flex justify-between items-center shadow-sm cursor-pointer hover:border-[#D8C4B6] transition-all group relative">
-                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all bg-white pl-2">
-                    <button onClick={(ev) => { ev.stopPropagation(); handleEdit(e); }} className="p-2 text-[#A68A71] hover:text-[#4E342E] transition-all"><Edit2 size={16} /></button>
-                    <button onClick={(ev) => { ev.stopPropagation(); handleDeleteExpense(e.id); }} className="p-2 text-[#A68A71] hover:text-red-500 transition-all"><Trash2 size={16} /></button>
-                </div>
-                <div><div className="text-[9px] text-[#A68A71] font-bold opacity-60 mb-1">{e.date}</div><div className="font-bold text-[#4E342E] text-sm">{e.title}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase">{e.currency} {e.amount}</div></div>
+              <div key={e.id} className="bg-white p-5 rounded-2xl border border-[#F5EBE0] flex justify-between items-center shadow-sm">
+                <div><div className="font-bold text-[#4E342E] text-sm">{e.title}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase">{e.currency} {e.amount}</div></div>
                 <div className="text-right font-black text-[#4E342E]">NT$ {e.twd.toLocaleString()}</div>
               </div>
             ))}
@@ -1157,7 +1175,7 @@
       );
     }
 
-    const App = () => {
+    function App() {
       const [activeTab, setActiveTab] = useState('ITINERARY');
       const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v53')) || INITIAL_ITINERARY);
       const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v53')) || INITIAL_PREP);
