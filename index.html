@@ -255,7 +255,7 @@
       "熱帶氣候穿透氣衣物，室內冷氣強建議帶薄外套。",
       "清真寺需穿長袍；居民島禁酒禁豬肉，度假村不限。",
       "自來水不可生飲，建議買瓶裝水；防曬請用海洋友善款。",
-      "馬爾地夫小費：行李/床頭約1-2美金，服務費另計。",
+      "馬爾地夫小費：行李/床頭約-2美金，服務費另計。",
       "吉隆坡Grab叫車便宜又方便，建議綁定信用卡付款。",
       "馬爾地夫週五是主麻日，居民島渡輪可能減班。",
       "吉隆坡必吃肉骨茶，新峰肉骨茶藥材味濃郁。",
@@ -377,7 +377,6 @@
         setAiResponse('');
         
         try {
-          // Changed model to gemini-1.5-flash as 'latest' sometimes causes issues
           const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
