@@ -91,7 +91,7 @@
       ClipboardCheck, Map as MapIcon, Plane, Bed, Sparkles, Plus,
       Compass, Wallet, X, Trash2, Clock, Star, Waves, Edit2,
       Calendar, MapPin, ExternalLink, Train, ArrowRight, ChevronRight,
-      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy, Search, Bus
+      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy, Search, Bus, Paperclip, Bot
     } from 'lucide-react';
 
     // Global Constants
@@ -153,8 +153,8 @@
 
     const INITIAL_PREP = [
       { id: 'p1', category: '重要文件', item: '護照正本 (效期6個月以上)', note: '建議拍照存手機雲端備份', checked: false },
-      { id: 'p2', category: '重要文件', item: '馬爾地夫 IMUGA 申報', note: '抵達前96小時內填寫', checked: false },
-      { id: 'p3', category: '重要文件', item: '馬來西亞 MDAC 電子卡', note: '抵達前3天內填寫', checked: false },
+      { id: 'p2', category: '重要文件', item: '馬爾地夫 IMUGA 申報', note: '抵達前96小時內填寫', checked: false, link: 'https://www.stan-travel.com/imuga-maldives-immigration/' },
+      { id: 'p3', category: '重要文件', item: '馬來西亞 MDAC 電子卡', note: '抵達前3天內填寫', checked: false, link: 'https://ianchen.life/mdac-application-malaysia/' },
       { id: 'p4', category: '重要文件', item: '旅遊行程表/機票/飯店憑證', note: '紙本備份', checked: false },
       { id: 'p5', category: '重要文件', item: '海外旅遊保險單', note: '包含醫療與班機不便險', checked: false },
       { id: 'p6', category: '重要文件', item: '外幣現金 (美金/令吉)', note: '美金需2009年後新鈔', checked: false },
@@ -235,6 +235,48 @@
       ]
     ];
 
+    const TRAVEL_TIPS = [
+      "馬爾地夫均溫30度，5-10月雨季；吉隆坡午後常雷雨。",
+      "入境大馬前3天填MDAC；馬爾地夫填IMUGA，免簽。",
+      "1馬幣≈7.5台幣；馬爾地夫用美金，1美金≈32.5台幣。",
+      "馬來西亞無時差；馬爾地夫慢台灣3小時 (GMT+5)。",
+      "兩地電壓230V，皆用英式三孔插座 (Type G)。",
+      "網卡建議eSIM；渡假村多有免費WiFi，訊號穩定。",
+      "熱帶氣候穿透氣衣物，室內冷氣強建議帶薄外套。",
+      "清真寺需穿長袍；居民島禁酒禁豬肉，度假村不限。",
+      "自來水不可生飲，建議買瓶裝水；防曬請用海洋友善款。",
+      "馬爾地夫小費：行李/床頭約1-2美金，服務費另計。"
+    ];
+
+    function TravelBot() {
+      const [tipIdx, setTipIdx] = useState(0);
+      const [visible, setVisible] = useState(true);
+
+      useEffect(() => {
+        const interval = setInterval(() => {
+          setVisible(false);
+          setTimeout(() => {
+            setTipIdx(prev => (prev + 1) % TRAVEL_TIPS.length);
+            setVisible(true);
+          }, 500);
+        }, 8000); 
+        return () => clearInterval(interval);
+      }, []);
+
+      return (
+        <div className="fixed bottom-28 right-4 z-50 flex flex-col items-end pointer-events-none">
+          <div className={`bg-white/95 backdrop-blur-md border border-[#D8C4B6] p-3 rounded-2xl rounded-br-none shadow-lg mb-2 max-w-[160px] transition-all duration-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+            <p className="text-[11px] font-bold text-[#4E342E] leading-relaxed">
+              {TRAVEL_TIPS[tipIdx]}
+            </p>
+          </div>
+          <button onClick={() => setTipIdx(prev => (prev + 1) % TRAVEL_TIPS.length)} className="w-12 h-12 bg-[#4E342E] rounded-full shadow-xl flex items-center justify-center text-white pointer-events-auto hover:scale-110 active:scale-95 transition-all border-2 border-[#D8C4B6]">
+            <Bot size={24} />
+          </button>
+        </div>
+      );
+    }
+
     const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
       const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v51')) || INITIAL_ITINERARY);
@@ -273,6 +315,9 @@
             </div>
           </header>
           <main className="flex-grow pt-24 pb-32 max-w-xl mx-auto w-full px-4">{renderContent()}</main>
+          
+          <TravelBot />
+
           <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[94%] max-w-lg z-50">
             <div className="glass-effect rounded-[2.5rem] shadow-2xl border border-[#F5EBE0]/60 p-1.5 flex justify-between items-center">
               {[
@@ -338,7 +383,14 @@
                     <div key={p.id} className="bg-white p-4 rounded-2xl border border-[#F5EBE0] flex items-center gap-4 shadow-sm hover:border-[#D8C4B6] transition-all group">
                       <div className={`checkbox-custom flex-shrink-0 ${p.checked ? 'checked' : ''}`} onClick={() => setPrepList(prepList.map(item => item.id === p.id ? {...item, checked: !item.checked} : item))} />
                       <div className={`flex-1 ${p.checked ? 'opacity-40' : ''}`}>
-                        <div className={`font-bold text-sm ${p.checked ? 'line-through' : ''}`}>{p.item}</div>
+                        <div className={`font-bold text-sm ${p.checked ? 'line-through' : ''} flex items-center gap-2`}>
+                          {p.item}
+                          {p.link && (
+                            <a href={p.link} target="_blank" rel="noopener noreferrer" className="text-[#A68A71] hover:text-[#4E342E]" onClick={(e) => e.stopPropagation()}>
+                              <Paperclip size={14} />
+                            </a>
+                          )}
+                        </div>
                         <div className="text-[10px] text-[#A68A71] italic">{p.note}</div>
                       </div>
                       <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
