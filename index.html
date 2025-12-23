@@ -351,14 +351,15 @@
     ];
 
     function TravelBot() {
+      // ⚠️ 請在此處貼上您的 API Key，並務必在 Google Console 設定 HTTP Referrer 網域限制以策安全
+      const API_KEY = "AIzaSyDfsVVNdmDTUqbdyikiRduDnkmKktqnORo"; 
+
       const [tipIdx, setTipIdx] = useState(0);
       const [visible, setVisible] = useState(true);
       const [searchMode, setSearchMode] = useState(false);
       const [query, setQuery] = useState('');
-      const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
       const [aiResponse, setAiResponse] = useState('');
       const [isLoading, setIsLoading] = useState(false);
-      const [showKeyInput, setShowKeyInput] = useState(false);
 
       useEffect(() => {
         if (searchMode) return;
@@ -372,27 +373,13 @@
         return () => clearInterval(interval);
       }, [searchMode]);
 
-      const handleSaveKey = (val) => {
-        setApiKey(val);
-        localStorage.setItem('gemini_api_key', val);
-        setShowKeyInput(false);
-      };
-
-      const handleResetKey = () => {
-        if(confirm('確定要清除 API Key 嗎？')) {
-          setApiKey('');
-          localStorage.removeItem('gemini_api_key');
-          setAiResponse('');
-        }
-      };
-
       const handleAiSubmit = async () => {
-        if (!query.trim() || !apiKey) return;
+        if (!query.trim() || !API_KEY) return;
         setIsLoading(true);
         setAiResponse('');
         
         try {
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -419,50 +406,32 @@
           <div className={`bg-white/95 backdrop-blur-md border border-[#D8C4B6] p-4 rounded-2xl rounded-br-none shadow-xl mb-3 w-64 pointer-events-auto transition-all duration-300 origin-bottom-right ${visible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
             {searchMode ? (
               <div className="space-y-3">
-                {!apiKey || showKeyInput ? (
-                  <div className="space-y-2">
-                    <p className="text-[10px] font-bold text-[#A68A71]">請輸入 Google Gemini API Key</p>
+                  <div className="flex items-center gap-2 border-b border-[#F5EBE0] pb-2 relative">
+                    <Search size={14} className="text-[#A68A71]" />
                     <input 
-                      type="password" 
-                      className="w-full text-xs p-2 rounded-lg border border-[#F5EBE0] bg-[#FDFBF7]"
-                      placeholder="Paste API Key here..."
-                      onBlur={(e) => handleSaveKey(e.target.value)}
+                      type="text" 
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleAiSubmit()}
+                      placeholder="輸入問題 (如: 電壓)..."
+                      className="text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#D8C4B6] p-0 border-none focus:shadow-none focus:ring-0 h-auto"
+                      autoFocus
                     />
-                    <p className="text-[9px] text-[#A68A71] opacity-60">Key 將儲存於手機端，不會上傳。</p>
+                    <button onClick={handleAiSubmit} disabled={isLoading} className="text-[#A68A71] hover:text-[#4E342E] disabled:opacity-30">
+                      <Send size={14} />
+                    </button>
                   </div>
-                ) : (
-                  <>
-                    <div className="flex items-center gap-2 border-b border-[#F5EBE0] pb-2 relative">
-                      <Search size={14} className="text-[#A68A71]" />
-                      <input 
-                        type="text" 
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && handleAiSubmit()}
-                        placeholder="輸入問題 (如: 電壓)..."
-                        className="text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#D8C4B6] p-0 border-none focus:shadow-none focus:ring-0 h-auto"
-                        autoFocus
-                      />
-                      <button onClick={handleAiSubmit} disabled={isLoading} className="text-[#A68A71] hover:text-[#4E342E] disabled:opacity-30">
-                        <Send size={14} />
-                      </button>
-                    </div>
-                    <div className="min-h-[60px] max-h-48 overflow-y-auto no-scrollbar">
-                      {isLoading ? (
-                        <div className="flex justify-center py-4"><RefreshCw size={20} className="animate-spin text-[#D8C4B6]" /></div>
-                      ) : aiResponse ? (
-                        <p className="text-[11px] font-bold text-[#4E342E] leading-relaxed animate-pulse-once">{aiResponse}</p>
-                      ) : (
-                        <div className="text-[10px] text-[#A68A71] text-center py-2 space-y-1">
-                          <p>我是 AI 助理！請輸入問題。</p>
-                          <div className="flex justify-center gap-2 mt-2">
-                             <button onClick={handleResetKey} className="text-[9px] underline opacity-50 flex items-center gap-1"><Settings size={10} /> 重設 Key</button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </>
-                )}
+                  <div className="min-h-[60px] max-h-48 overflow-y-auto no-scrollbar">
+                    {isLoading ? (
+                      <div className="flex justify-center py-4"><RefreshCw size={20} className="animate-spin text-[#D8C4B6]" /></div>
+                    ) : aiResponse ? (
+                      <p className="text-[11px] font-bold text-[#4E342E] leading-relaxed animate-pulse-once">{aiResponse}</p>
+                    ) : (
+                      <div className="text-[10px] text-[#A68A71] text-center py-2 space-y-1">
+                        <p>我是 AI 助理！請輸入問題。</p>
+                      </div>
+                    )}
+                  </div>
                 <div className="absolute top-2 right-2">
                    <button onClick={() => { setSearchMode(false); setQuery(''); setAiResponse(''); }}><X size={14} className="text-[#A68A71]" /></button>
                 </div>
