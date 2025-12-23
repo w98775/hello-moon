@@ -801,7 +801,7 @@
       const [convMode, setConvMode] = useState('USD');
       
       const [isModalOpen, setIsModalOpen] = useState(false);
-      const [newExpense, setNewExpense] = useState({ title: '', currency: 'TWD', amount: '' });
+      const [newExpense, setNewExpense] = useState({ title: '', currency: 'TWD', amount: '', date: new Date().toISOString().split('T')[0] });
       const [editingId, setEditingId] = useState(null);
 
       const totalTwd = expenses.reduce((sum, e) => sum + (e.twd || 0), 0);
@@ -824,13 +824,13 @@
         };
 
         if (editingId) {
-            setExpenses(expenses.map(e => e.id === editingId ? { ...expenseData, id: editingId } : e));
+            setExpenses(expenses.map(e => e.id === editingId ? { ...expenseData, id: editingId } : e).sort((a, b) => new Date(b.date) - new Date(a.date)));
         } else {
-            setExpenses([...expenses, { ...expenseData, id: 'exp-' + Date.now() }]);
+            setExpenses([...expenses, { ...expenseData, id: 'exp-' + Date.now() }].sort((a, b) => new Date(b.date) - new Date(a.date)));
         }
         
         setIsModalOpen(false);
-        setNewExpense({ title: '', currency: 'TWD', amount: '' });
+        setNewExpense({ title: '', currency: 'TWD', amount: '', date: new Date().toISOString().split('T')[0] });
         setEditingId(null);
       };
 
@@ -841,7 +841,7 @@
       };
 
       const handleEdit = (exp) => {
-          setNewExpense({ title: exp.title, currency: exp.currency, amount: exp.amount });
+          setNewExpense({ title: exp.title, currency: exp.currency, amount: exp.amount, date: exp.date || new Date().toISOString().split('T')[0] });
           setEditingId(exp.id);
           setIsModalOpen(true);
       };
@@ -866,7 +866,7 @@
           </div>
           <div className="flex justify-between items-center px-2">
             <h2 className="text-xl font-bold serif text-[#4E342E]">支出明細</h2>
-            <button onClick={() => { setEditingId(null); setNewExpense({ title: '', currency: 'TWD', amount: '' }); setIsModalOpen(true); }} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg transition-all"><Plus size={20} /></button>
+            <button onClick={() => { setEditingId(null); setNewExpense({ title: '', currency: 'TWD', amount: '', date: new Date().toISOString().split('T')[0] }); setIsModalOpen(true); }} className="w-10 h-10 bg-[#4E342E] text-white rounded-xl flex items-center justify-center shadow-lg transition-all"><Plus size={20} /></button>
           </div>
           <div className="space-y-3">
             {expenses.map(e => (
@@ -875,7 +875,7 @@
                     <button onClick={(ev) => { ev.stopPropagation(); handleEdit(e); }} className="p-2 text-[#A68A71] hover:text-[#4E342E] transition-all"><Edit2 size={16} /></button>
                     <button onClick={(ev) => { ev.stopPropagation(); handleDeleteExpense(e.id); }} className="p-2 text-[#A68A71] hover:text-red-500 transition-all"><Trash2 size={16} /></button>
                 </div>
-                <div><div className="font-bold text-[#4E342E] text-sm">{e.title}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase">{e.currency} {e.amount}</div></div>
+                <div><div className="text-[9px] text-[#A68A71] font-bold opacity-60 mb-1">{e.date}</div><div className="font-bold text-[#4E342E] text-sm">{e.title}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase">{e.currency} {e.amount}</div></div>
                 <div className="text-right font-black text-[#4E342E]">NT$ {e.twd.toLocaleString()}</div>
               </div>
             ))}
@@ -886,6 +886,10 @@
               <div className="bg-white w-full max-w-sm rounded-[2.5rem] p-8 space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
                 <h3 className="text-xl font-bold serif text-[#4E342E]">{editingId ? '編輯支出' : '新增支出'}</h3>
                 <div className="space-y-3">
+                  <div>
+                    <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">日期</label>
+                    <input type="date" value={newExpense.date} onChange={e => setNewExpense({...newExpense, date: e.target.value})} />
+                  </div>
                   <div>
                     <label className="text-[10px] font-black text-[#A68A71] uppercase ml-2">項目名稱</label>
                     <input type="text" value={newExpense.title} onChange={e => setNewExpense({...newExpense, title: e.target.value})} placeholder="例如：晚餐" />
