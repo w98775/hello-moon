@@ -101,7 +101,7 @@
       ClipboardCheck, Map as MapIcon, Plane, Bed, Sparkles, Plus,
       Compass, Wallet, X, Trash2, Clock, Star, Waves, Edit2,
       Calendar, MapPin, ExternalLink, Train, ArrowRight, ChevronRight,
-      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy, Search, Bus, Paperclip, Bot, Lightbulb, Settings, Send
+      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy, Search, Bus, Paperclip, Bot, Lightbulb, Settings, Send, Tag
     } from 'lucide-react';
 
     // Global Constants
@@ -245,227 +245,248 @@
       ]
     ];
 
-    const TRAVEL_TIPS = [
-      "馬爾地夫均溫30度，5-10月雨季；吉隆坡午後常雷雨。",
-      "入境大馬前3天填MDAC；馬爾地夫填IMUGA，免簽。",
-      "1馬幣≈7.5台幣；馬爾地夫用美金，1美金≈32.5台幣。",
-      "馬來西亞無時差；馬爾地夫慢台灣3小時 (GMT+5)。",
-      "兩地電壓230V，皆用英式三孔插座 (Type G)。",
-      "網卡建議eSIM；渡假村多有免費WiFi，訊號穩定。",
-      "熱帶氣候穿透氣衣物，室內冷氣強建議帶薄外套。",
-      "清真寺需穿長袍；居民島禁酒禁豬肉，度假村不限。",
-      "自來水不可生飲，建議買瓶裝水；防曬請用海洋友善款。",
-      "馬爾地夫小費：行李/床頭約-2美金，服務費另計。",
-      "吉隆坡Grab叫車便宜又方便，建議綁定信用卡付款。",
-      "馬爾地夫週五是主麻日，居民島渡輪可能減班。",
-      "吉隆坡必吃肉骨茶，新峰肉骨茶藥材味濃郁。",
-      "馬爾地夫嚴禁攜帶酒精與豬肉製品入境，查獲會沒收。",
-      "雙子星塔週一公休，參觀空橋建議提前網路購票。",
-      "馬爾地夫水上飛機下午四點後不飛，安排航班需注意。",
-      "吉隆坡過馬路要小心，摩托車有時會騎上人行道。",
-      "馬爾地夫珊瑚脆弱，潛水時請勿觸摸或踩踏。",
-      "黑風洞階梯有272階，且野生猴子多，請勿餵食。",
-      "馬爾地夫美金新鈔要求嚴格，破損或摺痕常被拒收。",
-      "吉隆坡中央車站KL Sentral是交通樞紐，轉乘方便。",
-      "馬爾地夫居民島穿著需保守，比基尼僅限比基尼沙灘。",
-      "亞羅街Jalan Alor是宵夜好去處，沙嗲雞翅必點。",
-      "馬爾地夫出海看海豚機率高，但仍屬自然生態不保證。",
-      "吉隆坡武吉免登區百貨林立，Pavilion適合逛街。",
-      "馬爾地夫部分居民島有蚊蟲，建議攜帶防蚊液。",
-      "吉隆坡茨廠街是唐人街，買東西記得要殺價。",
-      "馬爾地夫渡假村消費高，全包式方案較省心。",
-      "馬來西亞人習慣用右手吃飯與握手，左手視為不潔。",
-      "馬爾地夫插座若無開關，需留意是否通電。",
-      "吉隆坡機場KLIA與KLIA2航廈不同，轉機需搭快鐵。",
-      "馬爾地夫海龜保育嚴格，觸摸海龜是違法行為。",
-      "吉隆坡地鐵MRT冷氣極強，搭乘時建議備薄外套。",
-      "馬爾地夫沙洲野餐是熱門行程，記得帶墨鏡防眩光。",
-      "馬來西亞多元種族，常見馬來語、英語、華語交雜。",
-      "馬爾地夫浮潛三寶建議自備，衛生又合臉型。",
-      "吉隆坡粉紅清真寺在布城，距離市區約30分鐘車程。",
-      "馬爾地夫雨季浪大，易暈船者務必準備暈船藥。",
-      "吉隆坡主要使用Touch 'n Go卡，類似台灣悠遊卡。",
-      "馬爾地夫不可帶走貝殼或沙子，出境會被海關查扣。",
-      "吉隆坡舊街場白咖啡是經典伴手禮，超市買較便宜。",
-      "馬爾地夫居民島週五商店可能配合祈禱時間暫停營業。",
-      "馬來西亞茶室點飲料說「雪茶」指的是冰茶（無糖）。",
-      "馬爾地夫夜釣行程若釣到魚，餐廳通常可幫忙料理。",
-      "吉隆坡KLCC公園晚上有音樂噴泉秀，免費欣賞。",
-      "馬爾地夫渡假村通常提供飲用水，不需從本島扛水。",
-      "馬來西亞印度煎餅Roti Canai是早餐熱門選擇。",
-      "馬爾地夫太陽輻射強，浮潛務必穿水母衣防曬傷。",
-      "吉隆坡Grab尖峰時段易塞車，趕飛機請預留時間。",
-      "馬爾地夫飯店不提供牙刷牙膏，需自備盥洗用具。",
-      "馬來西亞廁所多有洗屁股管線，地板常是濕的。",
-      "馬爾地夫機場島Hulhumale有公車通往機場，便宜便利。",
-      "吉隆坡獨立廣場周邊有許多殖民風格建築，適合拍照。",
-      "馬爾地夫鯨鯊出沒點多在南阿里環礁，可參加一日遊。",
-      "馬來西亞榴槤季節約在6-8月，貓山王最受歡迎。",
-      "馬爾地夫小費不可給硬幣，當地人無法兌換。",
-      "吉隆坡NU Sentral百貨與中央車站共構，逛街方便。",
-      "馬爾地夫無人機空拍需事先向渡假村申請許可。",
-      "馬來西亞Kaya咖椰醬配吐司是道地南洋風味。",
-      "馬爾地夫居民島餐廳上菜速度慢，要有心理準備。",
-      "吉隆坡塔KL Tower景觀台視野比雙子星塔更開闊。",
-      "馬爾地夫潛水需出示證照，體驗潛水深度有限制。",
-      "馬來西亞部分餐廳收10%服務費與6%政府稅。",
-      "馬爾地夫旺季為11-4月，房價較高但天氣穩定。",
-      "吉隆坡鬼仔巷有壁畫與特色咖啡廳，文青必訪。",
-      "馬爾地夫居民島換匯匯率通常比機場好一點。",
-      "馬來西亞人過馬路會舉手示意，車輛通常會禮讓。",
-      "馬爾地夫部分渡假村時區會快馬累1小時，享更多陽光。",
-      "吉隆坡Saloma Link行人天橋夜間點燈很美。",
-      "馬爾地夫出海行程盡量穿鮮豔泳衣，拍照更出色。",
-      "馬來西亞Mamak檔是24小時營業，半夜不怕餓。",
-      "馬爾地夫度假村水上屋建議住兩晚體驗即可。",
-      "吉隆坡Pavilion門口的大碗公噴泉是熱門會面點。",
-      "馬爾地夫部分珊瑚礁有強流，浮潛務必穿救生衣。",
-      "馬來西亞肯德基KFC有獨特口味，價格也親民。",
-      "馬爾地夫居民島週五渡輪停駛，需改搭快艇。",
-      "吉隆坡中央藝術坊Central Market可買手工藝品。",
-      "馬爾地夫必買鮪魚罐頭，是當地特產且便宜。",
-      "馬來西亞Bata鞋子便宜好穿，是國民品牌。",
-      "馬爾地夫退房後若晚班機，可寄放行李逛馬累。",
-      "吉隆坡Thean Hou Temple天后宮融合多種建築風格。",
-      "馬爾地夫渡假村內自費餐飲昂貴，水一瓶約5-10美金。",
-      "馬來西亞便利商店除了7-11還有KK Mart與FamilyMart。",
-      "馬爾地夫有些島嶼有發光浮游生物，俗稱藍眼淚。",
-      "吉隆坡康樂夜市週三限定，全長2公里超好逛。",
-      "馬爾地夫居民島超市可買零食，價格比渡假村親民。",
-      "馬來西亞Teh Tarik拉茶甜度高，怕甜可喊少糖。",
-      "馬爾地夫搭乘快艇容易顛簸，盡量坐船尾較穩。",
-      "吉隆坡城中城公園KLCC Park有兒童戲水區。",
-      "馬爾地夫部分渡假村禁止攜帶空拍機，請先確認。",
-      "馬來西亞路邊攤衛生不一，腸胃敏感者請慎選。",
-      "馬爾地夫淡季5-10月房價便宜，但遇到下雨機率高。",
-      "吉隆坡按摩CP值高，武吉免登區有很多選擇。",
-      "馬爾地夫沙灘屋通常離海近，適合有小孩家庭。",
-      "馬來西亞過年期間吉隆坡像空城，很多店休。",
-      "馬爾地夫當地超市週五中午11-14點通常休息祈禱。",
-      "吉隆坡到馬六甲車程約2小時，適合安排一日遊。",
-      "馬爾地夫度假村房內插頭多是萬用孔，免轉接頭。",
-      "馬來西亞雲頂高原是避暑勝地，有賭場與樂園。",
-      "馬爾地夫若住居民島，記得尊重當地伊斯蘭習俗。"
+    // Categorized Travel Tips
+    const TRAVEL_TIPS_CATEGORIES = [
+      { id: 'prepare', icon: ClipboardCheck, name: '行前須知', desc: '簽證、氣候、時差' },
+      { id: 'money', icon: Wallet, name: '金錢消費', desc: '匯率、小費、刷卡' },
+      { id: 'transport', icon: Bus, name: '交通移動', desc: 'Grab、機場、渡輪' },
+      { id: 'life', icon: Info, name: '生活實用', desc: '電壓、網路、穿著' },
+      { id: 'culture', icon: Star, name: '文化禁忌', desc: '宗教、飲食、禮儀' },
     ];
 
-    function TravelBot() {
-      // ⚠️ 請在此處貼上您的 API Key，並務必在 Google Console 設定 HTTP Referrer 網域限制以策安全
-      const API_KEY = "AIzaSyDfsVVNdmDTUqbdyikiRduDnkmKktqnORo"; 
+    // Raw tips with inferred categories (in a real app these would be tagged in the data)
+    const RAW_TRAVEL_TIPS = [
+      { text: "馬爾地夫均溫30度，5-10月雨季；吉隆坡午後常雷雨。", cat: "prepare" },
+      { text: "入境大馬前3天填MDAC；馬爾地夫填IMUGA，免簽。", cat: "prepare" },
+      { text: "1馬幣≈7.5台幣；馬爾地夫用美金，1美金≈32.5台幣。", cat: "money" },
+      { text: "馬來西亞無時差；馬爾地夫慢台灣3小時 (GMT+5)。", cat: "prepare" },
+      { text: "兩地電壓230V，皆用英式三孔插座 (Type G)。", cat: "life" },
+      { text: "網卡建議eSIM；渡假村多有免費WiFi，訊號穩定。", cat: "life" },
+      { text: "熱帶氣候穿透氣衣物，室內冷氣強建議帶薄外套。", cat: "life" },
+      { text: "清真寺需穿長袍；居民島禁酒禁豬肉，度假村不限。", cat: "culture" },
+      { text: "自來水不可生飲，建議買瓶裝水；防曬請用海洋友善款。", cat: "life" },
+      { text: "馬爾地夫小費：行李/床頭約1-2美金，服務費另計。", cat: "money" },
+      { text: "吉隆坡Grab叫車便宜又方便，建議綁定信用卡付款。", cat: "transport" },
+      { text: "馬爾地夫週五是主麻日，居民島渡輪可能減班。", cat: "transport" },
+      { text: "吉隆坡必吃肉骨茶，新峰肉骨茶藥材味濃郁。", cat: "culture" },
+      { text: "馬爾地夫嚴禁攜帶酒精與豬肉製品入境，查獲會沒收。", cat: "culture" },
+      { text: "雙子星塔週一公休，參觀空橋建議提前網路購票。", cat: "culture" },
+      { text: "馬爾地夫水上飛機下午四點後不飛，安排航班需注意。", cat: "transport" },
+      { text: "吉隆坡過馬路要小心，摩托車有時會騎上人行道。", cat: "life" },
+      { text: "馬爾地夫珊瑚脆弱，潛水時請勿觸摸或踩踏。", cat: "culture" },
+      { text: "黑風洞階梯有272階，且野生猴子多，請勿餵食。", cat: "culture" },
+      { text: "馬爾地夫美金新鈔要求嚴格，破損或摺痕常被拒收。", cat: "money" },
+      { text: "吉隆坡中央車站KL Sentral是交通樞紐，轉乘方便。", cat: "transport" },
+      { text: "馬爾地夫居民島穿著需保守，比基尼僅限比基尼沙灘。", cat: "culture" },
+      { text: "亞羅街Jalan Alor是宵夜好去處，沙嗲雞翅必點。", cat: "culture" },
+      { text: "馬爾地夫出海看海豚機率高，但仍屬自然生態不保證。", cat: "culture" },
+      { text: "吉隆坡武吉免登區百貨林立，Pavilion適合逛街。", cat: "culture" },
+      { text: "馬爾地夫部分居民島有蚊蟲，建議攜帶防蚊液。", cat: "life" },
+      { text: "吉隆坡茨廠街是唐人街，買東西記得要殺價。", cat: "money" },
+      { text: "馬爾地夫渡假村消費高，全包式方案較省心。", cat: "money" },
+      { text: "馬來西亞人習慣用右手吃飯與握手，左手視為不潔。", cat: "culture" },
+      { text: "馬爾地夫插座若無開關，需留意是否通電。", cat: "life" },
+      { text: "吉隆坡機場KLIA與KLIA2航廈不同，轉機需搭快鐵。", cat: "transport" },
+      { text: "馬爾地夫海龜保育嚴格，觸摸海龜是違法行為。", cat: "culture" },
+      { text: "吉隆坡地鐵MRT冷氣極強，搭乘時建議備薄外套。", cat: "life" },
+      { text: "馬爾地夫沙洲野餐是熱門行程，記得帶墨鏡防眩光。", cat: "life" },
+      { text: "馬來西亞多元種族，常見馬來語、英語、華語交雜。", cat: "culture" },
+      { text: "馬爾地夫浮潛三寶建議自備，衛生又合臉型。", cat: "life" },
+      { text: "吉隆坡粉紅清真寺在布城，距離市區約30分鐘車程。", cat: "culture" },
+      { text: "馬爾地夫雨季浪大，易暈船者務必準備暈船藥。", cat: "life" },
+      { text: "吉隆坡主要使用Touch 'n Go卡，類似台灣悠遊卡。", cat: "transport" },
+      { text: "馬爾地夫不可帶走貝殼或沙子，出境會被海關查扣。", cat: "culture" },
+      { text: "吉隆坡舊街場白咖啡是經典伴手禮，超市買較便宜。", cat: "money" },
+      { text: "馬爾地夫居民島週五商店可能配合祈禱時間暫停營業。", cat: "life" },
+      { text: "馬來西亞茶室點飲料說「雪茶」指的是冰茶（無糖）。", cat: "culture" },
+      { text: "馬爾地夫夜釣行程若釣到魚，餐廳通常可幫忙料理。", cat: "culture" },
+      { text: "吉隆坡KLCC公園晚上有音樂噴泉秀，免費欣賞。", cat: "culture" },
+      { text: "馬爾地夫渡假村通常提供飲用水，不需從本島扛水。", cat: "life" },
+      { text: "馬來西亞印度煎餅Roti Canai是早餐熱門選擇。", cat: "culture" },
+      { text: "馬爾地夫太陽輻射強，浮潛務必穿水母衣防曬傷。", cat: "life" },
+      { text: "吉隆坡Grab尖峰時段易塞車，趕飛機請預留時間。", cat: "transport" },
+      { text: "馬爾地夫飯店不提供牙刷牙膏，需自備盥洗用具。", cat: "life" },
+      { text: "馬來西亞廁所多有洗屁股管線，地板常是濕的。", cat: "life" },
+      { text: "馬爾地夫機場島Hulhumale有公車通往機場，便宜便利。", cat: "transport" },
+      { text: "吉隆坡獨立廣場周邊有許多殖民風格建築，適合拍照。", cat: "culture" },
+      { text: "馬爾地夫鯨鯊出沒點多在南阿里環礁，可參加一日遊。", cat: "culture" },
+      { text: "馬來西亞榴槤季節約在6-8月，貓山王最受歡迎。", cat: "culture" },
+      { text: "馬爾地夫小費不可給硬幣，當地人無法兌換。", cat: "money" },
+      { text: "吉隆坡NU Sentral百貨與中央車站共構，逛街方便。", cat: "culture" },
+      { text: "馬爾地夫無人機空拍需事先向渡假村申請許可。", cat: "culture" },
+      { text: "馬來西亞Kaya咖椰醬配吐司是道地南洋風味。", cat: "culture" },
+      { text: "馬爾地夫居民島餐廳上菜速度慢，要有心理準備。", cat: "life" },
+      { text: "吉隆坡塔KL Tower景觀台視野比雙子星塔更開闊。", cat: "culture" },
+      { text: "馬爾地夫潛水需出示證照，體驗潛水深度有限制。", cat: "culture" },
+      { text: "馬來西亞部分餐廳收10%服務費與6%政府稅。", cat: "money" },
+      { text: "馬爾地夫旺季為11-4月，房價較高但天氣穩定。", cat: "prepare" },
+      { text: "吉隆坡鬼仔巷有壁畫與特色咖啡廳，文青必訪。", cat: "culture" },
+      { text: "馬爾地夫居民島換匯匯率通常比機場好一點。", cat: "money" },
+      { text: "馬來西亞人過馬路會舉手示意，車輛通常會禮讓。", cat: "transport" },
+      { text: "馬爾地夫部分渡假村時區會快馬累1小時，享更多陽光。", cat: "prepare" },
+      { text: "吉隆坡Saloma Link行人天橋夜間點燈很美。", cat: "culture" },
+      { text: "馬爾地夫出海行程盡量穿鮮豔泳衣，拍照更出色。", cat: "life" },
+      { text: "馬來西亞Mamak檔是24小時營業，半夜不怕餓。", cat: "culture" },
+      { text: "馬爾地夫度假村水上屋建議住兩晚體驗即可。", cat: "prepare" },
+      { text: "吉隆坡Pavilion門口的大碗公噴泉是熱門會面點。", cat: "culture" },
+      { text: "馬爾地夫部分珊瑚礁有強流，浮潛務必穿救生衣。", cat: "life" },
+      { text: "馬來西亞肯德基KFC有獨特口味，價格也親民。", cat: "culture" },
+      { text: "馬爾地夫居民島週五渡輪停駛，需改搭快艇。", cat: "transport" },
+      { text: "吉隆坡中央藝術坊Central Market可買手工藝品。", cat: "culture" },
+      { text: "馬爾地夫必買鮪魚罐頭，是當地特產且便宜。", cat: "money" },
+      { text: "馬來西亞Bata鞋子便宜好穿，是國民品牌。", cat: "culture" },
+      { text: "馬爾地夫退房後若晚班機，可寄放行李逛馬累。", cat: "transport" },
+      { text: "吉隆坡Thean Hou Temple天后宮融合多種建築風格。", cat: "culture" },
+      { text: "馬爾地夫渡假村內自費餐飲昂貴，水一瓶約5-10美金。", cat: "money" },
+      { text: "馬來西亞便利商店除了7-11還有KK Mart與FamilyMart。", cat: "life" },
+      { text: "馬爾地夫有些島嶼有發光浮游生物，俗稱藍眼淚。", cat: "culture" },
+      { text: "吉隆坡康樂夜市週三限定，全長2公里超好逛。", cat: "culture" },
+      { text: "馬爾地夫居民島超市可買零食，價格比渡假村親民。", cat: "money" },
+      { text: "馬來西亞Teh Tarik拉茶甜度高，怕甜可喊少糖。", cat: "culture" },
+      { text: "馬爾地夫搭乘快艇容易顛簸，盡量坐船尾較穩。", cat: "transport" },
+      { text: "吉隆坡城中城公園KLCC Park有兒童戲水區。", cat: "culture" },
+      { text: "馬爾地夫部分渡假村禁止攜帶空拍機，請先確認。", cat: "culture" },
+      { text: "馬來西亞路邊攤衛生不一，腸胃敏感者請慎選。", cat: "life" },
+      { text: "馬爾地夫淡季5-10月房價便宜，但遇到下雨機率高。", cat: "prepare" },
+      { text: "吉隆坡按摩CP值高，武吉免登區有很多選擇。", cat: "life" },
+      { text: "馬爾地夫沙灘屋通常離海近，適合有小孩家庭。", cat: "prepare" },
+      { text: "馬來西亞過年期間吉隆坡像空城，很多店休。", cat: "life" },
+      { text: "馬爾地夫當地超市週五中午11-14點通常休息祈禱。", cat: "life" },
+      { text: "吉隆坡到馬六甲車程約2小時，適合安排一日遊。", cat: "transport" },
+      { text: "馬爾地夫度假村房內插頭多是萬用孔，免轉接頭。", cat: "life" },
+      { text: "馬來西亞雲頂高原是避暑勝地，有賭場與樂園。", cat: "culture" },
+      { text: "馬爾地夫若住居民島，記得尊重當地伊斯蘭習俗。", cat: "culture" }
+    ];
 
-      const [tipIdx, setTipIdx] = useState(0);
-      const [visible, setVisible] = useState(true);
-      const [searchMode, setSearchMode] = useState(false);
+    function TravelTipsWidget() {
+      const [visible, setVisible] = useState(false);
       const [query, setQuery] = useState('');
-      const [aiResponse, setAiResponse] = useState('');
-      const [isLoading, setIsLoading] = useState(false);
+      const [tipIdx, setTipIdx] = useState(0);
+      const [selectedCat, setSelectedCat] = useState(null);
 
+      // Auto rotate tips when minimized
       useEffect(() => {
-        if (searchMode) return;
+        if (visible) return;
         const interval = setInterval(() => {
-          setVisible(false);
-          setTimeout(() => {
-            setTipIdx(prev => (prev + 1) % TRAVEL_TIPS.length);
-            setVisible(true);
-          }, 500);
-        }, 8000); 
+          setTipIdx(prev => (prev + 1) % RAW_TRAVEL_TIPS.length);
+        }, 8000);
         return () => clearInterval(interval);
-      }, [searchMode]);
+      }, [visible]);
 
-      const handleAiSubmit = async () => {
-        if (!query.trim() || !API_KEY) return;
-        setIsLoading(true);
-        setAiResponse('');
-        
-        try {
-          // Changed model to gemini-1.5-flash as it is the current standard.
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{
-                parts: [{ text: "請用繁體中文，針對馬來西亞(吉隆坡)或馬爾地夫的旅遊情境，簡短、直切要點(25字內尤佳)回答以下問題：" + query }]
-              }]
-            })
-          });
-          const data = await res.json();
-          if (data.error) {
-            setAiResponse('API 錯誤: ' + data.error.message);
-          } else {
-            setAiResponse(data.candidates?.[0]?.content?.parts?.[0]?.text || '無回應');
-          }
-        } catch (e) {
-          setAiResponse('連線錯誤，請檢查網路。');
-        } finally {
-          setIsLoading(false);
-        }
+      // Smart Search Logic
+      const keywordMap = {
+        '錢': ['匯率', '美金', '馬幣', '小費', '刷卡', '現金', '花費'],
+        '交通': ['Grab', '計程車', '捷運', '地鐵', '機場', '飛機', '船'],
+        '吃': ['美食', '餐廳', '肉骨茶', '榴槤', '口味', '早餐'],
+        '天氣': ['雨季', '氣溫', '熱', '雷雨'],
+        '電': ['插座', '電壓', '充電'],
+        '網': ['WiFi', 'SIM', '網卡']
       };
+
+      const filteredTips = useMemo(() => {
+        let results = RAW_TRAVEL_TIPS;
+        
+        // 1. Category Filter
+        if (selectedCat) {
+          results = results.filter(t => t.cat === selectedCat);
+        }
+
+        // 2. Keyword Search (Broad Match)
+        if (query.trim()) {
+          const q = query.trim().toLowerCase();
+          
+          // Expand search terms
+          let searchTerms = [q];
+          Object.entries(keywordMap).forEach(([key, values]) => {
+            if (q.includes(key)) searchTerms = [...searchTerms, ...values];
+          });
+
+          results = results.filter(t => 
+             searchTerms.some(term => t.text.toLowerCase().includes(term))
+          );
+        }
+
+        return results;
+      }, [query, selectedCat]);
 
       return (
         <div className="fixed bottom-28 right-4 z-50 flex flex-col items-end pointer-events-none">
-          <div className={`bg-white/95 backdrop-blur-md border border-[#D8C4B6] p-4 rounded-2xl rounded-br-none shadow-xl mb-3 w-64 pointer-events-auto transition-all duration-300 origin-bottom-right ${visible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
-            {searchMode ? (
-              <div className="space-y-3">
-                  <div className="flex items-center gap-2 border-b border-[#F5EBE0] pb-2 relative">
-                    <Search size={14} className="text-[#A68A71]" />
-                    <input 
-                      type="text" 
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                      onKeyDown={(e) => e.key === 'Enter' && handleAiSubmit()}
-                      placeholder="輸入問題 (如: 電壓)..."
-                      className="text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#D8C4B6] p-0 border-none focus:shadow-none focus:ring-0 h-auto"
-                      autoFocus
-                    />
-                    <button onClick={handleAiSubmit} disabled={isLoading} className="text-[#A68A71] hover:text-[#4E342E] disabled:opacity-30">
-                      <Send size={14} />
-                    </button>
-                  </div>
-                  <div className="min-h-[60px] max-h-48 overflow-y-auto no-scrollbar">
-                    {isLoading ? (
-                      <div className="flex justify-center py-4"><RefreshCw size={20} className="animate-spin text-[#D8C4B6]" /></div>
-                    ) : aiResponse ? (
-                      <p className="text-[11px] font-bold text-[#4E342E] leading-relaxed fade-in">{aiResponse}</p>
-                    ) : (
-                      <div className="text-[10px] text-[#A68A71] text-center py-2 space-y-1">
-                        <p>我是 AI 助理！請輸入問題。</p>
-                      </div>
-                    )}
-                  </div>
-                <div className="absolute top-2 right-2">
-                   <button onClick={() => { setSearchMode(false); setQuery(''); setAiResponse(''); }}><X size={14} className="text-[#A68A71]" /></button>
-                </div>
+          {/* Main Content Area */}
+          <div className={`bg-white/95 backdrop-blur-md border border-[#D8C4B6] p-4 rounded-2xl rounded-br-none shadow-xl mb-3 w-72 pointer-events-auto transition-all duration-300 origin-bottom-right ${visible ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none absolute'}`}>
+            
+            {/* Header & Search */}
+            <div className="space-y-3">
+              <div className="flex justify-between items-center pb-2 border-b border-[#F5EBE0]">
+                <h3 className="text-xs font-black text-[#A68A71] uppercase tracking-widest">Travel Tips 旅遊小幫手</h3>
+                <button onClick={() => setVisible(false)}><X size={16} className="text-[#A68A71]" /></button>
               </div>
-            ) : (
-              <p className="text-[11px] font-bold text-[#4E342E] leading-relaxed">
-                {TRAVEL_TIPS[tipIdx]}
-              </p>
-            )}
+              
+              <div className="flex items-center gap-2 bg-[#FDFBF7] rounded-xl px-3 py-2 border border-[#F5EBE0]">
+                <Search size={14} className="text-[#A68A71]" />
+                <input 
+                  type="text" 
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="搜尋錢、交通、天氣..."
+                  className="text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#D8C4B6]"
+                />
+                {query && <button onClick={() => setQuery('')}><X size={12} className="text-[#A68A71]" /></button>}
+              </div>
+
+              {/* Categories */}
+              <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+                <button 
+                  onClick={() => setSelectedCat(null)}
+                  className={`flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all ${!selectedCat ? 'bg-[#4E342E] text-white' : 'bg-[#FDFBF7] text-[#A68A71] border border-[#F5EBE0]'}`}
+                >
+                  全部
+                </button>
+                {TRAVEL_TIPS_CATEGORIES.map(cat => (
+                  <button 
+                    key={cat.id}
+                    onClick={() => setSelectedCat(selectedCat === cat.id ? null : cat.id)}
+                    className={`flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1 ${selectedCat === cat.id ? 'bg-[#D8C4B6] text-white' : 'bg-[#FDFBF7] text-[#A68A71] border border-[#F5EBE0]'}`}
+                  >
+                    <cat.icon size={10} /> {cat.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Results */}
+              <div className="min-h-[100px] max-h-60 overflow-y-auto no-scrollbar space-y-2 pr-1">
+                {filteredTips.length > 0 ? (
+                  filteredTips.map((tip, i) => (
+                    <div key={i} className="flex gap-3 py-2 border-b border-[#F5EBE0] last:border-0 group">
+                      <div className="mt-0.5 text-[#D8C4B6]"><Tag size={12} /></div>
+                      <p className="text-xs text-[#4E342E] leading-relaxed">{tip.text}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-6 text-[#A68A71] text-xs">
+                    <p>找不到相關資訊 🐢</p>
+                    <p className="text-[9px] mt-1 opacity-60">試試「錢」或「交通」等關鍵字</p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
-          <div className="flex items-center gap-3 pointer-events-auto">
-            <button 
-              onClick={() => { setSearchMode(true); setVisible(true); }}
-              className={`w-10 h-10 bg-white text-[#4E342E] rounded-full shadow-lg flex items-center justify-center border border-[#F5EBE0] transition-all hover:scale-110 active:scale-95 ${searchMode ? 'ring-2 ring-[#D8C4B6] bg-[#FDFBF7]' : ''}`}
-              title="AI 提問"
-            >
-              <Lightbulb size={18} />
-            </button>
+          {/* Minimized Bubble (Auto Rotate) */}
+          {!visible && (
+             <div className="bg-white/90 backdrop-blur-md border border-[#D8C4B6] px-4 py-2 rounded-2xl rounded-br-none shadow-md mb-2 max-w-[200px] transition-all duration-500 animate-in fade-in slide-in-from-bottom-2">
+                <p className="text-[10px] font-bold text-[#4E342E] line-clamp-2 leading-relaxed">
+                  {RAW_TRAVEL_TIPS[tipIdx].text}
+                </p>
+             </div>
+          )}
 
-            <button 
-              onClick={() => {
-                if (searchMode) {
-                   setSearchMode(false);
-                   setQuery('');
-                   setAiResponse('');
-                }
-                setTipIdx(prev => (prev + 1) % TRAVEL_TIPS.length);
-              }} 
-              className="w-12 h-12 bg-[#4E342E] rounded-full shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all border-2 border-[#D8C4B6]"
-              title="下一則提醒"
-            >
-              <Bot size={24} />
-            </button>
-          </div>
+          {/* Toggle Button */}
+          <button 
+            onClick={() => setVisible(!visible)}
+            className={`w-12 h-12 rounded-full shadow-xl flex items-center justify-center text-white pointer-events-auto hover:scale-110 active:scale-95 transition-all border-4 border-[#FDFBF7] ${visible ? 'bg-[#D8C4B6]' : 'bg-[#4E342E]'}`}
+          >
+            {visible ? <X size={24} /> : <Lightbulb size={24} />}
+          </button>
         </div>
       );
     }
@@ -1144,7 +1165,7 @@
           </header>
           <main className="flex-grow pt-24 pb-32 max-w-xl mx-auto w-full px-4">{renderContent()}</main>
           
-          <TravelBot />
+          <TravelTipsWidget />
 
           <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[94%] max-w-lg z-50">
             <div className="glass-effect rounded-[2.5rem] shadow-2xl border border-[#F5EBE0]/60 p-1.5 flex justify-between items-center">
