@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  
+  <!-- iOS & Android Web App Capable Settings (讓它像原生 App) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#FDFBF7">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="application-name" content="嶼海紀行">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3125/3125848.png"> 
+  
   <title>嶼海紀行</title>
   
   <!-- Libraries -->
@@ -26,6 +35,8 @@
       color: var(--milk-tea-primary);
       -webkit-tap-highlight-color: transparent;
       overflow-x: hidden;
+      /* 防止 iOS 下拉回彈效果影響 App 體驗 */
+      overscroll-behavior-y: none;
     }
     .serif { font-family: 'Noto Serif TC', serif; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -40,6 +51,7 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    /* 針對 iPhone X 以上瀏海屏的優化 */
     .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     .pt-safe { padding-top: env(safe-area-inset-top); }
     
@@ -91,7 +103,7 @@
       ClipboardCheck, Map as MapIcon, Plane, Bed, Sparkles, Plus,
       Compass, Wallet, X, Trash2, Clock, Star, Waves, Edit2,
       Calendar, MapPin, ExternalLink, Train, ArrowRight, ChevronRight,
-      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy, Search, Bus, Paperclip, Bot
+      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy, Search, Bus, Paperclip, Bot, Lightbulb, Settings, Send
     } from 'lucide-react';
 
     // Global Constants
@@ -341,8 +353,15 @@
     function TravelBot() {
       const [tipIdx, setTipIdx] = useState(0);
       const [visible, setVisible] = useState(true);
+      const [searchMode, setSearchMode] = useState(false);
+      const [query, setQuery] = useState('');
+      const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
+      const [aiResponse, setAiResponse] = useState('');
+      const [isLoading, setIsLoading] = useState(false);
+      const [showKeyInput, setShowKeyInput] = useState(false);
 
       useEffect(() => {
+        if (searchMode) return;
         const interval = setInterval(() => {
           setVisible(false);
           setTimeout(() => {
@@ -351,33 +370,149 @@
           }, 500);
         }, 8000); 
         return () => clearInterval(interval);
-      }, []);
+      }, [searchMode]);
+
+      const handleSaveKey = (val) => {
+        setApiKey(val);
+        localStorage.setItem('gemini_api_key', val);
+        setShowKeyInput(false);
+      };
+
+      const handleResetKey = () => {
+        if(confirm('確定要清除 API Key 嗎？')) {
+          setApiKey('');
+          localStorage.removeItem('gemini_api_key');
+          setAiResponse('');
+        }
+      };
+
+      const handleAiSubmit = async () => {
+        if (!query.trim() || !apiKey) return;
+        setIsLoading(true);
+        setAiResponse('');
+        
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{
+                parts: [{ text: "請用繁體中文，針對馬來西亞(吉隆坡)或馬爾地夫的旅遊情境，簡短、直切要點(25字內尤佳)回答以下問題：" + query }]
+              }]
+            })
+          });
+          const data = await res.json();
+          if (data.error) {
+            setAiResponse('API 錯誤: ' + data.error.message);
+          } else {
+            setAiResponse(data.candidates?.[0]?.content?.parts?.[0]?.text || '無回應');
+          }
+        } catch (e) {
+          setAiResponse('連線錯誤，請檢查網路。');
+        } finally {
+          setIsLoading(false);
+        }
+      };
 
       return (
         <div className="fixed bottom-28 right-4 z-50 flex flex-col items-end pointer-events-none">
-          <div className={`bg-white/95 backdrop-blur-md border border-[#D8C4B6] p-3 rounded-2xl rounded-br-none shadow-lg mb-2 max-w-[160px] transition-all duration-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-            <p className="text-[11px] font-bold text-[#4E342E] leading-relaxed">
-              {TRAVEL_TIPS[tipIdx]}
-            </p>
+          <div className={`bg-white/95 backdrop-blur-md border border-[#D8C4B6] p-4 rounded-2xl rounded-br-none shadow-xl mb-3 w-64 pointer-events-auto transition-all duration-300 origin-bottom-right ${visible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
+            {searchMode ? (
+              <div className="space-y-3">
+                {!apiKey || showKeyInput ? (
+                  <div className="space-y-2">
+                    <p className="text-[10px] font-bold text-[#A68A71]">請輸入 Google Gemini API Key</p>
+                    <input 
+                      type="password" 
+                      className="w-full text-xs p-2 rounded-lg border border-[#F5EBE0] bg-[#FDFBF7]"
+                      placeholder="Paste API Key here..."
+                      onBlur={(e) => handleSaveKey(e.target.value)}
+                    />
+                    <p className="text-[9px] text-[#A68A71] opacity-60">Key 將儲存於手機端，不會上傳。</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex items-center gap-2 border-b border-[#F5EBE0] pb-2 relative">
+                      <Search size={14} className="text-[#A68A71]" />
+                      <input 
+                        type="text" 
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleAiSubmit()}
+                        placeholder="輸入問題 (如: 電壓)..."
+                        className="text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#D8C4B6] p-0 border-none focus:shadow-none focus:ring-0 h-auto"
+                        autoFocus
+                      />
+                      <button onClick={handleAiSubmit} disabled={isLoading} className="text-[#A68A71] hover:text-[#4E342E] disabled:opacity-30">
+                        <Send size={14} />
+                      </button>
+                    </div>
+                    <div className="min-h-[60px] max-h-48 overflow-y-auto no-scrollbar">
+                      {isLoading ? (
+                        <div className="flex justify-center py-4"><RefreshCw size={20} className="animate-spin text-[#D8C4B6]" /></div>
+                      ) : aiResponse ? (
+                        <p className="text-[11px] font-bold text-[#4E342E] leading-relaxed animate-pulse-once">{aiResponse}</p>
+                      ) : (
+                        <div className="text-[10px] text-[#A68A71] text-center py-2 space-y-1">
+                          <p>我是 AI 助理！請輸入問題。</p>
+                          <div className="flex justify-center gap-2 mt-2">
+                             <button onClick={handleResetKey} className="text-[9px] underline opacity-50 flex items-center gap-1"><Settings size={10} /> 重設 Key</button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
+                <div className="absolute top-2 right-2">
+                   <button onClick={() => { setSearchMode(false); setQuery(''); setAiResponse(''); }}><X size={14} className="text-[#A68A71]" /></button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-[11px] font-bold text-[#4E342E] leading-relaxed">
+                {TRAVEL_TIPS[tipIdx]}
+              </p>
+            )}
           </div>
-          <button onClick={() => setTipIdx(prev => (prev + 1) % TRAVEL_TIPS.length)} className="w-12 h-12 bg-[#4E342E] rounded-full shadow-xl flex items-center justify-center text-white pointer-events-auto hover:scale-110 active:scale-95 transition-all border-2 border-[#D8C4B6]">
-            <Bot size={24} />
-          </button>
+
+          <div className="flex items-center gap-3 pointer-events-auto">
+            <button 
+              onClick={() => { setSearchMode(true); setVisible(true); }}
+              className={`w-10 h-10 bg-white text-[#4E342E] rounded-full shadow-lg flex items-center justify-center border border-[#F5EBE0] transition-all hover:scale-110 active:scale-95 ${searchMode ? 'ring-2 ring-[#D8C4B6] bg-[#FDFBF7]' : ''}`}
+              title="AI 提問"
+            >
+              <Lightbulb size={18} />
+            </button>
+
+            <button 
+              onClick={() => {
+                if (searchMode) {
+                   setSearchMode(false);
+                   setQuery('');
+                   setAiResponse('');
+                }
+                setTipIdx(prev => (prev + 1) % TRAVEL_TIPS.length);
+              }} 
+              className="w-12 h-12 bg-[#4E342E] rounded-full shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all border-2 border-[#D8C4B6]"
+              title="下一則提醒"
+            >
+              <Bot size={24} />
+            </button>
+          </div>
         </div>
       );
     }
 
-    const App = () => {
+    function App() {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v51')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v51')) || INITIAL_PREP);
-      const [transports, setTransports] = useState(() => JSON.parse(localStorage.getItem('trip_transport_v51')) || INITIAL_TRANSPORTS);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v51')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v52')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v52')) || INITIAL_PREP);
+      const [transports, setTransports] = useState(() => JSON.parse(localStorage.getItem('trip_transport_v52')) || INITIAL_TRANSPORTS);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v52')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v51', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v51', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_transport_v51', JSON.stringify(transports)), [transports]);
-      useEffect(() => localStorage.setItem('trip_expenses_v51', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v52', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v52', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_transport_v52', JSON.stringify(transports)), [transports]);
+      useEffect(() => localStorage.setItem('trip_expenses_v52', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
@@ -952,7 +1087,7 @@
       const result = Math.round((parseFloat(convVal) || 0) * rate);
 
       const handleSaveExpense = () => {
-        if (!newExpense.title.trim() || !newExpense.amount) return;
+        if (!newExpense.title.trim()) return;
         
         let twdAmount = 0;
         const amount = parseFloat(newExpense.amount);
