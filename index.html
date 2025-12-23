@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   
-  <!-- iOS & Android Web App Capable Settings -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#FDFBF7">
@@ -14,7 +13,6 @@
   
   <title>嶼海紀行</title>
   
-  <!-- Libraries -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -84,9 +82,7 @@
   "imports": {
     "react": "https://esm.sh/react@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.460.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0"
   }
 }
 </script>
@@ -101,7 +97,7 @@
       ClipboardCheck, Map as MapIcon, Plane, Bed, Sparkles, Plus,
       Compass, Wallet, X, Trash2, Clock, Star, Waves, Edit2,
       Calendar, MapPin, ExternalLink, Train, ArrowRight, ChevronRight,
-      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy, Search, Bus, Paperclip, Bot, Lightbulb, Settings, Send, Tag
+      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy, Search, Bus, Paperclip, Bot, Lightbulb, Tag
     } from 'lucide-react';
 
     // Global Constants
@@ -245,7 +241,6 @@
       ]
     ];
 
-    // Categorized Travel Tips
     const TRAVEL_TIPS_CATEGORIES = [
       { id: 'prepare', icon: ClipboardCheck, name: '行前須知', desc: '簽證、氣候、時差' },
       { id: 'money', icon: Wallet, name: '金錢消費', desc: '匯率、小費、刷卡' },
@@ -254,8 +249,7 @@
       { id: 'culture', icon: Star, name: '文化禁忌', desc: '宗教、飲食、禮儀' },
     ];
 
-    // Raw tips with inferred categories (in a real app these would be tagged in the data)
-    const RAW_TRAVEL_TIPS = [
+    const TRAVEL_TIPS_DATA = [
       { text: "馬爾地夫均溫30度，5-10月雨季；吉隆坡午後常雷雨。", cat: "prepare" },
       { text: "入境大馬前3天填MDAC；馬爾地夫填IMUGA，免簽。", cat: "prepare" },
       { text: "1馬幣≈7.5台幣；馬爾地夫用美金，1美金≈32.5台幣。", cat: "money" },
@@ -327,7 +321,7 @@
       { text: "吉隆坡Saloma Link行人天橋夜間點燈很美。", cat: "culture" },
       { text: "馬爾地夫出海行程盡量穿鮮豔泳衣，拍照更出色。", cat: "life" },
       { text: "馬來西亞Mamak檔是24小時營業，半夜不怕餓。", cat: "culture" },
-      { text: "馬爾地夫度假村水上屋建議住兩晚體驗即可。", cat: "prepare" },
+      { text: "馬爾地夫度假村區水上屋建議住兩晚體驗即可。", cat: "prepare" },
       { text: "吉隆坡Pavilion門口的大碗公噴泉是熱門會面點。", cat: "culture" },
       { text: "馬爾地夫部分珊瑚礁有強流，浮潛務必穿救生衣。", cat: "life" },
       { text: "馬來西亞肯德基KFC有獨特口味，價格也親民。", cat: "culture" },
@@ -359,21 +353,19 @@
     ];
 
     function TravelTipsWidget() {
-      const [visible, setVisible] = useState(false);
+      const [showSearch, setShowSearch] = useState(false);
       const [query, setQuery] = useState('');
       const [tipIdx, setTipIdx] = useState(0);
       const [selectedCat, setSelectedCat] = useState(null);
 
-      // Auto rotate tips when minimized
       useEffect(() => {
-        if (visible) return;
+        if (showSearch) return;
         const interval = setInterval(() => {
-          setTipIdx(prev => (prev + 1) % RAW_TRAVEL_TIPS.length);
+          setTipIdx(prev => (prev + 1) % TRAVEL_TIPS_DATA.length);
         }, 8000);
         return () => clearInterval(interval);
-      }, [visible]);
+      }, [showSearch]);
 
-      // Smart Search Logic
       const keywordMap = {
         '錢': ['匯率', '美金', '馬幣', '小費', '刷卡', '現金', '花費'],
         '交通': ['Grab', '計程車', '捷運', '地鐵', '機場', '飛機', '船'],
@@ -384,23 +376,18 @@
       };
 
       const filteredTips = useMemo(() => {
-        let results = RAW_TRAVEL_TIPS;
+        let results = TRAVEL_TIPS_DATA;
         
-        // 1. Category Filter
         if (selectedCat) {
           results = results.filter(t => t.cat === selectedCat);
         }
 
-        // 2. Keyword Search (Broad Match)
         if (query.trim()) {
           const q = query.trim().toLowerCase();
-          
-          // Expand search terms
           let searchTerms = [q];
           Object.entries(keywordMap).forEach(([key, values]) => {
             if (q.includes(key)) searchTerms = [...searchTerms, ...values];
           });
-
           results = results.filter(t => 
              searchTerms.some(term => t.text.toLowerCase().includes(term))
           );
@@ -410,15 +397,17 @@
       }, [query, selectedCat]);
 
       return (
-        <div className="fixed bottom-28 right-4 z-50 flex flex-col items-end pointer-events-none">
-          {/* Main Content Area */}
-          <div className={`bg-white/95 backdrop-blur-md border border-[#D8C4B6] p-4 rounded-2xl rounded-br-none shadow-xl mb-3 w-72 pointer-events-auto transition-all duration-300 origin-bottom-right ${visible ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none absolute'}`}>
-            
-            {/* Header & Search */}
+        <div className="fixed bottom-24 right-4 z-[100] flex flex-col items-end pointer-events-none">
+          
+          {/* 1. Search Panel */}
+          <div 
+            className={`bg-white/95 backdrop-blur-md border border-[#D8C4B6] p-4 rounded-2xl rounded-br-none shadow-xl mb-3 w-72 pointer-events-auto transition-all duration-300 origin-bottom-right ${showSearch ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4 pointer-events-none absolute invisible'}`}
+            style={{ display: showSearch ? 'block' : 'none' }}
+          >
             <div className="space-y-3">
               <div className="flex justify-between items-center pb-2 border-b border-[#F5EBE0]">
                 <h3 className="text-xs font-black text-[#A68A71] uppercase tracking-widest">Travel Tips 旅遊小幫手</h3>
-                <button onClick={() => setVisible(false)}><X size={16} className="text-[#A68A71]" /></button>
+                <button onClick={() => setShowSearch(false)} className="p-1"><X size={16} className="text-[#A68A71]" /></button>
               </div>
               
               <div className="flex items-center gap-2 bg-[#FDFBF7] rounded-xl px-3 py-2 border border-[#F5EBE0]">
@@ -433,7 +422,6 @@
                 {query && <button onClick={() => setQuery('')}><X size={12} className="text-[#A68A71]" /></button>}
               </div>
 
-              {/* Categories */}
               <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
                 <button 
                   onClick={() => setSelectedCat(null)}
@@ -452,7 +440,6 @@
                 ))}
               </div>
 
-              {/* Results */}
               <div className="min-h-[100px] max-h-60 overflow-y-auto no-scrollbar space-y-2 pr-1">
                 {filteredTips.length > 0 ? (
                   filteredTips.map((tip, i) => (
@@ -471,22 +458,31 @@
             </div>
           </div>
 
-          {/* Minimized Bubble (Auto Rotate) */}
-          {!visible && (
-             <div className="bg-white/90 backdrop-blur-md border border-[#D8C4B6] px-4 py-2 rounded-2xl rounded-br-none shadow-md mb-2 max-w-[200px] transition-all duration-500 animate-in fade-in slide-in-from-bottom-2">
+          {/* 2. Minimized Bubble */}
+          {!showSearch && (
+             <div className="bg-white/90 backdrop-blur-md border border-[#D8C4B6] px-4 py-2 rounded-2xl rounded-br-none shadow-md mb-2 max-w-[200px] transition-all duration-300 pointer-events-auto fade-in">
                 <p className="text-[10px] font-bold text-[#4E342E] line-clamp-2 leading-relaxed">
-                  {RAW_TRAVEL_TIPS[tipIdx].text}
+                  {TRAVEL_TIPS_DATA[tipIdx].text}
                 </p>
              </div>
           )}
 
-          {/* Toggle Button */}
-          <button 
-            onClick={() => setVisible(!visible)}
-            className={`w-12 h-12 rounded-full shadow-xl flex items-center justify-center text-white pointer-events-auto hover:scale-110 active:scale-95 transition-all border-4 border-[#FDFBF7] ${visible ? 'bg-[#D8C4B6]' : 'bg-[#4E342E]'}`}
-          >
-            {visible ? <X size={24} /> : <Lightbulb size={24} />}
-          </button>
+          {/* 3. Control Buttons - Stacked Vertically */}
+          <div className="flex flex-col items-center gap-3 pointer-events-auto mt-2">
+            <button 
+              onClick={(e) => { e.stopPropagation(); setTipIdx(prev => (prev + 1) % TRAVEL_TIPS_DATA.length); }}
+              className="w-12 h-12 bg-[#4E342E] rounded-full shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all border-2 border-[#D8C4B6] cursor-pointer z-[110]"
+            >
+              <Bot size={24} />
+            </button>
+
+            <button 
+              onClick={(e) => { e.stopPropagation(); setShowSearch(!showSearch); }}
+              className={`w-12 h-12 bg-white text-[#4E342E] rounded-full shadow-lg flex items-center justify-center border-2 border-[#F5EBE0] transition-all hover:scale-110 active:scale-95 cursor-pointer z-[110] ${showSearch ? 'ring-2 ring-[#D8C4B6] bg-[#FDFBF7]' : ''}`}
+            >
+              {showSearch ? <X size={20} /> : <Lightbulb size={20} />}
+            </button>
+          </div>
         </div>
       );
     }
@@ -1128,15 +1124,15 @@
 
     function App() {
       const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v52')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v52')) || INITIAL_PREP);
-      const [transports, setTransports] = useState(() => JSON.parse(localStorage.getItem('trip_transport_v52')) || INITIAL_TRANSPORTS);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v52')) || []);
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v53')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v53')) || INITIAL_PREP);
+      const [transports, setTransports] = useState(() => JSON.parse(localStorage.getItem('trip_transport_v53')) || INITIAL_TRANSPORTS);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v53')) || []);
 
-      useEffect(() => localStorage.setItem('trip_itinerary_v52', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v52', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_transport_v52', JSON.stringify(transports)), [transports]);
-      useEffect(() => localStorage.setItem('trip_expenses_v52', JSON.stringify(expenses)), [expenses]);
+      useEffect(() => localStorage.setItem('trip_itinerary_v53', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v53', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_transport_v53', JSON.stringify(transports)), [transports]);
+      useEffect(() => localStorage.setItem('trip_expenses_v53', JSON.stringify(expenses)), [expenses]);
 
       const renderContent = () => {
         switch (activeTab) {
