@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   
-  <!-- iOS & Android Web App Capable Settings (讓它像原生 App) -->
+  <!-- iOS & Android Web App Capable Settings -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#FDFBF7">
@@ -35,7 +35,6 @@
       color: var(--milk-tea-primary);
       -webkit-tap-highlight-color: transparent;
       overflow-x: hidden;
-      /* 防止 iOS 下拉回彈效果影響 App 體驗 */
       overscroll-behavior-y: none;
     }
     .serif { font-family: 'Noto Serif TC', serif; }
@@ -51,7 +50,6 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    /* 針對 iPhone X 以上瀏海屏的優化 */
     .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     .pt-safe { padding-top: env(safe-area-inset-top); }
     
@@ -379,7 +377,7 @@
         setAiResponse('');
         
         try {
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -425,7 +423,7 @@
                     {isLoading ? (
                       <div className="flex justify-center py-4"><RefreshCw size={20} className="animate-spin text-[#D8C4B6]" /></div>
                     ) : aiResponse ? (
-                      <p className="text-[11px] font-bold text-[#4E342E] leading-relaxed animate-pulse-once">{aiResponse}</p>
+                      <p className="text-[11px] font-bold text-[#4E342E] leading-relaxed fade-in">{aiResponse}</p>
                     ) : (
                       <div className="text-[10px] text-[#A68A71] text-center py-2 space-y-1">
                         <p>我是 AI 助理！請輸入問題。</p>
@@ -470,67 +468,6 @@
         </div>
       );
     }
-
-    function App() {
-      const [activeTab, setActiveTab] = useState('ITINERARY');
-      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v52')) || INITIAL_ITINERARY);
-      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v52')) || INITIAL_PREP);
-      const [transports, setTransports] = useState(() => JSON.parse(localStorage.getItem('trip_transport_v52')) || INITIAL_TRANSPORTS);
-      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v52')) || []);
-
-      useEffect(() => localStorage.setItem('trip_itinerary_v52', JSON.stringify(itinerary)), [itinerary]);
-      useEffect(() => localStorage.setItem('trip_prep_v52', JSON.stringify(prepList)), [prepList]);
-      useEffect(() => localStorage.setItem('trip_transport_v52', JSON.stringify(transports)), [transports]);
-      useEffect(() => localStorage.setItem('trip_expenses_v52', JSON.stringify(expenses)), [expenses]);
-
-      const renderContent = () => {
-        switch (activeTab) {
-          case 'PREPARATION': return <PreparationView prepList={prepList} setPrepList={setPrepList} />;
-          case 'ITINERARY': return <ItineraryView itinerary={itinerary} setItinerary={setItinerary} />;
-          case 'TRANSPORT': return <TransportView transports={transports} setTransports={setTransports} />;
-          case 'ACCOMMODATION': return <AccommodationView />;
-          case 'RECOMMENDATION': return <RecommendationView />;
-          case 'EXPENSE': return <ExpenseView expenses={expenses} setExpenses={setExpenses} />;
-          default: return <ItineraryView itinerary={itinerary} setItinerary={setItinerary} />;
-        }
-      };
-
-      return (
-        <div className="min-h-screen flex flex-col pb-safe">
-          <header className="fixed top-0 left-0 right-0 z-40 glass-effect border-b border-[#F5EBE0] py-4 pt-safe">
-            <div className="max-w-xl mx-auto px-4 flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#D8C4B6] rounded-2xl flex items-center justify-center text-white shadow-md"><Compass size={20} /></div>
-                <div>
-                  <h1 className="font-bold text-lg serif text-[#4E342E]">嶼海紀行</h1>
-                  <p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.3em]">Azure Reverie</p>
-                </div>
-              </div>
-            </div>
-          </header>
-          <main className="flex-grow pt-24 pb-32 max-w-xl mx-auto w-full px-4">{renderContent()}</main>
-          
-          <TravelBot />
-
-          <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[94%] max-w-lg z-50">
-            <div className="glass-effect rounded-[2.5rem] shadow-2xl border border-[#F5EBE0]/60 p-1.5 flex justify-between items-center">
-              {[
-                { id: 'PREPARATION', icon: ClipboardCheck, label: '準備' },
-                { id: 'ITINERARY', icon: MapIcon, label: '行程' },
-                { id: 'TRANSPORT', icon: Plane, label: '交通' },
-                { id: 'ACCOMMODATION', icon: Bed, label: '住宿' },
-                { id: 'RECOMMENDATION', icon: Sparkles, label: '推薦' },
-                { id: 'EXPENSE', icon: Wallet, label: '換算' }
-              ].map(item => (
-                <button key={item.id} onClick={() => setActiveTab(item.id)} className={`flex flex-col items-center justify-center py-3 rounded-[1.8rem] transition-all flex-1 ${activeTab === item.id ? 'tab-active scale-105' : 'text-[#A68A71]'}`}>
-                  <item.icon size={20} /><span className={`text-[10px] mt-1 font-bold ${activeTab === item.id ? 'block' : 'hidden'}`}>{item.label}</span>
-                </button>
-              ))}
-            </div>
-          </nav>
-        </div>
-      );
-    };
 
     function PreparationView({ prepList, setPrepList }) {
       const categories = ['重要文件', '電子電器', '衣物穿搭', '個人用品', '常備藥品'];
@@ -1163,6 +1100,67 @@
               </div>
             </div>
           )}
+        </div>
+      );
+    }
+
+    function App() {
+      const [activeTab, setActiveTab] = useState('ITINERARY');
+      const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v52')) || INITIAL_ITINERARY);
+      const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v52')) || INITIAL_PREP);
+      const [transports, setTransports] = useState(() => JSON.parse(localStorage.getItem('trip_transport_v52')) || INITIAL_TRANSPORTS);
+      const [expenses, setExpenses] = useState(() => JSON.parse(localStorage.getItem('trip_expenses_v52')) || []);
+
+      useEffect(() => localStorage.setItem('trip_itinerary_v52', JSON.stringify(itinerary)), [itinerary]);
+      useEffect(() => localStorage.setItem('trip_prep_v52', JSON.stringify(prepList)), [prepList]);
+      useEffect(() => localStorage.setItem('trip_transport_v52', JSON.stringify(transports)), [transports]);
+      useEffect(() => localStorage.setItem('trip_expenses_v52', JSON.stringify(expenses)), [expenses]);
+
+      const renderContent = () => {
+        switch (activeTab) {
+          case 'PREPARATION': return <PreparationView prepList={prepList} setPrepList={setPrepList} />;
+          case 'ITINERARY': return <ItineraryView itinerary={itinerary} setItinerary={setItinerary} />;
+          case 'TRANSPORT': return <TransportView transports={transports} setTransports={setTransports} />;
+          case 'ACCOMMODATION': return <AccommodationView />;
+          case 'RECOMMENDATION': return <RecommendationView />;
+          case 'EXPENSE': return <ExpenseView expenses={expenses} setExpenses={setExpenses} />;
+          default: return <ItineraryView itinerary={itinerary} setItinerary={setItinerary} />;
+        }
+      };
+
+      return (
+        <div className="min-h-screen flex flex-col pb-safe">
+          <header className="fixed top-0 left-0 right-0 z-40 glass-effect border-b border-[#F5EBE0] py-4 pt-safe">
+            <div className="max-w-xl mx-auto px-4 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-[#D8C4B6] rounded-2xl flex items-center justify-center text-white shadow-md"><Compass size={20} /></div>
+                <div>
+                  <h1 className="font-bold text-lg serif text-[#4E342E]">嶼海紀行</h1>
+                  <p className="text-[9px] font-black text-[#A68A71] uppercase tracking-[0.3em]">Azure Reverie</p>
+                </div>
+              </div>
+            </div>
+          </header>
+          <main className="flex-grow pt-24 pb-32 max-w-xl mx-auto w-full px-4">{renderContent()}</main>
+          
+          <TravelBot />
+
+          <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[94%] max-w-lg z-50">
+            <div className="glass-effect rounded-[2.5rem] shadow-2xl border border-[#F5EBE0]/60 p-1.5 flex justify-between items-center">
+              {[
+                { id: 'PREPARATION', icon: ClipboardCheck, label: '準備' },
+                { id: 'ITINERARY', icon: MapIcon, label: '行程' },
+                { id: 'TRANSPORT', icon: Plane, label: '交通' },
+                { id: 'ACCOMMODATION', icon: Bed, label: '住宿' },
+                { id: 'RECOMMENDATION', icon: Sparkles, label: '推薦' },
+                { id: 'EXPENSE', icon: Wallet, label: '換算' }
+              ].map(item => (
+                <button key={item.id} onClick={() => setActiveTab(item.id)} className={`flex flex-col items-center justify-center py-3 rounded-[1.8rem] transition-all flex-1 ${activeTab === item.id ? 'tab-active scale-105' : 'text-[#A68A71]'}`}>
+                  <item.icon size={20} /><span className={`text-[10px] mt-1 font-bold ${activeTab === item.id ? 'block' : 'hidden'}`}>{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </nav>
         </div>
       );
     }
