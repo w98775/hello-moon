@@ -97,10 +97,10 @@
       ClipboardCheck, Map as MapIcon, Plane, Bed, Sparkles, Plus,
       Compass, Wallet, X, Trash2, Clock, Star, Waves, Edit2,
       Calendar, MapPin, ExternalLink, Train, ArrowRight, ChevronRight,
-      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy, Search, Bus, Paperclip, Bot, Lightbulb, Tag
+      Check, Utensils, Camera, ShoppingBag, Info, Luggage, Save, DollarSign, RefreshCw, Anchor, LifeBuoy, Search, Bus, Paperclip, Bot, Lightbulb, Tag, ArrowUp
     } from 'lucide-react';
 
-    // Global Constants
+    // --- GLOBAL CONSTANTS ---
     const USD_TO_TWD = 32.5;
     const MYR_TO_TWD = 7.5;
     const getGoogleMapsUrl = (name) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`;
@@ -241,6 +241,7 @@
       ]
     ];
 
+    // Categorized Travel Tips
     const TRAVEL_TIPS_CATEGORIES = [
       { id: 'prepare', icon: ClipboardCheck, name: '行前須知', desc: '簽證、氣候、時差' },
       { id: 'money', icon: Wallet, name: '金錢消費', desc: '匯率、小費、刷卡' },
@@ -321,7 +322,7 @@
       { text: "吉隆坡Saloma Link行人天橋夜間點燈很美。", cat: "culture" },
       { text: "馬爾地夫出海行程盡量穿鮮豔泳衣，拍照更出色。", cat: "life" },
       { text: "馬來西亞Mamak檔是24小時營業，半夜不怕餓。", cat: "culture" },
-      { text: "馬爾地夫度假村區水上屋建議住兩晚體驗即可。", cat: "prepare" },
+      { text: "馬爾地夫度假村水上屋建議住兩晚體驗即可。", cat: "prepare" },
       { text: "吉隆坡Pavilion門口的大碗公噴泉是熱門會面點。", cat: "culture" },
       { text: "馬爾地夫部分珊瑚礁有強流，浮潛務必穿救生衣。", cat: "life" },
       { text: "馬來西亞肯德基KFC有獨特口味，價格也親民。", cat: "culture" },
@@ -357,7 +358,9 @@
       const [query, setQuery] = useState('');
       const [tipIdx, setTipIdx] = useState(0);
       const [selectedCat, setSelectedCat] = useState(null);
+      const [showScrollTop, setShowScrollTop] = useState(false);
 
+      // Auto rotate tips when search is closed
       useEffect(() => {
         if (showSearch) return;
         const interval = setInterval(() => {
@@ -366,6 +369,24 @@
         return () => clearInterval(interval);
       }, [showSearch]);
 
+      // Scroll to Top Logic
+      useEffect(() => {
+        const handleScroll = () => {
+          if (window.scrollY > 300) {
+            setShowScrollTop(true);
+          } else {
+            setShowScrollTop(false);
+          }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      // Smart Search Logic
       const keywordMap = {
         '錢': ['匯率', '美金', '馬幣', '小費', '刷卡', '現金', '花費'],
         '交通': ['Grab', '計程車', '捷運', '地鐵', '機場', '飛機', '船'],
@@ -388,6 +409,7 @@
           Object.entries(keywordMap).forEach(([key, values]) => {
             if (q.includes(key)) searchTerms = [...searchTerms, ...values];
           });
+
           results = results.filter(t => 
              searchTerms.some(term => t.text.toLowerCase().includes(term))
           );
@@ -397,35 +419,35 @@
       }, [query, selectedCat]);
 
       return (
-        <div className="fixed bottom-24 right-4 z-[100] flex flex-col items-end pointer-events-none">
+        <div className="fixed bottom-24 right-4 z-[9999] flex flex-col items-end gap-2">
           
-          {/* 1. Search Panel */}
+          {/* 1. Search Panel - Frosted Glass Glassmorphism */}
           <div 
-            className={`bg-white/95 backdrop-blur-md border border-[#D8C4B6] p-4 rounded-2xl rounded-br-none shadow-xl mb-3 w-72 pointer-events-auto transition-all duration-300 origin-bottom-right ${showSearch ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4 pointer-events-none absolute invisible'}`}
+            className={`bg-white/40 backdrop-blur-xl border border-white/30 p-4 rounded-2xl rounded-br-none shadow-2xl mb-1 w-72 pointer-events-auto transition-all duration-300 origin-bottom-right ${showSearch ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4 pointer-events-none absolute invisible'}`}
             style={{ display: showSearch ? 'block' : 'none' }}
           >
             <div className="space-y-3">
-              <div className="flex justify-between items-center pb-2 border-b border-[#F5EBE0]">
-                <h3 className="text-xs font-black text-[#A68A71] uppercase tracking-widest">Travel Tips 旅遊小幫手</h3>
-                <button onClick={() => setShowSearch(false)} className="p-1"><X size={16} className="text-[#A68A71]" /></button>
+              <div className="flex justify-between items-center pb-2 border-b border-[#4E342E]/10">
+                <h3 className="text-xs font-black text-[#4E342E] uppercase tracking-widest drop-shadow-sm">Travel Tips 旅遊小幫手</h3>
+                <button onClick={() => setShowSearch(false)} className="clickable-widget p-1"><X size={16} className="text-[#4E342E]" /></button>
               </div>
               
-              <div className="flex items-center gap-2 bg-[#FDFBF7] rounded-xl px-3 py-2 border border-[#F5EBE0]">
-                <Search size={14} className="text-[#A68A71]" />
+              <div className="flex items-center gap-2 bg-white/50 rounded-xl px-3 py-2 border border-white/20">
+                <Search size={14} className="text-[#4E342E]" />
                 <input 
                   type="text" 
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="搜尋錢、交通、天氣..."
-                  className="text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#D8C4B6]"
+                  className="clickable-widget text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#4E342E]/40"
                 />
-                {query && <button onClick={() => setQuery('')}><X size={12} className="text-[#A68A71]" /></button>}
+                {query && <button onClick={() => setQuery('')} className="clickable-widget"><X size={12} className="text-[#4E342E]" /></button>}
               </div>
 
               <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
                 <button 
                   onClick={() => setSelectedCat(null)}
-                  className={`flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all ${!selectedCat ? 'bg-[#4E342E] text-white' : 'bg-[#FDFBF7] text-[#A68A71] border border-[#F5EBE0]'}`}
+                  className={`clickable-widget flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all ${!selectedCat ? 'bg-[#4E342E] text-white' : 'bg-white/40 text-[#4E342E] border border-white/20'}`}
                 >
                   全部
                 </button>
@@ -433,7 +455,7 @@
                   <button 
                     key={cat.id}
                     onClick={() => setSelectedCat(selectedCat === cat.id ? null : cat.id)}
-                    className={`flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1 ${selectedCat === cat.id ? 'bg-[#D8C4B6] text-white' : 'bg-[#FDFBF7] text-[#A68A71] border border-[#F5EBE0]'}`}
+                    className={`clickable-widget flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1 ${selectedCat === cat.id ? 'bg-[#D8C4B6] text-white shadow-sm' : 'bg-white/40 text-[#4E342E] border border-white/20'}`}
                   >
                     <cat.icon size={10} /> {cat.name}
                   </button>
@@ -443,13 +465,13 @@
               <div className="min-h-[100px] max-h-60 overflow-y-auto no-scrollbar space-y-2 pr-1">
                 {filteredTips.length > 0 ? (
                   filteredTips.map((tip, i) => (
-                    <div key={i} className="flex gap-3 py-2 border-b border-[#F5EBE0] last:border-0 group">
-                      <div className="mt-0.5 text-[#D8C4B6]"><Tag size={12} /></div>
-                      <p className="text-xs text-[#4E342E] leading-relaxed">{tip.text}</p>
+                    <div key={i} className="flex gap-3 py-2 border-b border-[#4E342E]/5 last:border-0 group">
+                      <div className="mt-0.5 text-[#4E342E]/60"><Tag size={12} /></div>
+                      <p className="text-xs text-[#4E342E] font-medium leading-relaxed drop-shadow-sm">{tip.text}</p>
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-6 text-[#A68A71] text-xs">
+                  <div className="text-center py-6 text-[#4E342E]/60 text-xs">
                     <p>找不到相關資訊 🐢</p>
                     <p className="text-[9px] mt-1 opacity-60">試試「錢」或「交通」等關鍵字</p>
                   </div>
@@ -458,10 +480,10 @@
             </div>
           </div>
 
-          {/* 2. Minimized Bubble */}
+          {/* 2. Minimized Bubble - High Transparency Frosted Glass */}
           {!showSearch && (
-             <div className="bg-white/90 backdrop-blur-md border border-[#D8C4B6] px-4 py-2 rounded-2xl rounded-br-none shadow-md mb-2 max-w-[200px] transition-all duration-300 pointer-events-auto fade-in">
-                <p className="text-[10px] font-bold text-[#4E342E] line-clamp-2 leading-relaxed">
+             <div className="bg-white/25 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-2xl rounded-br-none shadow-xl mb-2 max-w-[200px] transition-all duration-500 animate-in fade-in slide-in-from-bottom-2 pointer-events-auto">
+                <p className="text-[10px] font-bold text-[#4E342E] line-clamp-2 leading-relaxed drop-shadow-sm">
                   {TRAVEL_TIPS_DATA[tipIdx].text}
                 </p>
              </div>
@@ -471,17 +493,30 @@
           <div className="flex flex-col items-center gap-3 pointer-events-auto mt-2">
             <button 
               onClick={(e) => { e.stopPropagation(); setTipIdx(prev => (prev + 1) % TRAVEL_TIPS_DATA.length); }}
-              className="w-12 h-12 bg-[#4E342E] rounded-full shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all border-2 border-[#D8C4B6] cursor-pointer z-[110]"
+              className="clickable-widget w-12 h-12 bg-[#4E342E] rounded-full shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all border-2 border-white/20"
+              aria-label="Next Tip"
             >
               <Bot size={24} />
             </button>
 
             <button 
               onClick={(e) => { e.stopPropagation(); setShowSearch(!showSearch); }}
-              className={`w-12 h-12 bg-white text-[#4E342E] rounded-full shadow-lg flex items-center justify-center border-2 border-[#F5EBE0] transition-all hover:scale-110 active:scale-95 cursor-pointer z-[110] ${showSearch ? 'ring-2 ring-[#D8C4B6] bg-[#FDFBF7]' : ''}`}
+              className={`clickable-widget w-12 h-12 bg-white/40 backdrop-blur-lg text-[#4E342E] rounded-full shadow-lg flex items-center justify-center border-2 border-white/30 transition-all hover:scale-110 active:scale-95 ${showSearch ? 'ring-2 ring-[#D8C4B6] bg-[#FDFBF7]/80' : ''}`}
+              aria-label="Search Tips"
             >
               {showSearch ? <X size={20} /> : <Lightbulb size={20} />}
             </button>
+
+             {/* Scroll To Top Button */}
+            {showScrollTop && (
+              <button 
+                onClick={scrollToTop}
+                className="clickable-widget w-12 h-12 bg-[#D8C4B6] rounded-full shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all animate-in fade-in slide-in-from-bottom-4 border-2 border-white/20"
+                aria-label="Scroll to top"
+              >
+                <ArrowUp size={24} />
+              </button>
+            )}
           </div>
         </div>
       );
@@ -1122,7 +1157,7 @@
       );
     }
 
-    function App() {
+    const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
       const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v53')) || INITIAL_ITINERARY);
       const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v53')) || INITIAL_PREP);
@@ -1181,7 +1216,7 @@
           </nav>
         </div>
       );
-    }
+    };
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
