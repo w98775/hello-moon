@@ -542,8 +542,6 @@
       );
     }
     
-    // ... (rest of the components: PreparationView, ItineraryView, TransportView, AccommodationView, RecommendationView, ExpenseView, App) ...
-
     function PreparationView({ prepList, setPrepList }) {
       const categories = ['重要文件', '電子電器', '衣物穿搭', '個人用品', '常備藥品'];
       const [isModalOpen, setIsModalOpen] = useState(false);
@@ -1107,13 +1105,13 @@
 
       return (
         <div className="fade-in space-y-6 pb-20">
-          <div className="bg-white p-8 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm space-y-6">
-            <h3 className="font-bold text-sm text-[#4E342E] flex items-center gap-2"><DollarSign size={16} className="text-[#D8C4B6]" /> 匯率快速換算</h3>
-            <div className="flex bg-[#FDFBF7] p-1.5 rounded-2xl border border-[#F5EBE0] mb-2">
+          <div className="bg-white p-8 rounded-[2.5rem] border border-[#F5EBE0] shadow-sm space-y-3 w-full">
+            <h3 className="font-bold text-sm text-[#4E342E] flex items-center justify-center gap-2"><DollarSign size={16} className="text-[#D8C4B6]" /> 匯率快速換算</h3>
+            <div className="flex bg-[#FDFBF7] p-1.5 rounded-2xl border border-[#F5EBE0]">
               <button onClick={() => setConvMode('USD')} className={`flex-1 py-2.5 rounded-xl text-xs font-black transition-all ${convMode === 'USD' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>美金 USD</button>
               <button onClick={() => setConvMode('MYR')} className={`flex-1 py-2.5 rounded-xl text-xs font-black transition-all ${convMode === 'MYR' ? 'bg-[#4E342E] text-white shadow-md' : 'text-[#A68A71]'}`}>令吉 MYR</button>
             </div>
-            <div className="text-center space-y-3 py-4">
+            <div className="text-center space-y-3 pt-1 pb-4">
               <div className="text-[10px] font-black text-[#A68A71] uppercase tracking-[0.2em]">1 {convMode} : {rate} TWD</div>
               <input type="number" value={convVal} onChange={e => setConvVal(e.target.value)} placeholder={`輸入 ${convMode} 金額`} className="text-center font-black text-3xl py-2 bg-transparent border-b-2 border-[#F5EBE0] focus:border-[#D8C4B6] w-full" />
               <div className="text-xl font-black text-[#4E342E] mt-4">≈ NT$ {result.toLocaleString()}</div>
@@ -1142,7 +1140,7 @@
 
           {isModalOpen && (
             <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
-              <div className="bg-white w-full max-w-sm rounded-[2.5rem] p-8 space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+              <div className="bg-white w-full max-sm rounded-[2.5rem] p-8 space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
                 <h3 className="text-xl font-bold serif text-[#4E342E]">{editingId ? '編輯支出' : '新增支出'}</h3>
                 <div className="space-y-3">
                   <div>
