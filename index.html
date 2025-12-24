@@ -438,14 +438,14 @@
                 <button onClick={() => setShowSearch(false)} className="clickable-widget p-1"><X size={16} className="text-[#A68A71]" /></button>
               </div>
               
-              <div className="flex items-center gap-2 bg-white/50 rounded-xl px-3 py-2 border border-white/60">
+              <div className="flex items-center gap-2 bg-white/50 rounded-xl px-2 py-1 border border-white/60">
                 <Search size={14} className="text-[#A68A71]" />
                 <input 
                   type="text" 
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="搜尋錢、交通、天氣..."
-                  className="clickable-widget text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#D8C4B6]"
+                  className="clickable-widget text-xs w-full outline-none bg-transparent text-[#4E342E] placeholder:text-[#D8C4B6] py-1"
                 />
                 {query && <button onClick={() => setQuery('')} className="clickable-widget"><X size={12} className="text-[#A68A71]" /></button>}
               </div>
@@ -542,7 +542,7 @@
       );
     }
     
-    // ... (PreparationView, ItineraryView, TransportView, AccommodationView, RecommendationView, ExpenseView, App remain the same) ...
+    // ... (rest of the components: PreparationView, ItineraryView, TransportView, AccommodationView, RecommendationView, ExpenseView, App) ...
 
     function PreparationView({ prepList, setPrepList }) {
       const categories = ['重要文件', '電子電器', '衣物穿搭', '個人用品', '常備藥品'];
@@ -976,7 +976,7 @@
         { nameZh: '吉隆坡孟沙假日酒店', nameEn: 'Holiday Inn Kuala Lumpur Bangsar', date: '1/23-1/25', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800', note: '時尚孟沙區，交通非常便利。' },
         { nameZh: '美居馬爾地夫度假村', nameEn: 'Mercure Maldives Kooddoo Resort', date: '1/25-1/29', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&q=80&w=800', note: '全包式水上別墅，潛水者天堂。' },
         { nameZh: '馬爾地夫居民島 h78 飯店', nameEn: 'h78 Maldives', date: '1/29-1/30', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800', note: '海濱首選，銜接機場極度便利。' },
-        { nameZh: 'Umi SplashMania 溫馨民宿', nameEn: 'Umi SplashMania homestay', date: '1/30-1/31', image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=800', note: '鄰近 SplashMania 水上樂園，環境溫馨舒適，返台前的絕佳休憩站。' }
+        { nameZh: 'Umi SplashMania 民宿', nameEn: 'Umi SplashMania homestay', date: '1/30-1/31', image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=800', note: '鄰近 SplashMania 水上樂園，環境溫馨舒適，返台前的絕佳休憩站。' }
       ];
       return (
         <div className="fade-in space-y-8">
@@ -1129,8 +1129,12 @@
           </div>
           <div className="space-y-3">
             {expenses.map(e => (
-              <div key={e.id} className="bg-white p-5 rounded-2xl border border-[#F5EBE0] flex justify-between items-center shadow-sm">
-                <div><div className="font-bold text-[#4E342E] text-sm">{e.title}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase">{e.currency} {e.amount}</div></div>
+              <div key={e.id} className="bg-white p-5 rounded-2xl border border-[#F5EBE0] flex justify-between items-center shadow-sm cursor-pointer hover:border-[#D8C4B6] transition-all group relative">
+                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all bg-white pl-2">
+                    <button onClick={(ev) => { ev.stopPropagation(); handleEdit(e); }} className="p-2 text-[#A68A71] hover:text-[#4E342E] transition-all"><Edit2 size={16} /></button>
+                    <button onClick={(ev) => { ev.stopPropagation(); handleDeleteExpense(e.id); }} className="p-2 text-[#A68A71] hover:text-red-500 transition-all"><Trash2 size={16} /></button>
+                </div>
+                <div><div className="text-[9px] text-[#A68A71] font-bold opacity-60 mb-1">{e.date}</div><div className="font-bold text-[#4E342E] text-sm">{e.title}</div><div className="text-[10px] text-[#A68A71] font-bold uppercase">{e.currency} {e.amount}</div></div>
                 <div className="text-right font-black text-[#4E342E]">NT$ {e.twd.toLocaleString()}</div>
               </div>
             ))}
@@ -1175,7 +1179,7 @@
       );
     }
 
-    function App() {
+    const App = () => {
       const [activeTab, setActiveTab] = useState('ITINERARY');
       const [itinerary, setItinerary] = useState(() => JSON.parse(localStorage.getItem('trip_itinerary_v53')) || INITIAL_ITINERARY);
       const [prepList, setPrepList] = useState(() => JSON.parse(localStorage.getItem('trip_prep_v53')) || INITIAL_PREP);
